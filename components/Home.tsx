@@ -1,6 +1,7 @@
 "use client";
 /* Interactive pieces of the home page: hero slider, carousels, gallery tabs, video grid, counters, social feeds. */
 import { type StaticImageData } from "next/image";
+import Link from "next/link";
 import { Pic } from "./Pic";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Photo } from "@/lib/content/events";
@@ -246,37 +247,82 @@ export function YouTubeFeed({ videos }: { videos: Video[] }) {
   );
 }
 
-/* Live Facebook timeline: the official Page plugin, which scrolls inside the box and always shows the newest posts. */
+/* Auto-scrolling lists: keeps nudging the list down, loops through a duplicated copy, pauses on hover/focus/touch. */
 const LIVE_H = 600;
 
-export function FacebookLive() {
-  const { t } = useSite();
-  const box = useRef<HTMLDivElement>(null);
-  const [w, setW] = useState(0);
+function useAutoScroll(on: boolean) {
+  const list = useRef<HTMLDivElement>(null);
+  const hold = useRef(false);
   useEffect(() => {
-    const el = box.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => setW(Math.min(500, Math.max(180, Math.floor(el.clientWidth)))));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
+    const el = list.current;
+    if (!el || !on || prefersReducedMotion()) return;
+    const id = setInterval(() => {
+      if (hold.current) return;
+      el.scrollTop += 1;
+      const half = el.scrollHeight / 2;
+      if (el.scrollTop >= half) el.scrollTop -= half;
+    }, 35);
+    return () => clearInterval(id);
+  }, [on]);
+  const pause = {
+    onMouseEnter: () => { hold.current = true; },
+    onMouseLeave: () => { hold.current = false; },
+    onFocus: () => { hold.current = true; },
+    onBlur: () => { hold.current = false; },
+    onTouchStart: () => { hold.current = true; },
+    onTouchEnd: () => { setTimeout(() => { hold.current = false; }, 2500); },
+  };
+  return { list, pause };
+}
+
+export type UpdateItem = { slug: string; date: string; category: Bi; title: Bi; summary: Bi; img: StaticImageData; source?: string };
+
+/* Latest updates from the Facebook page / events: a list that keeps scrolling by itself */
+export function UpdatesLive({ items, pageUrl }: { items: UpdateItem[]; pageUrl?: string }) {
+  const { lang, t, pick } = useSite();
+  const [tab, setTab] = useState<"posts" | "live">("posts");
+  const scrolls = items.length > 3;
+  const { list, pause } = useAutoScroll(scrolls && tab === "posts");
+  const rows = scrolls ? [...items, ...items] : items;
   const fb = site.social.facebook.url;
   return (
     <div className="card live-card">
-      <div className="live-head">
-        <span className="live-dot" aria-hidden="true" />
-        <b>Facebook</b><span>{t("ताज़ा पोस्ट", "Latest posts")}</span>
-        <a className="link-arrow" href={fb} target="_blank" rel="noopener">{t("पेज खोलें", "Open page")} <Icon name="arrowUpRight" /></a>
+      {pageUrl ? <FacebookPage url={pageUrl} /> : (
+        <div className="live-head">
+          <span className="live-dot" aria-hidden="true" />
+          <b>Facebook</b><span>{t("ताज़ा अपडेट", "Latest updates")}</span>
+          <a className="link-arrow" href={fb} target="_blank" rel="noopener">{t("पेज खोलें", "Open page")} <Icon name="arrowUpRight" /></a>
+        </div>
+      )}
+      {pageUrl && (
+        <div className="fb-tabs" role="tablist" aria-label={t("Facebook पोस्ट", "Facebook posts")}>
+          <button type="button" role="tab" aria-selected={tab === "posts"} onClick={() => setTab("posts")}><span className="live-dot" aria-hidden="true" />{t("ताज़ा पोस्ट", "Latest posts")}</button>
+          <button type="button" role="tab" aria-selected={tab === "live"} onClick={() => setTab("live")}><Icon name="facebook" />{t("Facebook लाइव", "Facebook live")}</button>
+        </div>
+      )}
+      {pageUrl && tab === "live" && <FacebookTimeline url={pageUrl} height={LIVE_H - FB_HEAD_H - TABS_H} />}
+      <div className="live-body upl" hidden={!!pageUrl && tab === "live"} style={{ height: pageUrl ? LIVE_H - FB_HEAD_H - TABS_H : LIVE_H }} ref={list} tabIndex={0} aria-label={t("ताज़ा अपडेट", "Latest updates")} {...pause}>
+        {rows.map((e, n) => {
+          const dup = scrolls && n >= items.length;
+          return (
+            <article key={`${e.slug}-${n}`} className="upl-item" aria-hidden={dup ? true : undefined}>
+              <Link href={`/${lang}/updates/${e.slug}`} className="upl-img" tabIndex={dup ? -1 : 0} aria-label={pick(e.title)}>
+                <Pic src={e.img} alt="" placeholder="blur" sizes="160px" />
+              </Link>
+              <div>
+                <div className="upl-meta"><span className="tag">{pick(e.category)}</span><time dateTime={e.date}>{fmtDate(e.date, lang)}</time></div>
+                <h4><Link href={`/${lang}/updates/${e.slug}`} tabIndex={dup ? -1 : 0}>{pick(e.title)}</Link></h4>
+                <p>{pick(e.summary)}</p>
+                <div className="upl-links">
+                  <Link href={`/${lang}/updates/${e.slug}`} tabIndex={dup ? -1 : 0}>{t("पूरा पढ़ें", "Read more")}</Link>
+                  {e.source && <a href={e.source} target="_blank" rel="noopener" tabIndex={dup ? -1 : 0}>{t("Facebook पोस्ट", "Facebook post")}</a>}
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
-      <div className="live-body fb-live" ref={box} style={{ height: LIVE_H }}>
-        {w > 0 && (
-          <iframe
-            title={t("Facebook पर ताज़ा पोस्ट", "Latest posts on Facebook")}
-            src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(fb)}&tabs=timeline&width=${w}&height=${LIVE_H}&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false`}
-            width={w} height={LIVE_H} loading="lazy" allow="encrypted-media" />
-        )}
-      </div>
-      <p className="live-note">{t("पोस्ट न दिखें तो ऊपर से पेज सीधे खोलें।", "If the posts do not load, open the page directly using the link above.")}</p>
+      {!pageUrl && <p className="live-note"><a className="btn btn-primary btn-sm" href={fb} target="_blank" rel="noopener"><Icon name="facebook" />{t("Facebook पर फॉलो करें", "Follow on Facebook")}</a></p>}
     </div>
   );
 }
@@ -286,21 +332,8 @@ export function YouTubeLive({ videos }: { videos: Video[] }) {
   const { lang, t } = useSite();
   const [cur, setCur] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const list = useRef<HTMLDivElement>(null);
-  const hold = useRef(false);
   const scrolls = videos.length > 3;
-
-  useEffect(() => {
-    const el = list.current;
-    if (!el || !scrolls || playing || prefersReducedMotion()) return;
-    const id = setInterval(() => {
-      if (hold.current) return;
-      el.scrollTop += 1;
-      const half = el.scrollHeight / 2;
-      if (el.scrollTop >= half) el.scrollTop -= half;
-    }, 35);
-    return () => clearInterval(id);
-  }, [scrolls, playing]);
+  const { list, pause } = useAutoScroll(scrolls && !playing);
 
   const ch = site.social.youtube.url;
   if (!videos.length) {
@@ -334,10 +367,7 @@ export function YouTubeLive({ videos }: { videos: Video[] }) {
           )}
         </div>
         <div className="ytl-now"><h4>{v.title}</h4><small>{fmtDate(v.published, lang)}</small></div>
-        <div className="ytl-list" ref={list} tabIndex={0} aria-label={t("वीडियो सूची", "Video list")}
-          onMouseEnter={() => { hold.current = true; }} onMouseLeave={() => { hold.current = false; }}
-          onFocus={() => { hold.current = true; }} onBlur={() => { hold.current = false; }}
-          onTouchStart={() => { hold.current = true; }} onTouchEnd={() => { setTimeout(() => { hold.current = false; }, 2500); }}>
+        <div className="ytl-list" ref={list} tabIndex={0} aria-label={t("वीडियो सूची", "Video list")} {...pause}>
           {rows.map((x, n) => {
             const k = n % videos.length;
             return (
@@ -354,3 +384,82 @@ export function YouTubeLive({ videos }: { videos: Video[] }) {
     </div>
   );
 }
+
+/* Facebook header: his photo, name, verified tick, followers and a Follow button.
+   (Facebook's own Page plugin was dropped: for visitors who are not signed in to Facebook, or who block
+   its cookies, it renders only a clipped avatar strip. Posts come from our own updates list below.) */
+const FB_HEAD_H = 104;
+const TABS_H = 50;
+
+/* Facebook's own Page plugin, timeline only. Facebook shows the posts to visitors who are signed in to
+   Facebook in this browser; everyone else sees a short note and a link (the "Latest posts" tab works for all). */
+export function FacebookTimeline({ url, height }: { url: string; height: number }) {
+  const { t } = useSite();
+  const box = useRef<HTMLDivElement>(null);
+  const [w, setW] = useState(0);
+  useEffect(() => {
+    const el = box.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setW(Math.min(500, Math.max(180, Math.floor(el.clientWidth)))));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const src = `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(url)}&tabs=timeline&width=${w}&height=${height}&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false`;
+  return (
+    <div className="fb-live" ref={box} style={{ height }}>
+      <div className="fb-live-note">
+        <Icon name="facebook" />
+        <p>{t("Facebook की लाइव पोस्ट यहाँ उन्हें दिखती हैं जो इस ब्राउज़र में Facebook पर लॉग-इन हैं।", "Facebook shows the live posts here to visitors signed in to Facebook in this browser.")}</p>
+        <a className="btn btn-sm fb-own-btn" href={url} target="_blank" rel="noopener">{t("Facebook पर सभी पोस्ट देखें", "See all posts on Facebook")}</a>
+      </div>
+      {w > 0 && <iframe key={w} title={t("Facebook पर लाइव पोस्ट", "Live posts on Facebook")} src={src} width={w} height={height} loading="lazy" allow="encrypted-media; clipboard-write" />}
+    </div>
+  );
+}
+
+export function FacebookPage({ url }: { url: string }) {
+  const { t, pick } = useSite();
+  return (
+    <div className="fb-head" style={{ height: FB_HEAD_H }}>
+      <div className="fb-own">
+        <Pic className="fb-own-avatar" src={img.hero} alt="" width={64} height={64} />
+        <div className="fb-own-txt">
+          <b>{pick(site.name)} MLA <Icon name="check" className="sc-tick" /></b>
+          <small>{pick(site.social.facebook.followers)} {t("फ़ॉलोअर्स", "followers")}</small>
+        </div>
+        <a className="btn btn-sm fb-own-btn" href={url} target="_blank" rel="noopener"><Icon name="facebook" />{t("पेज फ़ॉलो करें", "Follow Page")}</a>
+      </div>
+    </div>
+  );
+}
+
+/* Full Facebook Page box, like the reference site: cover, profile, followers, Follow button and the live posts.
+   Facebook shows the posts only to visitors signed in to Facebook in that browser; for everyone else it shows
+   just the top part, so a preview of our latest posts sits behind it and shows through below that part. */
+export function FacebookFull({ url, items, height = 600 }: { url: string; items: UpdateItem[]; height?: number }) {
+  const { lang, t, pick } = useSite();
+  const box = useRef<HTMLDivElement>(null);
+  const [w, setW] = useState(0);
+  useEffect(() => {
+    const el = box.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setW(Math.min(500, Math.max(180, Math.floor(el.clientWidth)))));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const src = `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(url)}&tabs=timeline&width=${w}&height=${height}&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false`;
+  return (
+    <div className="card fb-full" ref={box} style={{ height }}>
+      <div className="fb-full-back" aria-hidden="true">
+        {items.slice(0, 4).map((e) => (
+          <div key={e.slug} className="fbb-item">
+            <Pic src={e.img} alt="" placeholder="blur" sizes="120px" />
+            <div><small>{fmtDate(e.date, lang)}</small><b>{pick(e.title)}</b></div>
+          </div>
+        ))}
+      </div>
+      {w > 0 && <iframe key={w} title={t("Facebook पर ताज़ा पोस्ट", "Latest posts on Facebook")} src={src} width={w} height={height} loading="lazy" allow="encrypted-media; clipboard-write" />}
+    </div>
+  );
+}
+

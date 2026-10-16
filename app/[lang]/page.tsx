@@ -1,6 +1,6 @@
 import { Pic } from "@/components/Pic";
 import Link from "next/link";
-import { Carousel, FacebookLive, GalleryTabs, HeroSlider, VideoGrid, YouTubeLive, type GalTab, type Slide } from "@/components/Home";
+import { Carousel, FacebookFull, GalleryTabs, HeroSlider, UpdatesLive, VideoGrid, YouTubeLive, type GalTab, type Slide, type UpdateItem } from "@/components/Home";
 import { Icon } from "@/components/Icon";
 import { getEvent, sortedEvents, type EventPost } from "@/lib/content/events";
 import { morePhotos } from "@/lib/content/media";
@@ -25,6 +25,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
   const slides: Slide[] = [...BASE_SLIDES, ...sortedEvents.filter((e) => e.photos[0].img.width >= 900).slice(0, 4).map((e) => ({ img: e.photos[0].img, alt: e.title }))];
   const news = sortedEvents.slice(0, 3);
+  const updates: UpdateItem[] = [...sortedEvents].sort((a, b) => b.date.localeCompare(a.date))
+    .map((e) => ({ slug: e.slug, date: e.date, category: e.category, title: e.title, summary: e.summary, img: e.photos[0].img, source: e.source }));
   const tiles = [
     { path: "/vikas-yatra", img: img.addressing, label: t("उपलब्धियाँ", "Achievements"), tone: "orange" },
     { path: "/e-shikayat", img: img.atWork, label: t("ई-शिकायत", "e-Complaint"), tone: "green" },
@@ -149,8 +151,22 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <div className="wrap">
           <h2 className="sec-title center">{t("हमारे से जुड़िये", "Connect with us")}</h2>
           <div className="connect">
-            <div><FacebookLive /></div>
-            <div><YouTubeLive videos={videos} /></div>
+            <div className="connect-col">
+              <div className="col-head">
+                <h3>{t("ताज़ा पोस्ट", "Latest posts")}</h3>
+                <a className="link-arrow" href={site.social.facebook.url} target="_blank" rel="noopener">{t("Facebook पेज खोलें", "Open the Facebook page")} <Icon name="arrowUpRight" /></a>
+              </div>
+              {site.social.facebook.pageUrl
+                ? <FacebookFull url={site.social.facebook.pageUrl} items={updates} />
+                : <UpdatesLive items={updates} />}
+            </div>
+            <div className="connect-col">
+              <div className="col-head">
+                <h3>{t("वीडियो", "Videos")}</h3>
+                <a className="link-arrow" href={site.social.youtube.url} target="_blank" rel="noopener">{t("YouTube चैनल खोलें", "Open the YouTube channel")} <Icon name="arrowUpRight" /></a>
+              </div>
+              <YouTubeLive videos={videos} />
+            </div>
           </div>
         </div>
       </section>

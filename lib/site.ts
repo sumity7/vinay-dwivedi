@@ -14,7 +14,12 @@ export const site = {
   officeWhatsApp: "919670086000", // contact form, meeting requests and reminders go here
 
   social: {
-    facebook: { url: "https://www.facebook.com/vinaydwivedi295/", handle: "vinaydwivedi295", followers: { hi: "1.28 लाख+", en: "128K+" } as Bi },
+    facebook: {
+      url: "https://www.facebook.com/vinaydwivedi295/", handle: "vinaydwivedi295", followers: { hi: "1.28 लाख+", en: "128K+" } as Bi,
+      /* Official Facebook *Page* (not a personal profile) for the live Page plugin on the home page.
+         The plugin only works for public Pages; leave empty to show the updates feed instead. */
+      pageUrl: "https://www.facebook.com/vinaydwivedi295/",
+    },
     instagram: { url: "https://www.instagram.com/vinaydwivedimla/", handle: "@vinaydwivedimla", followers: { hi: "14.6 हज़ार+", en: "14.6K+" } as Bi },
     youtube: { url: "https://www.youtube.com/@vinaydwivedi71", handle: "@vinaydwivedi71", channelId: "UCQmXUpUFhZ1cBPNYTe0qznw" },
   },

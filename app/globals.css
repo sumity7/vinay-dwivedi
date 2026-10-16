@@ -700,8 +700,6 @@ footer .bottom{background:var(--navy-2);padding:18px 0;text-align:center;font-si
 .live-dot{width:10px;height:10px;border-radius:50%;background:#e62117;flex:none;animation:live-pulse 1.8s infinite}
 @keyframes live-pulse{0%{box-shadow:0 0 0 0 #e6211766}70%{box-shadow:0 0 0 9px #e6211700}100%{box-shadow:0 0 0 0 #e6211700}}
 .live-body{position:relative;min-height:0}
-.fb-live{display:flex;justify-content:center;background:#fff}
-.fb-live iframe{border:0;display:block;max-width:100%}
 .live-note{margin:0;padding:10px 18px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);flex:none}
 .ytl{display:flex;flex-direction:column}
 .ytl-player{position:relative;aspect-ratio:16/9;background:#000;flex:none}
@@ -717,3 +715,59 @@ footer .bottom{background:var(--navy-2);padding:18px 0;text-align:center;font-si
 .ytl-item img{width:112px;aspect-ratio:16/9;object-fit:cover;flex:none;border-radius:3px}
 .ytl-item span{font-size:14.5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .ytl-item small{display:block;color:var(--muted);font-size:12.5px;margin-top:3px}
+
+/* home: auto-scrolling latest-updates list */
+.upl{overflow-y:auto;padding:4px 18px;scrollbar-width:thin}
+.upl-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.upl-img{flex:none;width:150px;aspect-ratio:4/3;overflow:hidden;border-radius:3px;background:var(--beige);align-self:flex-start}
+.upl-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.upl-item:hover .upl-img img{transform:scale(1.06)}
+.upl-meta{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;font-size:13.5px;color:var(--muted)}
+.upl-item h4{font-size:17px;line-height:1.4;font-weight:600;margin:4px 0 6px}
+.upl-item h4 a{text-decoration:none}
+.upl-item h4 a:hover{color:var(--orange-text)}
+.upl-item p{margin:0 0 8px;font-size:14.5px;line-height:1.55;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.upl-links{display:flex;gap:16px;font-size:14px;font-weight:600}
+.upl-links a{color:var(--orange-text);text-decoration:none}
+.upl-links a:hover{text-decoration:underline}
+.live-note .btn{width:100%}
+@media (max-width:520px){.upl-item{flex-direction:column}.upl-img{width:100%}}
+.fb-head{position:relative;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;border-bottom:1px solid var(--line);background:#fff;flex:none}
+.fb-head .fb-page{position:relative;z-index:1;width:100%;max-width:500px}
+.upl-label{display:flex;align-items:center;gap:10px;padding:12px 18px 4px;font-weight:600;font-size:15px;color:var(--navy-3);flex:none}
+.fb-own{position:absolute;inset:0;z-index:0;display:flex;align-items:center;gap:14px;padding:0 18px;background:#fff}
+.fb-head.is-rendered .fb-own{visibility:hidden}
+.fb-own-avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid #1877f2;flex:none}
+.fb-own-txt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.fb-own-txt b{display:flex;align-items:center;gap:6px;color:#385898;font-weight:600;font-size:18px}
+.fb-own-txt small{color:var(--muted);font-size:14px}
+.fb-own-btn{background:#1877f2;color:#fff}
+.fb-own-btn:hover{background:#0f5fd0}
+@media (max-width:520px){.fb-own{flex-wrap:wrap;align-content:center;row-gap:8px}.fb-own-btn{width:100%}}
+
+/* Facebook tabs: our posts list | Facebook's live timeline */
+.fb-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line);flex:none;height:50px}
+.fb-tabs button{display:flex;align-items:center;justify-content:center;gap:8px;border:0;background:#fff;font:600 15px var(--body);color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:color .2s,border-color .2s}
+.fb-tabs button svg{width:17px;height:17px;color:#1877f2}
+.fb-tabs button[aria-selected=true]{color:var(--navy-3);border-bottom-color:var(--orange)}
+.fb-tabs button:hover{color:var(--orange-text)}
+.fb-live{position:relative;display:flex;justify-content:center;background:#fff;flex:none;overflow:hidden}
+.fb-live iframe{position:relative;z-index:1;border:0;display:block;background:transparent}
+.fb-live-note{position:absolute;left:0;right:0;bottom:0;z-index:0;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:24px 24px 34px;color:var(--muted);font-size:14.5px}
+.fb-live-note>svg{width:34px;height:34px;color:#1877f2}
+.fb-live-note p{margin:0;max-width:40ch}
+
+/* Connect: titles above the cards, Facebook box like the reference site */
+.connect-col{display:flex;flex-direction:column;min-width:0}
+.col-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
+.col-head h3{font-size:24px;color:var(--navy-3)}
+.col-head .link-arrow{font-size:15.5px}
+.connect-col>.live-card>.live-head{display:none}
+.connect-col>.live-card{border-radius:14px}
+.fb-full{position:relative;display:flex;justify-content:center;overflow:hidden;padding:0;border-radius:14px;background:#fff}
+.fb-full iframe{position:relative;z-index:1;border:0;display:block;background:transparent;color-scheme:light}
+.fb-full-back{position:absolute;left:0;right:0;top:190px;bottom:0;z-index:0;padding:6px 20px;display:grid;align-content:start;gap:2px}
+.fbb-item{display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.fbb-item img{width:96px;height:72px;object-fit:cover;border-radius:6px;flex:none}
+.fbb-item small{display:block;color:var(--muted);font-size:13px}
+.fbb-item b{font-weight:600;font-size:15.5px;line-height:1.4;color:var(--navy-3);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
