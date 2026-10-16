@@ -995,3 +995,56 @@ footer .bottom{background:var(--navy-2);padding:18px 0;text-align:center;font-si
   .hero .slide-bg{display:block;position:absolute;inset:0;z-index:0;filter:blur(26px) saturate(1.1);transform:scale(1.2)!important;opacity:.9}
 }
 @media (max-width:900px){.hero .slide-media{border-bottom:0;max-height:none;-webkit-mask-image:none;mask-image:none}.hero .slide-bg{display:none}}
+
+/* ===== Accessibility pass (audit P1/P2): every colour that carries white or small text now meets WCAG AA (4.5:1).
+   Bright saffron #f29933 stays for decoration (lines, borders, accents); deep saffron carries text. ===== */
+:root{--orange-btn:#b45309;--orange-text:#9a4a06;--muted:#555d68;--green-d:#0b6b2e;--green-bar:#15803d}
+.btn-primary:hover,.btn-orange:hover{background:#92400e}
+.ribbon{background:#15803d}
+.logo-block{background:var(--orange-btn)}
+.logo-block:hover{background:#92400e}
+/* hero: deep saffron where the words sit, brightening towards the photo */
+.hero .slide{background:radial-gradient(90% 120% at 100% 0%,#ffffff1f 0%,#ffffff00 60%),linear-gradient(90deg,#ad4a07 0%,#bd520a 42%,#e06a10 72%,#f47b20 100%)}
+@media (max-width:900px){.hero .slide{background:linear-gradient(180deg,#b84f08 0%,#a84f08 100%)}}
+/* quick-action rail: hidden over the first screen, slides in on scroll */
+.rail{transition:transform .35s var(--ease),opacity .25s}
+.rail.is-hidden{transform:translate(110%,-50%);opacity:0;pointer-events:none}
+@media (max-width:760px){.rail.is-hidden{transform:translateY(110%)}}
+@media (prefers-reduced-motion:reduce){.rail{transition:none}}
+/* Facebook blue that carries text: one shade deeper than #1877f2 so it passes AA */
+.fbp-follow,.fb-own-btn{background:#1465d0}
+.fbp-follow:hover,.fb-own-btn:hover{background:#0f52ab}
+.fbp-tabs button[aria-selected=true],.fbp-more,.fbp-post footer a:hover{color:#1465d0}
+/* home: journey on white so it doesn't merge with the beige personality block above it */
+.journey-sec{background:#fff}
+/* tap targets (audit P2): bigger hit areas without changing how things look */
+.soc-mini{gap:4px}
+.soc-mini a{width:36px;height:36px;margin:-6px -4px}
+.hero .dots{gap:8px}
+.hero .dots button{position:relative;height:24px;background:none!important;padding:0}
+.hero .dots button:before{content:"";position:absolute;left:0;right:0;top:50%;height:5px;margin-top:-3px;border-radius:3px;background:#ffffff80;transition:background .2s}
+.hero .dots button.active:before{background:#fff}
+.hero .dots{bottom:16px}
+.crumbs a{display:inline-block;padding:9px 2px;margin:-9px -2px}
+.ribbon a{display:inline-block;padding:8px 2px;margin:-8px -2px}
+.yt .now h3.yt-now-title{font-weight:600;font-size:17px;line-height:1.4;margin-top:4px;color:var(--navy-3)}
+
+/* 404 and error pages */
+.nf{padding:96px 0 110px;text-align:center}
+.nf-code{font:400 clamp(90px,16vw,170px)/1 var(--display);color:var(--orange);margin:0 0 6px}
+.nf h1{margin-bottom:14px}
+.nf .lead{max-width:52ch;margin:0 auto 28px}
+.nf-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+/* events list: last row of 2 cards sits left, not stretched */
+.ev-list{align-items:stretch}
+
+/* round 2 of the audit: bigger touch areas, and the last low-contrast bits */
+footer ul a,.f-line a{padding:9px 0}
+footer ul{gap:0 20px}
+.link-arrow{padding:9px 0}
+.contact-3 a{display:inline-block;padding:8px 0}
+.news-bar a{padding:10px 0}
+.fbp-post footer a{padding:10px 4px}
+.crumbs a{min-width:32px;text-align:center}
+.tag-pill{background:var(--orange-btn);color:#fff}
+.nf-code{color:var(--orange-btn)}

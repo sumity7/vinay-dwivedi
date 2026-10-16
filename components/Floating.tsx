@@ -16,11 +16,24 @@ const RAIL: { path: string; icon: IconName; hi: string; en: string }[] = [
   { path: "/vikas-yatra", icon: "trend", hi: "विकास यात्रा", en: "Vikas Yatra" },
 ];
 
+/* Stays out of the way while the first screen (hero, page title) is in view; slides in once the visitor scrolls,
+   or straight away on pages too short to scroll much. */
 export function SideRail() {
   const { lang, t } = useSite();
   const rest = usePathname().replace(/^\/(hi|en)/, "");
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const check = () => {
+      const room = document.documentElement.scrollHeight - innerHeight;
+      setShown(scrollY > 240 || room < 600);
+    };
+    check();
+    addEventListener("scroll", check, { passive: true });
+    addEventListener("resize", check);
+    return () => { removeEventListener("scroll", check); removeEventListener("resize", check); };
+  }, [rest]);
   return (
-    <nav className="rail" aria-label={t("त्वरित सेवाएँ", "Quick services")}>
+    <nav className={`rail${shown ? "" : " is-hidden"}`} aria-label={t("त्वरित सेवाएँ", "Quick services")}>
       {RAIL.map((r) => (
         <Link key={r.path} href={href(lang, r.path)} className={rest === r.path ? "active" : ""} aria-label={t(r.hi, r.en)}>
           <Icon name={r.icon} /><span>{t(r.hi, r.en)}</span>

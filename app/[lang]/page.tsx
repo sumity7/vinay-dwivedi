@@ -93,37 +93,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* PERSONALITY */}
-      <section className="persona">
-        <div className="persona-photos" aria-hidden="true">
-          <Pic className="p1" src={img.hero} alt="" placeholder="blur" sizes="(max-width: 900px) 60vw, 30vw" />
-          <Pic className="p2" src={img.villageGreeting} alt="" placeholder="blur" sizes="(max-width: 900px) 45vw, 20vw" />
-        </div>
-        <div className="persona-text">
-          <h2>{t("व्यक्तित्व - ", "Personality - ")}{tr(site.name, lang)}</h2>
-          <blockquote>{tr(journey[journey.length - 1].text, lang)}</blockquote>
-          {bio.slice(0, 2).map((p, i) => <p key={i}>{tr(p, lang)}</p>)}
-          <Link className="btn btn-orange" href={href(lang, "/about")}>{t("अधिक पढ़ें", "Read more")} <Icon name="arrow" /></Link>
-        </div>
-      </section>
-
-      {/* JOURNEY */}
-      <section className="journey-sec" id="journey">
-        <div className="wrap">
-          <h2 className="sec-title center">{t("यात्रा", "Journey")}</h2>
-          <Carousel className="journey">
-            {journey.map((j, i) => (
-              <article key={i} className="jr-item">
-                <span className="jr-year">{tr(j.tag, lang)}</span>
-                <h3>{tr(j.title, lang)}</h3>
-                <p>{tr(j.text, lang)}</p>
-                <Link className="link-arrow" href={href(lang, "/about#journey")}>{t("और देखें", "View more")} <Icon name="arrow" /></Link>
-              </article>
-            ))}
-          </Carousel>
-        </div>
-      </section>
-
       {/* LATEST NEWS & UPDATES */}
       <section className="news-sec" aria-labelledby="news-title">
         <div className="wrap">
@@ -143,6 +112,36 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* PERSONALITY */}
+      <section className="persona">
+        <div className="persona-photos" aria-hidden="true">
+          <Pic className="p1" src={img.hero} alt="" placeholder="blur" sizes="(max-width: 900px) 60vw, 30vw" />
+          <Pic className="p2" src={img.villageGreeting} alt="" placeholder="blur" sizes="(max-width: 900px) 45vw, 20vw" />
+        </div>
+        <div className="persona-text">
+          <h2>{t("व्यक्तित्व - ", "Personality - ")}{tr(site.name, lang)}</h2>
+          {bio.slice(0, 2).map((p, i) => <p key={i}>{tr(p, lang)}</p>)}
+          <Link className="btn btn-orange" href={href(lang, "/about")}>{t("अधिक पढ़ें", "Read more")} <Icon name="arrow" /></Link>
+        </div>
+      </section>
+
+      {/* JOURNEY */}
+      <section className="journey-sec" id="journey">
+        <div className="wrap">
+          <h2 className="sec-title center">{t("यात्रा", "Journey")}</h2>
+          <Carousel className="journey">
+            {journey.map((j, i) => (
+              <article key={i} className="jr-item">
+                <span className="jr-year">{tr(j.tag, lang)}</span>
+                <h3>{tr(j.title, lang)}</h3>
+                <p>{tr(j.text, lang)}</p>
+                <Link className="link-arrow" href={href(lang, "/about#journey")}>{t("और देखें", "View more")} <Icon name="arrow" /></Link>
+              </article>
+            ))}
+          </Carousel>
         </div>
       </section>
 

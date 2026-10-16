@@ -22,6 +22,7 @@ export default async function Updates({ params }: Props) {
         lead={{ hi: "मेहनौन और गोंडा से ताज़ा गतिविधियाँ, जनसंपर्क, राहत कार्य और सार्वजनिक कार्यक्रम।", en: "Latest activities, outreach, relief work and public programmes from Mehnaun and Gonda." }}
       />
       <section>
+        <h2 className="sr-only">{lang === "hi" ? "सभी कार्यक्रम" : "All events"}</h2>
         <div className="wrap ev-list">
           {sortedEvents.map((e) => <EventCard key={e.slug} e={e} lang={lang} wide />)}
         </div>

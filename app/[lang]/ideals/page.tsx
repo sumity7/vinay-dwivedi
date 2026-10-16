@@ -38,6 +38,7 @@ export default async function Ideals({ params }: Props) {
         }
       />
       <section>
+        <h2 className="sr-only">{lang === "hi" ? "हमारे आदर्श: सूची" : "Our ideals: the list"}</h2>
         <div className="wrap"><IdealsBrowser /></div>
       </section>
     </>

@@ -24,6 +24,7 @@ export default async function Contact({ params }: Props) {
         lead={{ hi: "जनहित के विषय, मुलाकात का अनुरोध, कार्यक्रम में आमंत्रण, सुझाव या अभियान से जुड़ने के लिए संपर्क करें।", en: "Get in touch about public matters, to request a meeting, invite the MLA to a programme, share a suggestion or volunteer." }}
       />
       <section>
+        <h2 className="sr-only">{lang === "hi" ? "संपर्क फ़ॉर्म और जानकारी" : "Contact form and details"}</h2>
         <div className="wrap contact-page">
           <ContactForm />
           <aside className="card" style={{ padding: "8px 24px 20px" }}>

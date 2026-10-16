@@ -39,6 +39,7 @@ export default async function EventPage({ params }: Props) {
         meta={<p className="meta"><Icon name="calendar" /> {fmtDate(e.date, lang)}</p>}
       />
       <section>
+        <h2 className="sr-only">{lang === "hi" ? "कार्यक्रम का विवरण" : "Event details"}</h2>
         <div className="wrap ev-detail">
           <PhotoGrid photos={e.photos} sizes="(max-width: 900px) 50vw, 330px" />
           <article>

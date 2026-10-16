@@ -22,6 +22,7 @@ export default async function Track({ params }: Props) {
         lead={{ hi: "शिकायत दर्ज करते समय मिली टिकट संख्या और अपने मोबाइल नंबर के अंतिम चार अंक डालें।", en: "Enter the ticket number you received and the last four digits of the mobile number you gave." }}
       />
       <section>
+        <h2 className="sr-only">{lang === "hi" ? "शिकायत की स्थिति देखें" : "Check complaint status"}</h2>
         <div className="wrap">
           <Suspense><TrackForm /></Suspense>
         </div>

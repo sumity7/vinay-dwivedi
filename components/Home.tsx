@@ -249,7 +249,7 @@ export function YouTubeFeed({ videos }: { videos: Video[] }) {
       </div>
       <div className="now">
         <div className="row"><b>{t("अभी चल रहा है", "Now playing")}</b><span>{fmtDate(v.published, lang)}</span></div>
-        <h4>{v.title}</h4>
+        <h3 className="yt-now-title">{v.title}</h3>
       </div>
       <div className="yt-list">
         {videos.map((x, k) => (

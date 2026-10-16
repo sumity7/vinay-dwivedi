@@ -35,6 +35,7 @@ export default async function Shikayat({ params }: Props) {
         }
       />
       <section>
+        <h2 className="sr-only">{lang === "hi" ? "शिकायत फ़ॉर्म और जानकारी" : "Complaint form and information"}</h2>
         <div className="wrap svc-grid">
           <ComplaintForm />
           <aside className="note-card">

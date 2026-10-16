@@ -58,7 +58,7 @@ Copy `.env.example` to `.env.local` (and add the same keys in Vercel → Setting
 | `ASSISTANT_MODEL` | Optional. Defaults to `claude-opus-5-5`; set e.g. `claude-haiku-5-5` for a cheaper model |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL — enables real complaint storage |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
-| `NEXT_PUBLIC_SITE_URL` | e.g. `https://vinaydwivedi.in` — used in share links and social previews |
+| `NEXT_PUBLIC_SITE_URL` | e.g. `https://vinaydwivedi.in` — used in share links, social previews, `sitemap.xml` and `robots.txt`. If empty on Vercel, the project's production domain is used |
 
 The assistant answers only from the site’s own content, in the visitor’s language, keeps answers short,
 and is limited to 20 questions per visitor per 10 minutes (per server instance).
@@ -67,7 +67,7 @@ and is limited to 20 questions per visitor per 10 minutes (per server instance).
 Out of the box the portal runs in **demo mode**: complaints are saved only in the visitor’s own browser.
 To receive real complaints, connect Supabase:
 
-1. Create a Supabase project. In SQL Editor run:
+1. Create a Supabase project. In SQL Editor run the whole of [`supabase/setup.sql`](supabase/setup.sql) (it is the SQL below plus the photo bucket), or run the two blocks below by hand:
 
 ```sql
 create table complaints (
@@ -130,6 +130,13 @@ create policy "public can upload complaint photos" on storage.objects
 3. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`, then rebuild / redeploy (they are baked in at build time).
 
 The office updates `status` (received → review → action → resolved) and `office_note` from the Supabase Table Editor; citizens see it at once on the tracking page.
+
+## Launch checklist (Vercel)
+1. Push to GitHub, import the repo in Vercel (it is detected as Next.js).
+2. Settings → Environment Variables: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL` (and `ANTHROPIC_API_KEY` to switch the assistant on). Deploy again after changing them: the `NEXT_PUBLIC_*` values are baked in at build time.
+3. Run `supabase/setup.sql` once in Supabase. Until then the complaint form shows an error, because the table does not exist yet.
+4. Check `/sitemap.xml` and `/robots.txt` on the live domain, and submit the sitemap in Google Search Console.
+5. Add the next year's festival dates (Diwali, Chhath, Holi, Mahashivratri) to `lib/content/ecard.ts` (`dates`): they move every year and drive the green banner at the top.
 
 ## Before going live — confirm with the client
 - Jansampark office address (shown as “to be added”)

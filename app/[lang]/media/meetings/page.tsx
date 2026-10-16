@@ -22,6 +22,7 @@ export default async function Meetings({ params }: Props) {
         lead={{ hi: "सार्वजनिक जीवन की चुनिंदा मुलाकातें, बैठकें और संवाद।", en: "Selected meetings and interactions from public life." }}
       />
       <section>
+        <h2 className="sr-only">{lang === "hi" ? "भेंट व संवाद की सूची" : "List of meetings and interactions"}</h2>
         <div className="wrap meet-grid">
           {meetings.map((m) => (
             <div className="card" key={m.title.en}>

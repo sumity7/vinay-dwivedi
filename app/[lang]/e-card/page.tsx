@@ -22,6 +22,7 @@ export default async function ECard({ params }: Props) {
         lead={{ hi: "अवसर चुनें, अपना नाम और फोटो जोड़ें, और कार्ड डाउनलोड करें या सीधे WhatsApp पर साझा करें।", en: "Choose an occasion, add your name and photo, and download the card or share it straight to WhatsApp." }}
       />
       <section>
+        <h2 className="sr-only">{lang === "hi" ? "ई-कार्ड बनाएं" : "Make your card"}</h2>
         <div className="wrap">
           <Suspense><ECardMaker /></Suspense>
         </div>
