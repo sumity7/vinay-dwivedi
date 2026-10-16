@@ -1,7 +1,7 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { daysUntil, occasions, type Motif, type Occasion } from "@/lib/content/ecard";
+import { daysUntil, nextOccurrence, occasions, type Motif, type Occasion } from "@/lib/content/ecard";
 import { ideals } from "@/lib/content/ideals";
 import type { Bi } from "@/lib/i18n";
 import { img } from "@/lib/images";
@@ -206,8 +206,8 @@ export function ECardMaker() {
   const [occId, setOccId] = useState(() => {
     const q = params.get("occasion");
     if (q && all.some((o) => o.id === q)) return q;
-    const soon = [...occasions].filter((o) => o.date).map((o) => ({ o, d: daysUntil(o.date!) })).sort((a, b) => a.d - b.d)[0];
-    return soon && soon.d <= 7 ? soon.o.id : "diwali";
+    const soon = occasions.map((o) => ({ o, n: nextOccurrence(o) })).filter((x) => x.n).sort((a, b) => a.n!.days - b.n!.days)[0];
+    return soon && soon.n!.days <= 30 ? soon.o.id : "diwali";
   });
   const occ = all.find((o) => o.id === occId) ?? occasions[1];
 

@@ -15,6 +15,8 @@ export type Occasion = {
   wish: Bi;
   sub?: Bi;
   date?: string;
+  /** Festivals that follow the Hindu calendar move every year: year -> MM-DD, from the panchang. Add the next year’s date when it is known. */
+  dates?: Record<string, string>;
 };
 
 const SUB: Bi = { hi: "मेहनौन विधानसभा क्षेत्र के सभी परिवारों को हार्दिक शुभकामनाएँ", en: "Warm wishes to every family of Mehnaun" };
@@ -22,15 +24,15 @@ const SUB: Bi = { hi: "मेहनौन विधानसभा क्षे�
 export const occasions: Occasion[] = [
   { id: "birthday", label: { hi: "मुन्ना भैया का जन्मदिन", en: "Munna Bhaiya’s birthday" }, date: "10-15", bg: ["#9e3c03", "#e8670f"], accent: "#ffd27a", text: "#ffffff", motif: "sparkles",
     title: { hi: "जन्मदिन की हार्दिक शुभकामनाएँ", en: "Happy Birthday" }, wish: { hi: "हमारे प्रिय विधायक मुन्ना भैया को जन्मदिवस की अनंत शुभकामनाएँ।", en: "Warmest birthday wishes to our dear MLA, Munna Bhaiya." }, sub: { hi: "आप स्वस्थ रहें, दीर्घायु हों और यूँ ही जनसेवा करते रहें", en: "Wishing you good health, long life and many more years of service" } },
-  { id: "diwali", label: { hi: "दीपावली", en: "Deepawali" }, bg: ["#0f3a48", "#0a2832"], accent: "#f2a51a", text: "#ffffff", motif: "diyas",
+  { id: "diwali", label: { hi: "दीपावली", en: "Deepawali" }, dates: { 2026: "11-08" }, bg: ["#0f3a48", "#0a2832"], accent: "#f2a51a", text: "#ffffff", motif: "diyas",
     title: { hi: "शुभ दीपावली", en: "Happy Deepawali" }, wish: { hi: "दीपों का यह पर्व आपके घर-आँगन में सुख, समृद्धि और उजाला लाए।", en: "May the festival of lamps fill your home with joy, prosperity and light." }, sub: SUB },
-  { id: "chhath", label: { hi: "छठ पूजा", en: "Chhath Puja" }, bg: ["#c2410c", "#f28c0f"], accent: "#fff1b8", text: "#ffffff", motif: "sun",
+  { id: "chhath", label: { hi: "छठ पूजा", en: "Chhath Puja" }, dates: { 2026: "11-15" }, bg: ["#c2410c", "#f28c0f"], accent: "#fff1b8", text: "#ffffff", motif: "sun",
     title: { hi: "छठ पूजा की शुभकामनाएँ", en: "Happy Chhath Puja" }, wish: { hi: "छठी मैया सबकी मनोकामनाएँ पूर्ण करें और हर घर में सुख-समृद्धि बनी रहे।", en: "May Chhathi Maiya fulfil every wish and bless every home." }, sub: SUB },
-  { id: "holi", label: { hi: "होली", en: "Holi" }, bg: ["#6d1b5f", "#c2185b"], accent: "#ffd23f", text: "#ffffff", motif: "colors",
+  { id: "holi", label: { hi: "होली", en: "Holi" }, dates: { 2027: "03-22" }, bg: ["#6d1b5f", "#c2185b"], accent: "#ffd23f", text: "#ffffff", motif: "colors",
     title: { hi: "होली की शुभकामनाएँ", en: "Happy Holi" }, wish: { hi: "रंगों का यह त्योहार आपके जीवन में खुशियों के रंग भर दे।", en: "May the festival of colours fill your life with happiness." }, sub: SUB },
   { id: "navratri", label: { hi: "नवरात्रि / विजयादशमी", en: "Navratri / Vijayadashami" }, bg: ["#7f0f16", "#c2201f"], accent: "#f5b700", text: "#ffffff", motif: "mandala",
     title: { hi: "नवरात्रि व विजयादशमी", en: "Navratri & Vijayadashami" }, wish: { hi: "माँ दुर्गा की कृपा सब पर बनी रहे और असत्य पर सत्य की विजय हो।", en: "May Maa Durga bless all, and may truth triumph over untruth." }, sub: SUB },
-  { id: "shivratri", label: { hi: "महाशिवरात्रि", en: "Mahashivratri" }, bg: ["#141838", "#2e3577"], accent: "#a8d8ff", text: "#ffffff", motif: "crescent",
+  { id: "shivratri", label: { hi: "महाशिवरात्रि", en: "Mahashivratri" }, dates: { 2027: "03-06" }, bg: ["#141838", "#2e3577"], accent: "#a8d8ff", text: "#ffffff", motif: "crescent",
     title: { hi: "महाशिवरात्रि की शुभकामनाएँ", en: "Happy Mahashivratri" }, wish: { hi: "भगवान भोलेनाथ की कृपा आप पर सदा बनी रहे। हर हर महादेव!", en: "May Bholenath always bless you. Har Har Mahadev!" }, sub: SUB },
   { id: "rakhi", label: { hi: "रक्षाबंधन", en: "Raksha Bandhan" }, bg: ["#8a1f3d", "#d6336c"], accent: "#ffd27a", text: "#ffffff", motif: "rakhi",
     title: { hi: "रक्षाबंधन की शुभकामनाएँ", en: "Happy Raksha Bandhan" }, wish: { hi: "भाई-बहन के अटूट स्नेह और विश्वास का यह पर्व सबके लिए मंगलमय हो।", en: "May this festival of the bond between brother and sister bring joy to all." }, sub: SUB },
@@ -61,4 +63,20 @@ export function daysUntil(mmdd: string, now = new Date()) {
   let next = new Date(now.getFullYear(), m - 1, d);
   if (next < today) next = new Date(now.getFullYear() + 1, m - 1, d);
   return Math.round((next.getTime() - today.getTime()) / 864e5);
+}
+
+/** Next known date of an occasion: a fixed MM-DD every year, or the nearest listed year's date. Null if none is ahead. */
+export function nextOccurrence(o: { date?: string; dates?: Record<string, string> }, now = new Date()): { iso: string; days: number } | null {
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const at = (y: number, mmdd: string) => {
+    const [m, d] = mmdd.split("-").map(Number);
+    const day = new Date(y, m - 1, d);
+    return { iso: `${y}-${mmdd}`, days: Math.round((day.getTime() - today.getTime()) / 864e5) };
+  };
+  if (o.date) {
+    const n = at(now.getFullYear(), o.date);
+    return n.days >= 0 ? n : at(now.getFullYear() + 1, o.date);
+  }
+  const ahead = Object.entries(o.dates ?? {}).map(([y, mmdd]) => at(Number(y), mmdd)).filter((n) => n.days >= 0);
+  return ahead.sort((a, b) => a.days - b.days)[0] ?? null;
 }

@@ -20,11 +20,15 @@ import fbParasrai1 from "@/images/fb/parasrai-1.jpg";
 import farmerField from "@/images/farmer-field.jpg";
 import felicitation from "@/images/felicitation.jpg";
 import hero from "@/images/hero.jpg";
+import heroAchievements from "@/images/hero-achievements.jpg";
+import heroComplaint from "@/images/hero-complaint.jpg";
+import heroEcard from "@/images/hero-ecard.jpg";
 import homeVisit from "@/images/home-visit.jpg";
 import honouringGuest from "@/images/honouring-guest.jpg";
 import meetingGreeting from "@/images/meeting-greeting.jpg";
 import memento from "@/images/memento.jpg";
 import officialMeeting from "@/images/official-meeting.jpg";
+import portrait from "@/images/portrait.jpg";
 import publicProgramme from "@/images/public-programme.jpg";
 import reliefCheque from "@/images/relief-cheque.jpg";
 import reliefSeeds from "@/images/relief-seeds.jpg";
@@ -37,8 +41,8 @@ import villageWalk from "@/images/village-walk.jpg";
 import villagerChat from "@/images/villager-chat.jpg";
 
 export const img = {
-  addressing, atWork, communityProgramme, farmerField, felicitation, hero, homeVisit, honouringGuest,
-  meetingGreeting, memento, officialMeeting, publicProgramme, reliefCheque, reliefSeeds, stateMeeting,
+  addressing, atWork, communityProgramme, farmerField, felicitation, hero, heroAchievements, heroComplaint, heroEcard, homeVisit, honouringGuest,
+  meetingGreeting, memento, officialMeeting, portrait, publicProgramme, reliefCheque, reliefSeeds, stateMeeting,
   tribute, villageBaithak, villageElders, villageGreeting, villageWalk, villagerChat,
   /* from the official Facebook page (Oct 2026) */
   fbAvatar, fbCover, fbBagahi1, fbBagahi4, fbBinuhani1, fbBinuhani2, fbBinuhani3, fbBinuhani4, fbBinuhani5,
@@ -49,8 +53,8 @@ export const img = {
    Every <Photo> uses this, so any crop (slider, tile, card, gallery) keeps the face in frame. */
 const focus: Record<keyof typeof img, string> = {
   addressing: "50% 40%", atWork: "62% 18%", communityProgramme: "58% 30%", farmerField: "42% 28%",
-  felicitation: "55% 18%", hero: "50% 14%", homeVisit: "45% 35%", honouringGuest: "62% 28%",
-  meetingGreeting: "55% 22%", memento: "62% 30%", officialMeeting: "50% 20%", publicProgramme: "68% 50%",
+  felicitation: "55% 18%", hero: "50% 14%", heroAchievements: "50% 34%", heroComplaint: "62% 24%", heroEcard: "58% 30%", homeVisit: "45% 35%", honouringGuest: "62% 28%",
+  meetingGreeting: "55% 22%", memento: "62% 30%", officialMeeting: "50% 20%", portrait: "50% 32%", publicProgramme: "68% 50%",
   reliefCheque: "62% 38%", reliefSeeds: "62% 38%", stateMeeting: "50% 50%", tribute: "58% 42%",
   villageBaithak: "50% 55%", villageElders: "62% 42%", villageGreeting: "56% 44%", villageWalk: "55% 45%",
   villagerChat: "68% 32%",

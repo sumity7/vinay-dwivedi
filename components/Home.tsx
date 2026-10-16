@@ -13,7 +13,7 @@ import type { Video } from "@/lib/youtube";
 import { Icon, type IconName } from "./Icon";
 import { useSite } from "./SiteProvider";
 
-export type Slide = { img: StaticImageData; alt?: Bi; pos?: string };
+export type Slide = { img: StaticImageData; alt?: Bi; pos?: string; tag?: Bi; title?: Bi; text?: Bi; points?: Bi[]; cta?: { href: string; label: Bi } };
 
 /* Full-width banner: slides move sideways, white arrows, dots below */
 export function HeroSlider({ slides }: { slides: Slide[] }) {
@@ -31,9 +31,23 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
     <div className="hero-slider" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} aria-roledescription="carousel">
       <div className="slider" style={{ transform: `translateX(-${i * 100}%)` }}>
         {slides.map((s, k) => (
-          <div key={k} className="slide" aria-hidden={k !== i}>
-            <Pic src={s.img} alt={s.alt ? pick(s.alt) : t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi")} fill sizes="(max-width: 900px) 100vw, 66vw"
-              preload={k === 0} style={{ objectFit: "cover", ...(s.pos ? { objectPosition: s.pos } : {}) }} />
+          <div key={k} className={`slide${k === i ? " is-active" : ""}`} aria-hidden={k !== i}>
+            {s.title && (
+              <div className="slide-cap">
+                {s.tag && <span className="slide-tag">{pick(s.tag)}</span>}
+                <h2>{pick(s.title)}</h2>
+                {s.text && <p>{pick(s.text)}</p>}
+                {s.points && <ul className="slide-points">{s.points.map((x, n) => <li key={n}>{pick(x)}</li>)}</ul>}
+                {s.cta && <Link className="btn btn-orange" href={s.cta.href} tabIndex={k === i ? 0 : -1}>{pick(s.cta.label)} <Icon name="arrow" /></Link>}
+              </div>
+            )}
+            {/* photo panel takes the photo's own shape, so the whole picture shows with nothing cropped */}
+            <div className="slide-media" style={{ aspectRatio: `${s.img.width} / ${s.img.height}` }}>
+              {/* soft blurred copy fills the panel around the photo, so the photo itself is never cropped */}
+              <Pic className="slide-bg" src={s.img} alt="" aria-hidden="true" fill sizes="(max-width: 900px) 50vw, 25vw" style={{ objectFit: "cover" }} />
+              <Pic className="slide-img" src={s.img} alt={s.alt ? pick(s.alt) : t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi")} fill sizes="(max-width: 900px) 100vw, 50vw"
+                preload={k === 0} style={{ objectFit: "cover" }} />
+            </div>
           </div>
         ))}
       </div>
@@ -78,8 +92,10 @@ export function GalleryTabs({ tabs }: { tabs: GalTab[] }) {
   const { pick, openLightbox, t } = useSite();
   const [k, setK] = useState(0);
   const tab = tabs[k];
-  const shown = tab.photos.slice(0, 4);
+  const shown = tab.photos.slice(0, 8);
   const list = tab.photos.map((p) => ({ img: p.img, cap: pick(p.cap) }));
+  /* equal tiles; with fewer than 4 photos keep them at normal size, centred, instead of stretching one across the row */
+  const cols = Math.min(4, shown.length);
   return (
     <div className="gal">
       <div className="gal-tabs" role="tablist" aria-label={t("श्रेणी", "Category")}>
@@ -89,10 +105,10 @@ export function GalleryTabs({ tabs }: { tabs: GalTab[] }) {
           </button>
         ))}
       </div>
-      <div className="gal-grid" key={tab.key}>
+      <div className="gal-grid" key={tab.key} style={{ ["--cols" as string]: cols }}>
         {shown.map((p, n) => (
-          <button key={n} type="button" className={`g${n}`} onClick={() => openLightbox(list, n)} aria-label={`${t("बड़ा देखें", "View larger")}: ${pick(p.cap)}`}>
-            <Pic src={p.img} alt={pick(p.cap)} placeholder="blur" sizes={n === 0 ? "(max-width: 860px) 100vw, 40vw" : "(max-width: 860px) 50vw, 22vw"} />
+          <button key={n} type="button" onClick={() => openLightbox(list, n)} aria-label={`${t("बड़ा देखें", "View larger")}: ${pick(p.cap)}`}>
+            <Pic src={p.img} alt={pick(p.cap)} placeholder="blur" sizes="(max-width: 860px) 50vw, 300px" />
           </button>
         ))}
       </div>

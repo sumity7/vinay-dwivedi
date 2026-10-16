@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { Assistant } from "@/components/Assistant";
 import { Footer } from "@/components/Chrome";
-import { BirthdayRibbon, SideRail } from "@/components/Floating";
+import { SideRail, UpcomingRibbon } from "@/components/Floating";
 import { Header } from "@/components/Header";
 import { SiteProvider } from "@/components/SiteProvider";
 import { isLang, LANGS } from "@/lib/i18n";
@@ -45,7 +45,7 @@ export default async function LangLayout({ children, params }: { children: React
     <html lang={lang} className={`${tiro.variable} ${hind.variable}`}>
       <body>
         <SiteProvider lang={lang}>
-          <BirthdayRibbon />
+          <UpcomingRibbon />
           <Header />
           <main id="main">{children}</main>
           <Footer lang={lang} />

@@ -1,73 +1,95 @@
 import { Pic } from "@/components/Pic";
 import Link from "next/link";
-import { Carousel, FacebookProfile, GalleryTabs, HeroSlider, VideoGrid, YouTubeLive, type GalTab, type Slide, type UpdateItem } from "@/components/Home";
+import { Carousel, FacebookProfile, GalleryTabs, HeroSlider, YouTubeLive, type GalTab, type Slide, type UpdateItem } from "@/components/Home";
 import { Icon } from "@/components/Icon";
-import { getEvent, sortedEvents, type EventPost } from "@/lib/content/events";
+import { sortedEvents, type EventPost } from "@/lib/content/events";
 import { morePhotos } from "@/lib/content/media";
-import { bio, intro, journey } from "@/lib/content/profile";
+import { bio, journey } from "@/lib/content/profile";
 import { dateParts, href, tr, type Lang } from "@/lib/i18n";
 import { img } from "@/lib/images";
 import { phoneLabel, site } from "@/lib/site";
 import { getVideos } from "@/lib/youtube";
 
-const BASE_SLIDES: Slide[] = [
-  { img: img.hero },
-  { img: img.farmerField, alt: { hi: "खेत-खलिहान तक", en: "Out in the fields" } },
-  { img: img.villageGreeting, alt: { hi: "गाँव-गाँव जनसंपर्क", en: "Village to village" } },
+/* Hero: three slides, one per service (photos enhanced from the originals) */
+const heroSlides = (lang: Lang): Slide[] => [
+  {
+    img: img.heroAchievements, alt: { hi: "जनसभा को संबोधित करते विनय कुमार द्विवेदी", en: "Vinay Kumar Dwivedi addressing a gathering" },
+    tag: { hi: "जननायक", en: "A people’s leader" },
+    title: { hi: "मेहनौन की बुलंद आवाज़", en: "The strong voice of Mehnaun" },
+    text: { hi: "दो दशकों से अधिक के जनसेवा अनुभव के साथ ‘मुन्ना भैया’ गाँव-गाँव की हर बात को विधानसभा तक पूरी ताक़त से पहुँचाते हैं। 2022 में जनता ने आधे से अधिक मत देकर इस भरोसे पर ऐतिहासिक मुहर लगाई।", en: "With over two decades in public service, ‘Munna Bhaiya’ carries every village’s voice to the Assembly with full force. In 2022 the people gave him more than half of all votes, a historic seal on that trust." },
+    points: [{ hi: "लगातार दूसरी बार विधायक", en: "MLA for a second straight term" }, { hi: "1,07,327 मतों का जनादेश (50.05%)", en: "A mandate of 1,07,327 votes (50.05%)" }, { hi: "23,218 मतों के अंतर से शानदार जीत", en: "A resounding 23,218-vote win" }],
+    cta: { href: href(lang, "/vikas-yatra"), label: { hi: "उपलब्धियाँ देखें", en: "See the achievements" } },
+  },
+  {
+    img: img.heroComplaint, alt: { hi: "जन समस्याओं पर कार्य करते विधायक जी", en: "The MLA working through public grievances" },
+    tag: { hi: "ई-शिकायत", en: "e-Complaint" },
+    title: { hi: "हर शिकायत पर स्वयं ध्यान", en: "Every complaint, personally seen to" },
+    text: { hi: "मुन्ना भैया के लिए क्षेत्र की हर समस्या व्यक्तिगत ज़िम्मेदारी है। अब घर बैठे अपनी बात सीधे विधायक कार्यालय तक पहुँचाएँ और कार्यवाही के हर कदम की जानकारी पाएँ।", en: "For Munna Bhaiya every problem in the area is a personal responsibility. Now send your concern straight to the MLA’s office from home and follow every step of the action taken." },
+    points: [{ hi: "मिनटों में ऑनलाइन शिकायत", en: "File online in minutes" }, { hi: "टिकट संख्या से स्थिति जानें", en: "Track it with your ticket number" }, { hi: "सीधे विधायक कार्यालय तक", en: "Straight to the MLA’s office" }],
+    cta: { href: href(lang, "/e-shikayat"), label: { hi: "शिकायत दर्ज करें", en: "Register a complaint" } },
+  },
+  {
+    img: img.heroEcard, alt: { hi: "मुख्यमंत्री योगी आदित्यनाथ जी के साथ", en: "With Chief Minister Yogi Adityanath" },
+    tag: { hi: "डबल इंजन का विकास", en: "Double-engine development" },
+    title: { hi: "योगी जी के नेतृत्व में, नया मेहनौन", en: "A new Mehnaun under Yogi ji" },
+    text: { hi: "प्रधानमंत्री श्री नरेन्द्र मोदी जी के विज़न और मुख्यमंत्री श्री योगी आदित्यनाथ जी के सुशासन को मेहनौन के हर घर तक पहुँचाना ही उनका संकल्प है। हर पर्व की खुशी अपनों के साथ बाँटें।", en: "Taking Prime Minister Shri Narendra Modi’s vision and Chief Minister Shri Yogi Adityanath’s good governance to every home in Mehnaun is his resolve. Share the joy of every festival with your own." },
+    points: [{ hi: "सड़क, बिजली, पानी, हर गाँव तक", en: "Roads, power and water to every village" }, { hi: "किसान, युवा और महिलाओं का सम्मान", en: "Respect for farmers, youth and women" }, { hi: "अपने नाम-फोटो के साथ शुभकामना कार्ड", en: "Greeting cards with your name and photo" }],
+    cta: { href: href(lang, "/e-card"), label: { hi: "ई-कार्ड बनाएं", en: "Make an e-card" } },
+  },
 ];
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params).lang as Lang;
   const t = (hi: string, en: string) => (lang === "hi" ? hi : en);
   const videos = await getVideos(12);
-  /* the two events highlighted on the home page; the rest are on the Events page */
-  const homeEvents = ["kisan-rahat-vitaran", "gaon-gaon-jansampark"].map(getEvent).filter((e): e is EventPost => !!e);
-
-  const slides: Slide[] = [...BASE_SLIDES, ...sortedEvents.filter((e) => e.photos[0].img.width >= 900).slice(0, 4).map((e) => ({ img: e.photos[0].img, alt: e.title }))];
+  const slides = heroSlides(lang);
   const news = sortedEvents.slice(0, 3);
-  const updates: UpdateItem[] = [...sortedEvents].sort((a, b) => b.date.localeCompare(a.date))
-    .map((e) => ({ slug: e.slug, date: e.date, category: e.category, title: e.title, summary: e.summary, img: e.photos[0].img, source: e.source }));
-  const tiles = [
-    { path: "/vikas-yatra", img: img.addressing, label: t("उपलब्धियाँ", "Achievements"), tone: "orange" },
-    { path: "/e-shikayat", img: img.atWork, label: t("ई-शिकायत", "e-Complaint"), tone: "green" },
-    { path: "/e-card", img: img.meetingGreeting, label: t("ई-कार्ड", "e-Card"), tone: "orange" },
-  ];
-  const galTabs: GalTab[] = [
+  /* photos already shown higher on the page are left out of the gallery, so nothing repeats */
+  const shown = new Set([img.hero, img.villageGreeting, img.addressing, img.atWork, img.meetingGreeting, ...news.map((e) => e.photos[0].img)].map((p) => p.src));
+  /* Facebook card: each post shows a photo not used above (the cover is on the news card) */
+  const updates: UpdateItem[] = [...sortedEvents].sort((a, b) => b.date.localeCompare(a.date)).map((e) => {
+    const pic = (e.photos.slice(1).find((p) => !shown.has(p.img.src)) ?? e.photos[0]).img;
+    shown.add(pic.src);
+    return { slug: e.slug, date: e.date, category: e.category, title: e.title, summary: e.summary, img: pic, source: e.source };
+  });
+  const fresh = (ps: EventPost["photos"]) => ps.filter((p) => !shown.has(p.img.src));
+  const catTabs: GalTab[] = [
     /* one tab per category, newest event first */
     ...sortedEvents.filter((e, n, all) => all.findIndex((x) => x.category.en === e.category.en) === n).slice(0, 3)
-      .map((e, n): GalTab => ({ key: e.slug, label: e.category, icon: (["bolt", "people", "calendar"] as const)[n], photos: e.photos })),
-    { key: "more", label: { hi: "भेंट व संवाद", en: "Meetings" }, icon: "images", photos: morePhotos },
-  ];
+      .map((e, n): GalTab => ({ key: e.slug, label: e.category, icon: (["bolt", "people", "calendar"] as const)[n], photos: fresh(e.photos) })),
+    { key: "more", label: { hi: "भेंट व संवाद", en: "Meetings" }, icon: "chat" as const, photos: fresh(morePhotos) },
+  ].filter((g) => g.photos.length > 0);
+  /* "All" first, so the gallery always opens on a full grid */
+  const allPhotos = catTabs.flatMap((g) => g.photos).filter((p, n, a) => a.findIndex((x) => x.img.src === p.img.src) === n);
+  const galTabs: GalTab[] = [{ key: "all", label: { hi: "सभी", en: "All" }, icon: "images", photos: allPhotos }, ...catTabs];
 
   return (
     <>
-      {/* HERO: slider + latest updates */}
-      <section className="hero" aria-label={t("मुख्य", "Main")}>
+      {/* HERO: three service slides, full width */}
+      <section className="hero" aria-label={t("मुख्य स्लाइड", "Highlights")}>
         <HeroSlider slides={slides} />
-        <aside className="news">
-          <h2>{t("नवीनतम समाचार और अपडेट", "Latest news & updates")}</h2>
-          <ul>
-            {news.map((e) => (
-              <li key={e.slug}>
-                <Link href={href(lang, `/updates/${e.slug}`)}>
-                  <Pic src={e.photos[0].img} alt="" placeholder="blur" sizes="200px" />
-                  <span>{tr(e.title, lang)}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </aside>
       </section>
 
-      {/* THREE TILES */}
-      <section className="tiles-sec">
-        <div className="wrap tiles">
-          {tiles.map((x) => (
-            <Link key={x.path} href={href(lang, x.path)} className="tile">
-              <Pic src={x.img} alt="" placeholder="blur" sizes="(max-width: 760px) 100vw, 360px" />
-              <span className={`tile-bar ${x.tone}`}>{x.label} <Icon name="arrow" /></span>
-            </Link>
-          ))}
+      {/* INTRODUCTION: plain strip under the hero, no card */}
+      <section className="intro-strip" aria-labelledby="hero-name">
+        <div className="wrap intro-row">
+          <div className="intro-who">
+            <span className="intro-role">{tr(site.roleLong, lang)}</span>
+            <h1 id="hero-name">{tr(site.name, lang)}</h1>
+            <p className="intro-nick">‘{tr(site.nickname, lang)}’</p>
+          </div>
+          <div className="intro-mid">
+            <p>{t("गाँव की पगडंडियों से विधानसभा तक का सफ़र तय करने वाले मुन्ना भैया मेहनौन के सबसे भरोसेमंद जननायक हैं: सरल स्वभाव, हर गाँव से सीधा रिश्ता और हर ज़रूरतमंद के लिए हमेशा खुला द्वार।", "Having walked from village lanes to the Assembly, Munna Bhaiya is Mehnaun’s most trusted leader: a simple manner, a direct bond with every village and a door always open to anyone in need.")}</p>
+            <dl className="intro-stats">
+              <div><dt>{t("बार विधायक", "terms as MLA")}</dt><dd>2</dd></div>
+              <div><dt>{t("मत, 2022", "vote share, 2022")}</dt><dd>50.05%</dd></div>
+              <div><dt>{t("वर्ष जनसेवा", "years of service")}</dt><dd>20+</dd></div>
+            </dl>
+          </div>
+          <div className="intro-actions">
+            <Link className="btn btn-orange" href={href(lang, "/about")}>{t("पूरा परिचय", "Full biography")} <Icon name="arrow" /></Link>
+            <Link className="btn btn-outline" href={href(lang, "/contact")}>{t("संपर्क करें", "Contact")}</Link>
+          </div>
         </div>
       </section>
 
@@ -79,53 +101,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
         <div className="persona-text">
           <h2>{t("व्यक्तित्व - ", "Personality - ")}{tr(site.name, lang)}</h2>
-          <blockquote>{tr(intro, lang)}</blockquote>
           <blockquote>{tr(journey[journey.length - 1].text, lang)}</blockquote>
           {bio.slice(0, 2).map((p, i) => <p key={i}>{tr(p, lang)}</p>)}
           <Link className="btn btn-orange" href={href(lang, "/about")}>{t("अधिक पढ़ें", "Read more")} <Icon name="arrow" /></Link>
-        </div>
-      </section>
-
-      {/* PHOTO GALLERY */}
-      <section className="gallery-sec">
-        <div className="wrap">
-          <h2 className="sec-title center">{t("फोटो गैलरी", "Photo Gallery")}</h2>
-          <GalleryTabs tabs={galTabs} />
-          <div className="center"><Link className="btn btn-orange" href={href(lang, "/media")}>{t("और देखें", "View more")} <Icon name="arrow" /></Link></div>
-        </div>
-      </section>
-
-      {/* EVENTS (media coverage slot) */}
-      <section>
-        <div className="wrap">
-          <div className="sec-row">
-            <h2 className="sec-title">{t("कार्यक्रम", "Events")}</h2>
-            <Link className="btn btn-outline" href={href(lang, "/updates")}>{t("और देखें", "View more")} <Icon name="arrow" /></Link>
-          </div>
-          <div className="cover-grid two">
-            {homeEvents.map((e) => {
-              const { d, month, y } = dateParts(e.date, lang);
-              return (
-                <Link key={e.slug} href={href(lang, `/updates/${e.slug}`)} className="cover big">
-                  <Pic src={e.photos[0].img} alt="" placeholder="blur" sizes="(max-width: 860px) 100vw, 600px" />
-                  <span className="cover-meta"><span className="tag">{tr(e.category, lang)}</span><span className="cover-date">{d} {month} {y}</span></span>
-                  <b>{tr(e.title, lang)}</b>
-                  <span className="link-arrow">{t("पूरा पढ़ें", "Read more")} <Icon name="arrow" /></span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* LATEST VIDEOS */}
-      <section>
-        <div className="wrap">
-          <div className="sec-row">
-            <h2 className="sec-title">{t("नवीनतम वीडियो", "Latest videos")}</h2>
-            <a className="btn btn-outline" href={site.social.youtube.url} target="_blank" rel="noopener">{t("सभी को देखें", "View all")} <Icon name="arrow" /></a>
-          </div>
-          <VideoGrid videos={videos} />
         </div>
       </section>
 
@@ -143,6 +121,37 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               </article>
             ))}
           </Carousel>
+        </div>
+      </section>
+
+      {/* LATEST NEWS & UPDATES */}
+      <section className="news-sec" aria-labelledby="news-title">
+        <div className="wrap">
+          <div className="news-bar">
+            <h2 id="news-title">{t("ताज़ा समाचार और कार्यक्रम", "Latest news & events")}</h2>
+            <Link href={href(lang, "/updates")}>{t("सभी देखें", "View all")} <Icon name="arrow" /></Link>
+          </div>
+          <div className="news-grid">
+            {news.map((e) => {
+              const { d, month, y } = dateParts(e.date, lang);
+              return (
+                <Link key={e.slug} href={href(lang, `/updates/${e.slug}`)} className="news-card">
+                  <Pic src={e.photos[0].img} alt="" placeholder="blur" sizes="(max-width: 860px) 100vw, 380px" />
+                  <span className="news-date">{tr(e.category, lang)} · {d} {month} {y}</span>
+                  <b>{tr(e.title, lang)}</b>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* PHOTO GALLERY */}
+      <section className="gallery-sec">
+        <div className="wrap">
+          <h2 className="sec-title center">{t("फोटो गैलरी", "Photo Gallery")}</h2>
+          <GalleryTabs tabs={galTabs} />
+          <div className="center"><Link className="btn btn-orange" href={href(lang, "/media")}>{t("और देखें", "View more")} <Icon name="arrow" /></Link></div>
         </div>
       </section>
 
