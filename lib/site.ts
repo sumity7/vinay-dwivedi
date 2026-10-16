@@ -19,6 +19,10 @@ export const site = {
       /* Official Facebook *Page* (not a personal profile) for the live Page plugin on the home page.
          The plugin only works for public Pages; leave empty to show the updates feed instead. */
       pageUrl: "https://www.facebook.com/vinaydwivedi295/",
+      /* shown on the Facebook-style card on the home page; update now and then */
+      stats: { following: "101", posts: { hi: "9.8 हज़ार", en: "9.8K" } as Bi },
+      bio: { hi: "विधायक, 295-मेहनौन, गोंडा", en: "MLA, 295-Mehnaun, Gonda" } as Bi,
+      message: "https://m.me/vinaydwivedi295",
     },
     instagram: { url: "https://www.instagram.com/vinaydwivedimla/", handle: "@vinaydwivedimla", followers: { hi: "14.6 हज़ार+", en: "14.6K+" } as Bi },
     youtube: { url: "https://www.youtube.com/@vinaydwivedi71", handle: "@vinaydwivedi71", channelId: "UCQmXUpUFhZ1cBPNYTe0qznw" },

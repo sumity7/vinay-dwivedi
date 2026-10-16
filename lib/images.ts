@@ -2,7 +2,9 @@
 import addressing from "@/images/addressing.jpg";
 import atWork from "@/images/at-work.jpg";
 import communityProgramme from "@/images/community-programme.jpg";
+import fbAvatar from "@/images/fb/avatar.jpg";
 import fbBagahi1 from "@/images/fb/bagahi-1.jpg";
+import fbCover from "@/images/fb/cover.jpg";
 import fbBagahi4 from "@/images/fb/bagahi-4.jpg";
 import fbBinuhani1 from "@/images/fb/binuhani-1.jpg";
 import fbBinuhani2 from "@/images/fb/binuhani-2.jpg";
@@ -39,7 +41,7 @@ export const img = {
   meetingGreeting, memento, officialMeeting, publicProgramme, reliefCheque, reliefSeeds, stateMeeting,
   tribute, villageBaithak, villageElders, villageGreeting, villageWalk, villagerChat,
   /* from the official Facebook page (Oct 2026) */
-  fbBagahi1, fbBagahi4, fbBinuhani1, fbBinuhani2, fbBinuhani3, fbBinuhani4, fbBinuhani5,
+  fbAvatar, fbCover, fbBagahi1, fbBagahi4, fbBinuhani1, fbBinuhani2, fbBinuhani3, fbBinuhani4, fbBinuhani5,
   fbJamunhi1, fbJamunhi3, fbJamunhi5, fbNausahra1, fbNausahra4, fbParasrai1,
 };
 
@@ -52,7 +54,7 @@ const focus: Record<keyof typeof img, string> = {
   reliefCheque: "62% 38%", reliefSeeds: "62% 38%", stateMeeting: "50% 50%", tribute: "58% 42%",
   villageBaithak: "50% 55%", villageElders: "62% 42%", villageGreeting: "56% 44%", villageWalk: "55% 45%",
   villagerChat: "68% 32%",
-  fbBagahi1: "30% 20%", fbBagahi4: "60% 30%", fbBinuhani1: "50% 14%", fbBinuhani2: "30% 24%", fbBinuhani3: "48% 30%",
+  fbAvatar: "50% 30%", fbCover: "50% 40%", fbBagahi1: "30% 20%", fbBagahi4: "60% 30%", fbBinuhani1: "50% 14%", fbBinuhani2: "30% 24%", fbBinuhani3: "48% 30%",
   fbBinuhani4: "50% 35%", fbBinuhani5: "50% 50%", fbJamunhi1: "30% 30%", fbJamunhi3: "50% 50%", fbJamunhi5: "70% 35%",
   fbNausahra1: "30% 22%", fbNausahra4: "35% 50%", fbParasrai1: "50% 40%",
 };

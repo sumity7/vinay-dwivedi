@@ -1,6 +1,6 @@
 import { Pic } from "@/components/Pic";
 import Link from "next/link";
-import { Carousel, FacebookFull, GalleryTabs, HeroSlider, UpdatesLive, VideoGrid, YouTubeLive, type GalTab, type Slide, type UpdateItem } from "@/components/Home";
+import { Carousel, FacebookProfile, GalleryTabs, HeroSlider, VideoGrid, YouTubeLive, type GalTab, type Slide, type UpdateItem } from "@/components/Home";
 import { Icon } from "@/components/Icon";
 import { getEvent, sortedEvents, type EventPost } from "@/lib/content/events";
 import { morePhotos } from "@/lib/content/media";
@@ -156,9 +156,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 <h3>{t("ताज़ा पोस्ट", "Latest posts")}</h3>
                 <a className="link-arrow" href={site.social.facebook.url} target="_blank" rel="noopener">{t("Facebook पेज खोलें", "Open the Facebook page")} <Icon name="arrowUpRight" /></a>
               </div>
-              {site.social.facebook.pageUrl
-                ? <FacebookFull url={site.social.facebook.pageUrl} items={updates} />
-                : <UpdatesLive items={updates} />}
+              <FacebookProfile items={updates} photos={sortedEvents.flatMap((e) => e.photos)} />
             </div>
             <div className="connect-col">
               <div className="col-head">

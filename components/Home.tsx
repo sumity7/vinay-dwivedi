@@ -463,3 +463,71 @@ export function FacebookFull({ url, items, height = 600 }: { url: string; items:
   );
 }
 
+/* Facebook-style page card (built by us, so every visitor sees it, signed in to Facebook or not):
+   cover, profile photo, name, followers, bio, Follow / Message, tabs — and the posts scroll below,
+   all inside one scrolling card, like his page in the Facebook app. */
+export type FbPhoto = { img: StaticImageData; cap: Bi };
+
+export function FacebookProfile({ items, photos }: { items: UpdateItem[]; photos: FbPhoto[] }) {
+  const { lang, t, pick, openLightbox } = useSite();
+  const [tab, setTab] = useState<"all" | "photos">("all");
+  const fb = site.social.facebook;
+  const lb = photos.map((p) => ({ img: p.img, cap: pick(p.cap) }));
+  return (
+    <div className="card fbp" tabIndex={0} aria-label={t("Facebook पेज", "Facebook page")}>
+      <div className="fbp-cover">
+        <Pic src={img.fbCover} alt="" placeholder="blur" sizes="(max-width: 860px) 100vw, 600px" />
+        <a className="fbp-fb" href={fb.url} target="_blank" rel="noopener" aria-label="Facebook"><Icon name="facebook" /></a>
+      </div>
+      <div className="fbp-head">
+        <div className="fbp-avatar"><Pic src={img.fbAvatar} alt={pick(site.name)} width={150} height={150} /></div>
+        <h3>{t("विनय कुमार द्विवेदी MLA", "Vinay Kumar Dwivedi MLA")} <Icon name="check" className="sc-tick" /></h3>
+        <p className="fbp-stats">
+          <b>{pick(fb.followers)}</b> {t("फ़ॉलोअर्स", "followers")} · <b>{fb.stats.following}</b> {t("फ़ॉलोइंग", "following")} · <b>{pick(fb.stats.posts)}</b> {t("पोस्ट", "posts")}
+        </p>
+        <p className="fbp-bio">{pick(fb.bio)}</p>
+        <p className="fbp-cat"><Icon name="card" /> {t("राजनेता", "Politician")}</p>
+        <div className="fbp-btns">
+          <a className="fbp-follow" href={fb.url} target="_blank" rel="noopener"><Icon name="facebook" />{t("फ़ॉलो करें", "Follow")}</a>
+          <a className="fbp-msg" href={fb.message} target="_blank" rel="noopener"><Icon name="chat" />{t("मैसेज", "Message")}</a>
+        </div>
+        <div className="fbp-tabs" role="tablist">
+          <button type="button" role="tab" aria-selected={tab === "all"} onClick={() => setTab("all")}>{t("सभी", "All")}</button>
+          <button type="button" role="tab" aria-selected={tab === "photos"} onClick={() => setTab("photos")}>{t("फ़ोटो", "Photos")}</button>
+          <a href={`${fb.url}reels/`} target="_blank" rel="noopener">{t("रील्स", "Reels")}</a>
+        </div>
+      </div>
+      {tab === "all" ? (
+        <div className="fbp-feed">
+          {items.map((e) => (
+            <article key={e.slug} className="fbp-post">
+              <header>
+                <Pic className="fbp-mini" src={img.fbAvatar} alt="" width={40} height={40} />
+                <div><b>{t("विनय कुमार द्विवेदी MLA", "Vinay Kumar Dwivedi MLA")} <Icon name="check" className="sc-tick" /></b><small>{fmtDate(e.date, lang)} · {pick(e.category)}</small></div>
+              </header>
+              <h4>{pick(e.title)}</h4>
+              <p>{pick(e.summary)}</p>
+              <Link href={`/${lang}/updates/${e.slug}`} className="fbp-img" aria-label={pick(e.title)}>
+                <Pic src={e.img} alt="" placeholder="blur" sizes="(max-width: 860px) 100vw, 600px" />
+              </Link>
+              <footer>
+                <Link href={`/${lang}/updates/${e.slug}`}>{t("पूरा पढ़ें", "Read more")}</Link>
+                {e.source && <a href={e.source} target="_blank" rel="noopener"><Icon name="facebook" />{t("Facebook पर देखें", "View on Facebook")}</a>}
+              </footer>
+            </article>
+          ))}
+          <a className="fbp-more" href={fb.url} target="_blank" rel="noopener">{t("Facebook पर सभी पोस्ट देखें", "See all posts on Facebook")} <Icon name="arrowUpRight" /></a>
+        </div>
+      ) : (
+        <div className="fbp-photos">
+          {photos.map((p, n) => (
+            <button key={n} type="button" onClick={() => openLightbox(lb, n)} aria-label={pick(p.cap)}>
+              <Pic src={p.img} alt="" placeholder="blur" sizes="200px" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
