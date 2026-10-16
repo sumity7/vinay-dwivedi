@@ -25,7 +25,7 @@ function upcomingAnniversaries(limit = 6): Anniv[] {
         label: { hi: `${i.name.hi}: ${kind === "birth" ? "जयंती" : "पुण्यतिथि"}`, en: `${i.name.en}: ${kind === "birth" ? "Birth anniversary" : "Death anniversary"}` },
         bg: kind === "birth" ? ["#fff7ec", "#fde3cf"] : ["#f1e9df", "#e7ddd1"], accent: "#9e3c03", text: "#1c1410", light: true, motif: "lamp",
         title: i.name,
-        wish: i.quote,
+        wish: i.line.kind === "quote" ? i.line.text : i.role,
         sub: kind === "birth" ? { hi: "जयंती पर शत-शत नमन", en: "Respectful tributes on the birth anniversary" } : { hi: "पुण्यतिथि पर विनम्र श्रद्धांजलि", en: "Humble tributes on the death anniversary" },
       });
     }

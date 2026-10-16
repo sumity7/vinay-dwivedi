@@ -19,9 +19,86 @@ export type EventPost = {
   source?: string; // link to the original post
 };
 
-const CAT = { events: { hi: "कार्यक्रम", en: "Events" }, outreach: { hi: "जनसंपर्क", en: "Outreach" }, relief: { hi: "राहत कार्य", en: "Relief" } };
+const CAT = { events: { hi: "कार्यक्रम", en: "Events" }, outreach: { hi: "जनसंपर्क", en: "Outreach" }, relief: { hi: "राहत कार्य", en: "Relief" }, culture: { hi: "आस्था व संस्कृति", en: "Faith & culture" } };
 
 export const events: EventPost[] = [
+  {
+    slug: "navratri-durga-puja-bhagwat-katha",
+    date: "2026-10-16",
+    category: CAT.culture,
+    place: { hi: "पारासराय, जमुनही हरदोपट्टी, बगाही, नौसहरा (इटियाथोक)", en: "Parasrai, Jamunhi Hardopatti, Bagahi, Nausahra (Itia Thok)" },
+    title: { hi: "नवरात्रि: दुर्गा पूजा एवं श्रीमद्भागवत कथा में सहभागिता", en: "Navratri: Durga Puja and Shrimad Bhagwat Katha across the constituency" },
+    summary: {
+      hi: "मेहनौन विधानसभा के चार गाँवों में आयोजित दुर्गा पूजा महोत्सव और श्रीमद्भागवत कथा में सम्मिलित होकर माँ भगवती का पूजन-अर्चन किया।",
+      en: "Joined Durga Puja celebrations and Shrimad Bhagwat Katha gatherings in four villages of Mehnaun and offered prayers to Maa Bhagwati.",
+    },
+    lead: {
+      hi: "नवरात्रि के पावन अवसर पर विधायक जी ने क्षेत्र के अनेक गाँवों में पूजा समितियों द्वारा आयोजित दुर्गा पूजा एवं श्रीमद्भागवत कथा में सहभागिता की और समस्त क्षेत्रवासियों के सुख, शांति व समृद्धि की मंगलकामना की।",
+      en: "During Navratri the MLA joined Durga Puja and Bhagwat Katha gatherings organised by village puja committees, and prayed for the happiness, peace and prosperity of everyone in the area.",
+    },
+    body: [
+      {
+        hi: "ग्रामसभा पारासराय स्थित चतुर्भुजी मंदिर में श्री नवदुर्गा पूजा समिति तथा ग्रामसभा जमुनही हरदोपट्टी में श्री-श्री 1008 माँ दुर्गा पूजा सेवा समिति द्वारा आयोजित दुर्गा पूजा एवं श्रीमद्भागवत कथा में सम्मिलित होकर विधिवत पूजन-अर्चन किया और व्यासपीठ का आशीर्वाद प्राप्त किया।",
+        en: "At the Chaturbhuji temple in Parasrai (Shri Navdurga Puja Samiti) and at Jamunhi Hardopatti (Shri Shri 1008 Maa Durga Puja Seva Samiti), he took part in the Durga Puja and Bhagwat Katha and received the blessings of the Vyaspeeth.",
+      },
+      {
+        hi: "ग्रामसभा बगाही (जगन्नाथीपुर) में श्री नवदुर्गा पूजा समिति के दुर्गा पूजा समारोह तथा श्री सम्मय माता मंदिर, नौसहरा (इटियाथोक) में आयोजित दुर्गा पूजा एवं श्रीमद्भागवत कथा में भी माँ भगवती का पूजन किया।",
+        en: "He also offered prayers at the Shri Navdurga Puja Samiti celebration in Bagahi (Jagannathipur) and at the Durga Puja and Bhagwat Katha at the Shri Sammay Mata temple, Nausahra (Itia Thok).",
+      },
+      {
+        hi: "श्रीमद्भागवत कथा जैसे धार्मिक आयोजन हमारी सनातन संस्कृति, परंपराओं और संस्कारों को नई पीढ़ी तक पहुँचाते हैं तथा समाज में भक्ति, सद्भाव, सेवा और नैतिक मूल्यों को सुदृढ़ करते हैं। जय माता दी!",
+        en: "Religious gatherings like the Bhagwat Katha carry our culture, traditions and values to the next generation, and strengthen devotion, harmony, service and moral values in society.",
+      },
+    ],
+    photos: [
+      { img: img.fbJamunhi5, cap: { hi: "जमुनही हरदोपट्टी में माँ दुर्गा का पूजन-अर्चन", en: "Worship of Maa Durga at Jamunhi Hardopatti" } },
+      { img: img.fbJamunhi1, cap: { hi: "श्रीमद्भागवत कथा में व्यासपीठ का आशीर्वाद", en: "Blessings from the Vyaspeeth at the Bhagwat Katha" } },
+      { img: img.fbNausahra1, cap: { hi: "श्री सम्मय माता मंदिर, नौसहरा में पूजन", en: "Prayers at the Shri Sammay Mata temple, Nausahra" } },
+      { img: img.fbBagahi1, cap: { hi: "बगाही (जगन्नाथीपुर) में माँ भगवती की आराधना", en: "Prayers to Maa Bhagwati at Bagahi (Jagannathipur)" } },
+      { img: img.fbParasrai1, cap: { hi: "पारासराय में श्री नवदुर्गा पूजा समिति द्वारा स्वागत", en: "Welcomed by the Shri Navdurga Puja Samiti, Parasrai" } },
+      { img: img.fbNausahra4, cap: { hi: "नौसहरा में व्यासपीठ को नमन", en: "Bowing before the Vyaspeeth at Nausahra" } },
+      { img: img.fbBagahi4, cap: { hi: "पूजा समिति के सदस्यों व ग्रामवासियों के साथ", en: "With the puja committee and villagers" } },
+      { img: img.fbJamunhi3, cap: { hi: "कथा में उपस्थित श्रद्धालु", en: "Devotees at the Katha" } },
+    ],
+    source: "https://www.facebook.com/vinaydwivedi295/posts/pfbid02XHWqhuDHS3LGwUvwYjrtYH64HctiMFnoSeQhjzGoMCsiuW5LbasR2HZdNhqz9JJdl",
+  },
+  {
+    slug: "binuhani-ramlila",
+    date: "2026-10-16",
+    category: CAT.culture,
+    place: { hi: "ग्रामसभा बिनुहनी, इटियाथोक", en: "Binuhani, Itia Thok" },
+    title: { hi: "बिनुहनी की 53 वर्ष पुरानी श्री रामलीला में सहभागिता", en: "At Binuhani’s Ramlila, staged every year for 53 years" },
+    summary: {
+      hi: "आदर्श रामलीला प्रबंध समिति, बिनुहनी द्वारा आयोजित भव्य श्री रामलीला में सम्मिलित होकर प्रभु श्रीराम के आदर्शों का स्मरण किया।",
+      en: "Joined the grand Ramlila staged by the Adarsh Ramlila committee of Binuhani and recalled the ideals of Lord Ram.",
+    },
+    lead: {
+      hi: "ग्राम बिनुहनी के ग्रामवासी विगत 53 वर्षों से अनवरत श्री रामलीला का आयोजन कर रहे हैं। यह गौरवशाली परंपरा पूरे क्षेत्र के लिए गर्व का विषय है।",
+      en: "The people of Binuhani have staged the Ramlila without a break for 53 years. This proud tradition belongs to the whole area.",
+    },
+    body: [
+      {
+        hi: "प्रत्येक वर्ष की भांति इस वर्ष भी आदर्श रामलीला प्रबंध समिति, बिनुहनी द्वारा आयोजित भव्य श्री रामलीला कार्यक्रम में सम्मिलित होकर प्रभु श्रीराम के पावन चरित्र एवं उनके आदर्शों का स्मरण किया।",
+        en: "As every year, the MLA attended the Ramlila organised by the Adarsh Ramlila committee and recalled Lord Ram’s life and ideals.",
+      },
+      {
+        hi: "प्रभु श्रीराम का जीवन सिखाता है कि कठिन से कठिन परिस्थिति में भी सत्य और धर्म के मार्ग पर अडिग रहना ही वास्तविक विजय है। ऐसे आयोजन नई पीढ़ी को अपनी जड़ों और संस्कारों से जोड़ते हैं।",
+        en: "Lord Ram’s life teaches that standing firm on the path of truth and duty, however hard the times, is the real victory. Such events connect the next generation with its roots and values.",
+      },
+      {
+        hi: "इस अवसर पर ग्राम प्रधान बिनुहनी श्री दशरथ लाल जी, मंडल अध्यक्ष इटियाथोक श्री संतोष चौरसिया जी सहित बड़ी संख्या में ग्रामवासी एवं श्रद्धालु उपस्थित रहे। जय श्रीराम!",
+        en: "Binuhani’s village head Shri Dashrath Lal, Itia Thok mandal president Shri Santosh Chaurasiya and a large number of villagers and devotees were present.",
+      },
+    ],
+    photos: [
+      { img: img.fbBinuhani4, cap: { hi: "आदर्श रामलीला प्रबंध समिति, बिनुहनी के मंच पर", en: "On stage with the Adarsh Ramlila committee, Binuhani" } },
+      { img: img.fbBinuhani1, cap: { hi: "रामलीला मंच से क्षेत्रवासियों को संबोधन", en: "Addressing residents from the Ramlila stage" } },
+      { img: img.fbBinuhani3, cap: { hi: "समिति द्वारा स्मृति-चिह्न भेंट कर स्वागत", en: "Welcomed with a memento by the committee" } },
+      { img: img.fbBinuhani2, cap: { hi: "अंगवस्त्र भेंट कर सम्मान", en: "Honoured with a stole" } },
+      { img: img.fbBinuhani5, cap: { hi: "रामलीला देखने उमड़े ग्रामवासी", en: "Villagers gathered for the Ramlila" } },
+    ],
+    source: "https://www.facebook.com/vinaydwivedi295/posts/pfbid024MUyT9EnxddU22dbEBzTXnyppfScFTDA7yd6MCuNmzvZSDS7kX3TnZso3YhEUQcul",
+  },
   {
     slug: "kisan-rahat-vitaran",
     date: "2026-10-12",

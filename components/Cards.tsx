@@ -1,5 +1,5 @@
 /* Server-rendered cards shared across pages (events and articles). */
-import Image from "next/image";
+import { Pic } from "./Pic";
 import Link from "next/link";
 import type { Article } from "@/lib/content/articles";
 import { articleCats } from "@/lib/content/articles";
@@ -12,7 +12,7 @@ export function EventCard({ e, lang, wide }: { e: EventPost; lang: Lang; wide?: 
   return (
     <Link className="ev-card" href={href(lang, `/updates/${e.slug}`)}>
       <div className="ev-img">
-        <Image src={e.photos[0].img} alt="" placeholder="blur" sizes="(max-width: 760px) 100vw, 400px" />
+        <Pic src={e.photos[0].img} alt="" placeholder="blur" sizes="(max-width: 760px) 100vw, 400px" />
         <span className="count" title={lang === "hi" ? "फोटो" : "Photos"}><Icon name="images" />{e.photos.length}</span>
       </div>
       <div className="body">

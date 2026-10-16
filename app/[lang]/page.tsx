@@ -1,9 +1,10 @@
-import Image from "next/image";
+import { Pic } from "@/components/Pic";
 import Link from "next/link";
 import { Carousel, FacebookFeed, GalleryTabs, HeroSlider, VideoGrid, YouTubeFeed, type GalTab, type Slide } from "@/components/Home";
 import { Icon } from "@/components/Icon";
 import { sortedEvents } from "@/lib/content/events";
 import { ideals } from "@/lib/content/ideals";
+import { IdealCard } from "@/components/IdealsBrowser";
 import { morePhotos } from "@/lib/content/media";
 import { bio, intro, journey } from "@/lib/content/profile";
 import { dateParts, href, tr, type Lang } from "@/lib/i18n";
@@ -12,9 +13,9 @@ import { phoneLabel, site } from "@/lib/site";
 import { getVideos } from "@/lib/youtube";
 
 const BASE_SLIDES: Slide[] = [
-  { img: img.hero, pos: "center 18%" },
-  { img: img.farmerField, pos: "center 30%", alt: { hi: "खेत-खलिहान तक", en: "Out in the fields" } },
-  { img: img.villageGreeting, pos: "center 40%", alt: { hi: "गाँव-गाँव जनसंपर्क", en: "Village to village" } },
+  { img: img.hero },
+  { img: img.farmerField, alt: { hi: "खेत-खलिहान तक", en: "Out in the fields" } },
+  { img: img.villageGreeting, alt: { hi: "गाँव-गाँव जनसंपर्क", en: "Village to village" } },
 ];
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
@@ -22,18 +23,19 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const t = (hi: string, en: string) => (lang === "hi" ? hi : en);
   const videos = await getVideos();
 
-  const slides: Slide[] = [...BASE_SLIDES, ...sortedEvents.slice(0, 4).map((e) => ({ img: e.photos[0].img, alt: e.title }))];
+  const slides: Slide[] = [...BASE_SLIDES, ...sortedEvents.filter((e) => e.photos[0].img.width >= 900).slice(0, 4).map((e) => ({ img: e.photos[0].img, alt: e.title }))];
   const news = sortedEvents.slice(0, 3);
   const tiles = [
-    { path: "/vikas-yatra", img: img.addressing, pos: "center 20%", label: t("उपलब्धियाँ", "Achievements"), tone: "orange" },
-    { path: "/e-shikayat", img: img.atWork, pos: "center 25%", label: t("ई-शिकायत", "e-Complaint"), tone: "green" },
-    { path: "/e-card", img: img.meetingGreeting, pos: "center 25%", label: t("ई-कार्ड", "e-Card"), tone: "orange" },
+    { path: "/vikas-yatra", img: img.addressing, label: t("उपलब्धियाँ", "Achievements"), tone: "orange" },
+    { path: "/e-shikayat", img: img.atWork, label: t("ई-शिकायत", "e-Complaint"), tone: "green" },
+    { path: "/e-card", img: img.meetingGreeting, label: t("ई-कार्ड", "e-Card"), tone: "orange" },
   ];
   const galTabs: GalTab[] = [
-    ...sortedEvents.slice(0, 3).map((e, n): GalTab => ({ key: e.slug, label: e.category, icon: (["bolt", "people", "calendar"] as const)[n], photos: e.photos })),
+    /* one tab per category, newest event first */
+    ...sortedEvents.filter((e, n, all) => all.findIndex((x) => x.category.en === e.category.en) === n).slice(0, 3)
+      .map((e, n): GalTab => ({ key: e.slug, label: e.category, icon: (["bolt", "people", "calendar"] as const)[n], photos: e.photos })),
     { key: "more", label: { hi: "भेंट व संवाद", en: "Meetings" }, icon: "images", photos: morePhotos },
   ];
-  const voices = ideals.slice(0, 8);
 
   return (
     <>
@@ -46,7 +48,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             {news.map((e) => (
               <li key={e.slug}>
                 <Link href={href(lang, `/updates/${e.slug}`)}>
-                  <Image src={e.photos[0].img} alt="" placeholder="blur" sizes="200px" />
+                  <Pic src={e.photos[0].img} alt="" placeholder="blur" sizes="200px" />
                   <span>{tr(e.title, lang)}</span>
                 </Link>
               </li>
@@ -60,7 +62,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <div className="wrap tiles">
           {tiles.map((x) => (
             <Link key={x.path} href={href(lang, x.path)} className="tile">
-              <Image src={x.img} alt="" placeholder="blur" sizes="(max-width: 760px) 100vw, 360px" style={{ objectPosition: x.pos }} />
+              <Pic src={x.img} alt="" placeholder="blur" sizes="(max-width: 760px) 100vw, 360px" />
               <span className={`tile-bar ${x.tone}`}>{x.label} <Icon name="arrow" /></span>
             </Link>
           ))}
@@ -70,8 +72,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {/* PERSONALITY */}
       <section className="persona">
         <div className="persona-photos" aria-hidden="true">
-          <Image className="p1" src={img.hero} alt="" placeholder="blur" sizes="(max-width: 900px) 60vw, 30vw" />
-          <Image className="p2" src={img.addressing} alt="" placeholder="blur" sizes="(max-width: 900px) 60vw, 26vw" />
+          <Pic className="p1" src={img.hero} alt="" placeholder="blur" sizes="(max-width: 900px) 60vw, 30vw" />
+          <Pic className="p2" src={img.villageGreeting} alt="" placeholder="blur" sizes="(max-width: 900px) 45vw, 20vw" />
         </div>
         <div className="persona-text">
           <h2>{t("व्यक्तित्व - ", "Personality - ")}{tr(site.name, lang)}</h2>
@@ -103,7 +105,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               const { d, month, y } = dateParts(e.date, lang);
               return (
                 <Link key={e.slug} href={href(lang, `/updates/${e.slug}`)} className="cover">
-                  <Image src={e.photos[0].img} alt="" placeholder="blur" sizes="(max-width: 760px) 100vw, 400px" />
+                  <Pic src={e.photos[0].img} alt="" placeholder="blur" sizes="(max-width: 760px) 100vw, 400px" />
                   <span className="cover-date">{d} {month} {y}</span>
                   <b>{tr(e.title, lang)}</b>
                 </Link>
@@ -141,21 +143,15 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* VIEWS */}
-      <section>
+      {/* OUR IDEALS */}
+      <section className="ideals-home">
         <div className="wrap">
           <div className="sec-row">
-            <h2 className="sec-title">{t("विचार", "Views")}</h2>
-            <Link className="btn btn-outline" href={href(lang, "/ideals")}>{t("और देखें", "View more")} <Icon name="arrow" /></Link>
+            <h2 className="sec-title">{t("हमारे आदर्श", "Our Ideals")}</h2>
+            <Link className="btn btn-outline" href={href(lang, "/ideals")}>{t("सभी आदर्श", "All ideals")} <Icon name="arrow" /></Link>
           </div>
-          <Carousel className="voices">
-            {voices.map((v) => (
-              <figure key={v.id} className="voice">
-                <span className="voice-mono" aria-hidden="true">{tr(v.name, lang).replace(/^(श्री|डॉ\.|पं\.|भारत रत्न|Shri|Dr\.|Pt\.|Bharat Ratna)\s+/, "").charAt(0)}</span>
-                <h3>{tr(v.name, lang)}</h3>
-                <blockquote>{tr(v.quote, lang)}</blockquote>
-              </figure>
-            ))}
+          <Carousel className="ideals-car">
+            {ideals.map((i) => <IdealCard key={i.id} i={i} lang={lang} />)}
           </Carousel>
         </div>
       </section>

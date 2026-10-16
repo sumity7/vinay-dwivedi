@@ -67,7 +67,7 @@ Uttar Pradesh milestones: ${upMilestones.map((m) => `${m.date} ${m.title.en}`).j
 Our region: ${regionMilestones.map((m) => `${m.date} ${m.title.en}`).join("; ")}`);
 
   out.push(`# Our Ideals (page: /{lang}/ideals)
-${ideals.map((i) => `${i.name.en} (${i.years}): "${i.quote.en}"`).join("\n")}`);
+${ideals.map((i) => `${i.name.en} (${i.years}), ${i.role.en}: ${i.line.kind === "quote" ? `"${i.line.text.en}"` : i.line.text.en}`).join("\n")}`);
 
   return out.join("\n\n");
 }

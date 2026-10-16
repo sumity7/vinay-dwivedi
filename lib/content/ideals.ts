@@ -1,78 +1,122 @@
-/* Our Ideals: lives and words we draw inspiration from. `day` = anniversary used by the e-card maker (MM-DD). */
+/* Our Ideals: the Sangh and BJP leaders whose lives and thought we draw from.
+   `line.kind`: "quote" = their own words (well-attested); "about" = a line about their contribution.
+   `day` fields = anniversaries used by the e-card maker (MM-DD).
+   Portraits: /images/ideals, cropped 4:5 from Wikimedia Commons — license and source in `credit`. */
+import type { StaticImageData } from "next/image";
+import atal from "@/images/ideals/atal.jpg";
+import deendayal from "@/images/ideals/deendayal.jpg";
+import golwalkar from "@/images/ideals/golwalkar.jpg";
+import hedgewar from "@/images/ideals/hedgewar.jpg";
+import modi from "@/images/ideals/modi.jpg";
+import mookerjee from "@/images/ideals/mookerjee.jpg";
+import nanaji from "@/images/ideals/nanaji.jpg";
+import rajmata from "@/images/ideals/rajmata.jpg";
 import type { Bi } from "../i18n";
 
-export type IdealCat = "sangh" | "heroes" | "dharma" | "awakening";
+export type IdealGroup = "sangh" | "bjp";
 
-export const idealCats: { id: IdealCat; label: Bi }[] = [
-  { id: "sangh", label: { hi: "राष्ट्रवादी विचार के प्रणेता", en: "Leading lights of the Sangh and BJP" } },
-  { id: "heroes", label: { hi: "भारत के महानायक", en: "Great heroes of Bharat" } },
-  { id: "dharma", label: { hi: "संत और मनीषी", en: "Saints and seers" } },
-  { id: "awakening", label: { hi: "सामाजिक-राजनीतिक जागरण के अग्रदूत", en: "Leaders of social and political awakening" } },
+export const idealGroups: { id: IdealGroup; label: Bi }[] = [
+  { id: "sangh", label: { hi: "राष्ट्रीय स्वयंसेवक संघ", en: "Rashtriya Swayamsevak Sangh" } },
+  { id: "bjp", label: { hi: "जनसंघ एवं भाजपा", en: "Jana Sangh and BJP" } },
 ];
 
 export type Ideal = {
   id: string;
-  cat: IdealCat;
+  group: IdealGroup;
   name: Bi;
   years: string;
-  quote: Bi;
+  role: Bi;
+  line: { kind: "quote" | "about"; text: Bi };
+  img: StaticImageData;
+  credit: { by: string; license: string; url: string };
   birth?: string; // MM-DD
   death?: string; // MM-DD
 };
 
 export const ideals: Ideal[] = [
-  { id: "deendayal", cat: "sangh", name: { hi: "पं. दीनदयाल उपाध्याय", en: "Pt. Deendayal Upadhyaya" }, years: "1916–1968", birth: "09-25", death: "02-11",
-    quote: { hi: "अंत्योदय: विकास की कसौटी वह व्यक्ति है जो समाज की सबसे अंतिम पंक्ति में खड़ा है।", en: "Antyodaya: the measure of development is the person standing in the very last row of society." } },
-  { id: "atal", cat: "sangh", name: { hi: "श्री अटल बिहारी वाजपेयी", en: "Shri Atal Bihari Vajpayee" }, years: "1924–2018", birth: "12-25", death: "08-16",
-    quote: { hi: "छोटे मन से कोई बड़ा नहीं होता, टूटे मन से कोई खड़ा नहीं होता।", en: "No one grows great with a small mind; no one stands tall with a broken heart." } },
-  { id: "mookerjee", cat: "sangh", name: { hi: "डॉ. श्यामा प्रसाद मुखर्जी", en: "Dr. Syama Prasad Mookerjee" }, years: "1901–1953", birth: "07-06", death: "06-23",
-    quote: { hi: "एक देश में दो विधान, दो प्रधान और दो निशान नहीं चलेंगे।", en: "One country cannot have two constitutions, two heads and two flags." } },
-  { id: "nanaji", cat: "sangh", name: { hi: "भारत रत्न नानाजी देशमुख", en: "Bharat Ratna Nanaji Deshmukh" }, years: "1916–2010", birth: "10-11", death: "02-27",
-    quote: { hi: "मैं अपने लिए नहीं, अपनों के लिए हूँ; और अपने वे हैं जो पीड़ित और उपेक्षित हैं।", en: "I am not for myself but for my own; and my own are those who are suffering and neglected." } },
-  { id: "modi", cat: "sangh", name: { hi: "श्री नरेन्द्र मोदी", en: "Shri Narendra Modi" }, years: "1950",
-    quote: { hi: "सबका साथ, सबका विकास, सबका विश्वास, सबका प्रयास।", en: "Together with all, development for all, the trust of all, the effort of all." } },
-
-  { id: "bose", cat: "heroes", name: { hi: "नेताजी सुभाष चंद्र बोस", en: "Netaji Subhas Chandra Bose" }, years: "1897–1945", birth: "01-23",
-    quote: { hi: "तुम मुझे खून दो, मैं तुम्हें आज़ादी दूँगा।", en: "Give me blood, and I will give you freedom." } },
-  { id: "patel", cat: "heroes", name: { hi: "सरदार वल्लभभाई पटेल", en: "Sardar Vallabhbhai Patel" }, years: "1875–1950", birth: "10-31", death: "12-15",
-    quote: { hi: "एकता के बिना जनशक्ति, शक्ति नहीं है; जब वह ठीक से संगठित होती है, तभी वह आत्मिक शक्ति बनती है।", en: "Manpower without unity is not a strength; only when it is properly united does it become a spiritual power." } },
-  { id: "tilak", cat: "heroes", name: { hi: "लोकमान्य बाल गंगाधर तिलक", en: "Lokmanya Bal Gangadhar Tilak" }, years: "1856–1920", birth: "07-23", death: "08-01",
-    quote: { hi: "स्वराज मेरा जन्मसिद्ध अधिकार है, और मैं उसे लेकर रहूँगा।", en: "Swaraj is my birthright, and I shall have it." } },
-  { id: "bhagat", cat: "heroes", name: { hi: "शहीद भगत सिंह", en: "Shaheed Bhagat Singh" }, years: "1907–1931", birth: "09-28", death: "03-23",
-    quote: { hi: "क्रांति मानव जाति का अविच्छिन्न अधिकार है, और स्वतंत्रता सबका जन्मसिद्ध अधिकार।", en: "Revolution is an inalienable right of mankind; freedom is the birthright of all." } },
-  { id: "azad", cat: "heroes", name: { hi: "चंद्रशेखर आज़ाद", en: "Chandrashekhar Azad" }, years: "1906–1931", birth: "07-23", death: "02-27",
-    quote: { hi: "दुश्मन की गोलियों का हम सामना करेंगे, आज़ाद ही रहे हैं, आज़ाद ही रहेंगे।", en: "We will face the enemy’s bullets; we have always been free, and free we shall remain." } },
-  { id: "lakshmibai", cat: "heroes", name: { hi: "रानी लक्ष्मीबाई", en: "Rani Lakshmibai" }, years: "1828–1858", birth: "11-19", death: "06-18",
-    quote: { hi: "मैं अपनी झाँसी नहीं दूँगी।", en: "I shall not give up my Jhansi." } },
-  { id: "shastri", cat: "heroes", name: { hi: "लाल बहादुर शास्त्री", en: "Lal Bahadur Shastri" }, years: "1904–1966", birth: "10-02", death: "01-11",
-    quote: { hi: "जय जवान, जय किसान।", en: "Hail the soldier, hail the farmer." } },
-  { id: "kalam", cat: "heroes", name: { hi: "डॉ. ए.पी.जे. अब्दुल कलाम", en: "Dr. A.P.J. Abdul Kalam" }, years: "1931–2015", birth: "10-15", death: "07-27",
-    quote: { hi: "सपने वे नहीं जो हम सोते समय देखते हैं, सपने वे हैं जो हमें सोने नहीं देते।", en: "Dreams are not what you see in sleep; they are what do not let you sleep." } },
-
-  { id: "vivekananda", cat: "dharma", name: { hi: "स्वामी विवेकानंद", en: "Swami Vivekananda" }, years: "1863–1902", birth: "01-12", death: "07-04",
-    quote: { hi: "उठो, जागो और तब तक मत रुको जब तक लक्ष्य प्राप्त न हो जाए।", en: "Arise, awake, and stop not till the goal is reached." } },
-  { id: "tulsidas", cat: "dharma", name: { hi: "गोस्वामी तुलसीदास", en: "Goswami Tulsidas" }, years: "1532–1623",
-    quote: { hi: "परहित सरिस धरम नहिं भाई। पर पीड़ा सम नहिं अधमाई॥", en: "There is no virtue like doing good to others, and no sin like causing them pain." } },
-  { id: "kabir", cat: "dharma", name: { hi: "संत कबीर", en: "Sant Kabir" }, years: "15वीं सदी|15th century",
-    quote: { hi: "बुरा जो देखन मैं चला, बुरा न मिलिया कोय। जो दिल खोजा आपना, मुझसा बुरा न कोय॥", en: "I went looking for the bad and found none; when I searched my own heart, I found none worse than me." } },
-  { id: "nanak", cat: "dharma", name: { hi: "गुरु नानक देव", en: "Guru Nanak Dev" }, years: "1469–1539",
-    quote: { hi: "किरत करो, नाम जपो, वंड छको: ईमानदारी से श्रम करो, ईश्वर को याद रखो और बाँटकर खाओ।", en: "Kirat karo, naam japo, vand chhako: work honestly, remember God, and share what you have." } },
-  { id: "dayanand", cat: "dharma", name: { hi: "महर्षि दयानंद सरस्वती", en: "Maharshi Dayanand Saraswati" }, years: "1824–1883", death: "10-30",
-    quote: { hi: "वेदों की ओर लौटो।", en: "Go back to the Vedas." } },
-
-  { id: "gandhi", cat: "awakening", name: { hi: "महात्मा गांधी", en: "Mahatma Gandhi" }, years: "1869–1948", birth: "10-02", death: "01-30",
-    quote: { hi: "जब भी संदेह हो, सबसे गरीब और कमज़ोर व्यक्ति का चेहरा याद करो और सोचो कि तुम्हारा अगला कदम उसके किसी काम आएगा या नहीं।", en: "Whenever in doubt, recall the face of the poorest and weakest person you have seen, and ask if the step you contemplate will be of any use to them." } },
-  { id: "ambedkar", cat: "awakening", name: { hi: "डॉ. भीमराव आंबेडकर", en: "Dr. Bhimrao Ambedkar" }, years: "1891–1956", birth: "04-14", death: "12-06",
-    quote: { hi: "शिक्षित बनो, संगठित रहो, संघर्ष करो।", en: "Educate, organise, agitate." } },
-  { id: "lohia", cat: "awakening", name: { hi: "डॉ. राम मनोहर लोहिया", en: "Dr. Ram Manohar Lohia" }, years: "1910–1967", birth: "03-23", death: "10-12",
-    quote: { hi: "ज़िंदा क़ौमें पाँच साल इंतज़ार नहीं करतीं।", en: "Living nations do not wait five years." } },
+  {
+    id: "hedgewar", group: "sangh", years: "1889–1940", birth: "04-01", death: "06-21", img: hedgewar,
+    name: { hi: "डॉ. केशव बलिराम हेडगेवार", en: "Dr. Keshav Baliram Hedgewar" },
+    role: { hi: "राष्ट्रीय स्वयंसेवक संघ के संस्थापक", en: "Founder, Rashtriya Swayamsevak Sangh" },
+    line: { kind: "about", text: {
+      hi: "1925 में विजयादशमी के दिन नागपुर में संघ की स्थापना की और शाखा के माध्यम से चरित्रवान, अनुशासित व्यक्ति-निर्माण का मार्ग दिखाया।",
+      en: "Founded the Sangh in Nagpur on Vijayadashami 1925, and showed how the daily shakha builds disciplined people of character." } },
+    credit: { by: "Sudhirn", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Dr._Hedgevar.jpg" },
+  },
+  {
+    id: "golwalkar", group: "sangh", years: "1906–1973", birth: "02-19", death: "06-05", img: golwalkar,
+    name: { hi: "श्री माधव सदाशिव गोलवलकर ‘श्री गुरुजी’", en: "Shri M. S. Golwalkar ‘Shri Guruji’" },
+    role: { hi: "संघ के द्वितीय सरसंघचालक (1940–1973)", en: "Second Sarsanghchalak of the Sangh (1940–1973)" },
+    line: { kind: "about", text: {
+      hi: "33 वर्षों तक सरसंघचालक रहकर संघ कार्य को देश के हर कोने तक पहुँचाया और सेवा व संगठन के अनेक कार्यों के प्रेरणास्रोत बने।",
+      en: "Led the Sangh for 33 years, carrying its work to every corner of the country and inspiring many service and organisational efforts." } },
+    credit: { by: "Filmindia magazine, 1949", license: "Public domain", url: "https://commons.wikimedia.org/wiki/File:M_S_Golwalkar.jpg" },
+  },
+  {
+    id: "nanaji", group: "sangh", years: "1916–2010", birth: "10-11", death: "02-27", img: nanaji,
+    name: { hi: "भारत रत्न नानाजी देशमुख", en: "Bharat Ratna Nanaji Deshmukh" },
+    role: { hi: "ग्रामोदय के प्रणेता, चित्रकूट", en: "Pioneer of village self-reliance, Chitrakoot" },
+    line: { kind: "quote", text: {
+      hi: "मैं अपने लिए नहीं, अपनों के लिए हूँ; अपने वे हैं जो सदियों से पीड़ित और उपेक्षित हैं।",
+      en: "I am not for myself but for my own; and my own are those who have suffered and been neglected for centuries." } },
+    credit: { by: "India Post, Government of India", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Nanaji_Deshmukh_2017_stamp_of_India.jpg" },
+  },
+  {
+    id: "mookerjee", group: "bjp", years: "1901–1953", birth: "07-06", death: "06-23", img: mookerjee,
+    name: { hi: "डॉ. श्यामा प्रसाद मुखर्जी", en: "Dr. Syama Prasad Mookerjee" },
+    role: { hi: "भारतीय जनसंघ के संस्थापक (1951)", en: "Founder, Bharatiya Jana Sangh (1951)" },
+    line: { kind: "quote", text: {
+      hi: "एक देश में दो विधान, दो प्रधान और दो निशान नहीं चलेंगे।",
+      en: "One country cannot have two constitutions, two heads and two flags." } },
+    credit: { by: "Ministry of Parliamentary Affairs", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Shyama_Prasad_Mukherjee_portrait_in_Parliament.jpg" },
+  },
+  {
+    id: "deendayal", group: "bjp", years: "1916–1968", birth: "09-25", death: "02-11", img: deendayal,
+    name: { hi: "पं. दीनदयाल उपाध्याय", en: "Pt. Deendayal Upadhyaya" },
+    role: { hi: "एकात्म मानववाद के प्रणेता, जनसंघ के अध्यक्ष", en: "Thinker of Integral Humanism, President of the Jana Sangh" },
+    line: { kind: "about", text: {
+      hi: "एकात्म मानववाद का दर्शन दिया और अंत्योदय, यानी समाज की अंतिम पंक्ति में खड़े व्यक्ति के उदय को, विकास की कसौटी बनाया।",
+      en: "Gave the philosophy of Integral Humanism and made Antyodaya, the rise of the person in the last row of society, the test of development." } },
+    credit: { by: "India Post, Government of India", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Deendayal_Upadhyaya_2018_stamp_of_India_(cropped).jpg" },
+  },
+  {
+    id: "atal", group: "bjp", years: "1924–2018", birth: "12-25", death: "08-16", img: atal,
+    name: { hi: "भारत रत्न श्री अटल बिहारी वाजपेयी", en: "Bharat Ratna Shri Atal Bihari Vajpayee" },
+    role: { hi: "भाजपा के संस्थापक अध्यक्ष, पूर्व प्रधानमंत्री", en: "Founding President of the BJP, former Prime Minister" },
+    line: { kind: "quote", text: {
+      hi: "छोटे मन से कोई बड़ा नहीं होता, टूटे मन से कोई खड़ा नहीं होता।",
+      en: "No one grows great with a small mind; no one stands tall with a broken heart." } },
+    credit: { by: "Government of India", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Atal_Bihari_Vajpayee_(crop_2).jpg" },
+  },
+  {
+    id: "rajmata", group: "bjp", years: "1919–2001", birth: "10-12", death: "01-25", img: rajmata,
+    name: { hi: "राजमाता विजयाराजे सिंधिया", en: "Rajmata Vijaya Raje Scindia" },
+    role: { hi: "भाजपा की संस्थापक उपाध्यक्ष", en: "Founding Vice-President of the BJP" },
+    line: { kind: "about", text: {
+      hi: "जनसंघ और भाजपा को जन-जन तक पहुँचाने में अग्रणी रहीं; सादगी और जनसेवा से ‘राजमाता’ के रूप में घर-घर में सम्मान पाया।",
+      en: "A leading force in taking the Jana Sangh and BJP to the people, honoured in every home as ‘Rajmata’ for her simplicity and service." } },
+    credit: { by: "India Post, Government of India", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Vijaya_Raje_Scindia_2001_cover_of_India_crop.jpg" },
+  },
+  {
+    id: "modi", group: "bjp", years: "1950", birth: "09-17", img: modi,
+    name: { hi: "श्री नरेन्द्र मोदी", en: "Shri Narendra Modi" },
+    role: { hi: "भारत के प्रधानमंत्री", en: "Prime Minister of India" },
+    line: { kind: "quote", text: {
+      hi: "सबका साथ, सबका विकास, सबका विश्वास, सबका प्रयास।",
+      en: "Together with all, development for all, the trust of all, the effort of all." } },
+    credit: { by: "Prime Minister's Office", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Shri_Narendra_Modi,_Prime_Minister_of_India.jpg" },
+  },
 ];
 
-export const yearsText = (y: string, lang: "hi" | "en") => (y.includes("|") ? y.split("|")[lang === "hi" ? 0 : 1] : y);
+/** "1950" -> "1950 से" / "b. 1950" for the living. */
+export const yearsText = (y: string, lang: "hi" | "en") => (y.includes("–") ? y : lang === "hi" ? `जन्म ${y}` : `b. ${y}`);
+
+/** Only their own words make a "thought of the day". */
+const quotes = ideals.filter((i) => i.line.kind === "quote");
 
 /** A different thought each day, the same for every visitor. */
 export function thoughtOfTheDay(date = new Date()) {
   const start = Date.UTC(date.getUTCFullYear(), 0, 0);
   const day = Math.floor((date.getTime() - start) / 864e5);
-  return ideals[day % ideals.length];
+  return quotes[day % quotes.length];
 }

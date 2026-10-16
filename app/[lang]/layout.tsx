@@ -50,7 +50,8 @@ export default async function LangLayout({ children, params }: { children: React
           <main id="main">{children}</main>
           <Footer lang={lang} />
           <SideRail />
-          <Assistant />
+          {/* the "Ask assistant" button only appears once the AI key is set (see .env.example) */}
+          {process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN ? <Assistant /> : null}
         </SiteProvider>
       </body>
     </html>

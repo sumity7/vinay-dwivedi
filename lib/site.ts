@@ -14,8 +14,8 @@ export const site = {
   officeWhatsApp: "919670086000", // contact form, meeting requests and reminders go here
 
   social: {
-    facebook: { url: "https://www.facebook.com/vinaydwivedi295/", handle: "vinaydwivedi295" },
-    instagram: { url: "https://www.instagram.com/vinaydwivedimla/", handle: "@vinaydwivedimla" },
+    facebook: { url: "https://www.facebook.com/vinaydwivedi295/", handle: "vinaydwivedi295", followers: { hi: "1.28 लाख+", en: "128K+" } as Bi },
+    instagram: { url: "https://www.instagram.com/vinaydwivedimla/", handle: "@vinaydwivedimla", followers: { hi: "14.6 हज़ार+", en: "14.6K+" } as Bi },
     youtube: { url: "https://www.youtube.com/@vinaydwivedi71", handle: "@vinaydwivedi71", channelId: "UCQmXUpUFhZ1cBPNYTe0qznw" },
   },
 

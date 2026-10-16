@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/Chrome";
+import { Pic } from "@/components/Pic";
 import { meetings } from "@/lib/content/media";
 import { tr, type Lang } from "@/lib/i18n";
 
@@ -24,6 +25,7 @@ export default async function Meetings({ params }: Props) {
         <div className="wrap meet-grid">
           {meetings.map((m) => (
             <div className="card" key={m.title.en}>
+              <div className="meet-img"><Pic src={m.img} alt={tr(m.title, lang)} placeholder="blur" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 380px" /></div>
               <div className="body"><h3>{tr(m.title, lang)}</h3><p>{tr(m.text, lang)}</p></div>
             </div>
           ))}

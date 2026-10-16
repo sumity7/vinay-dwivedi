@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { Pic } from "@/components/Pic";
 import Link from "next/link";
 import { PageHero } from "@/components/Chrome";
 import { Icon, type IconName } from "@/components/Icon";
@@ -27,7 +27,7 @@ export default async function About({ params }: Props) {
         title={{ hi: "विनय कुमार द्विवेदी", en: "Vinay Kumar Dwivedi" }}
         lead={{ hi: "विनय कुमार द्विवेदी ‘मुन्ना भैया’ गोंडा जनपद की मेहनौन विधानसभा से लगातार दूसरी बार विधायक हैं, जो जनसेवा, संगठन और विकास के लिए कार्यरत हैं।", en: "Vinay Kumar Dwivedi ‘Munna Bhaiya’ is serving a second consecutive term as MLA from Mehnaun in Gonda district, working in public service, organisation and development." }}
         meta={<p className="meta">{t("विधायक, मेहनौन विधानसभा (295) · गोंडा, उत्तर प्रदेश", "MLA, Mehnaun Assembly (295) · Gonda, Uttar Pradesh")}</p>}
-        aside={<div className="soft-photo" style={{ maxWidth: 420, justifySelf: "center", width: "100%" }}><Image src={img.hero} alt={t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi")} placeholder="blur" sizes="420px" preload /></div>}
+        aside={<div className="soft-photo" style={{ maxWidth: 420, justifySelf: "center", width: "100%" }}><Pic src={img.hero} alt={t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi")} placeholder="blur" sizes="420px" preload /></div>}
       />
 
       <section>

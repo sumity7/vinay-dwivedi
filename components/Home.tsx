@@ -1,9 +1,11 @@
 "use client";
 /* Interactive pieces of the home page: hero slider, carousels, gallery tabs, video grid, counters, social feeds. */
-import Image, { type StaticImageData } from "next/image";
+import { type StaticImageData } from "next/image";
+import { Pic } from "./Pic";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Photo } from "@/lib/content/events";
 import { fmtDate, type Bi } from "@/lib/i18n";
+import { img } from "@/lib/images";
 import { site } from "@/lib/site";
 import { fmtIN, prefersReducedMotion } from "@/lib/utils";
 import type { Video } from "@/lib/youtube";
@@ -29,8 +31,8 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
       <div className="slider" style={{ transform: `translateX(-${i * 100}%)` }}>
         {slides.map((s, k) => (
           <div key={k} className="slide" aria-hidden={k !== i}>
-            <Image src={s.img} alt={s.alt ? pick(s.alt) : t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi")} fill sizes="(max-width: 900px) 100vw, 66vw"
-              preload={k === 0} style={{ objectFit: "cover", objectPosition: s.pos ?? "center 25%" }} />
+            <Pic src={s.img} alt={s.alt ? pick(s.alt) : t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi")} fill sizes="(max-width: 900px) 100vw, 66vw"
+              preload={k === 0} style={{ objectFit: "cover", ...(s.pos ? { objectPosition: s.pos } : {}) }} />
           </div>
         ))}
       </div>
@@ -47,9 +49,20 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
 export function Carousel({ children, className = "" }: { children: ReactNode; className?: string }) {
   const { t } = useSite();
   const ref = useRef<HTMLDivElement>(null);
+  const [edge, setEdge] = useState({ start: true, end: false });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => setEdge({ start: el.scrollLeft < 8, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 8 });
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => { el.removeEventListener("scroll", update); ro.disconnect(); };
+  }, []);
   const go = (d: number) => ref.current?.scrollBy({ left: d * ref.current.clientWidth * 0.8, behavior: "smooth" });
   return (
-    <div className={`carousel ${className}`}>
+    <div className={`carousel ${className}${edge.start ? " at-start" : ""}${edge.end ? " at-end" : ""}`}>
       <button type="button" className="car-btn prev" onClick={() => go(-1)} aria-label={t("पिछला", "Previous")}><Icon name="chevLeft" /></button>
       <div className="car-track" ref={ref}>{children}</div>
       <button type="button" className="car-btn next" onClick={() => go(1)} aria-label={t("अगला", "Next")}><Icon name="chevRight" /></button>
@@ -78,7 +91,7 @@ export function GalleryTabs({ tabs }: { tabs: GalTab[] }) {
       <div className="gal-grid" key={tab.key}>
         {shown.map((p, n) => (
           <button key={n} type="button" className={`g${n}`} onClick={() => openLightbox(list, n)} aria-label={`${t("बड़ा देखें", "View larger")}: ${pick(p.cap)}`}>
-            <Image src={p.img} alt={pick(p.cap)} placeholder="blur" sizes={n === 0 ? "(max-width: 860px) 100vw, 40vw" : "(max-width: 860px) 50vw, 22vw"} />
+            <Pic src={p.img} alt={pick(p.cap)} placeholder="blur" sizes={n === 0 ? "(max-width: 860px) 100vw, 40vw" : "(max-width: 860px) 50vw, 22vw"} />
           </button>
         ))}
       </div>
@@ -149,33 +162,43 @@ export function Counter({ end, format, suffix = "" }: { end: number; format?: "i
   return <b ref={ref}>{show(end)}</b>;
 }
 
+/* Social card: reliable stand-in for the Facebook page plugin (which often renders half-empty). */
+const SOCIAL_PHOTOS = [img.reliefCheque, img.villageGreeting, img.tribute, img.farmerField, img.meetingGreeting, img.villageElders];
+
 export function FacebookFeed() {
-  const { t } = useSite();
-  const box = useRef<HTMLDivElement>(null);
-  const [w, setW] = useState(0);
-  useEffect(() => {
-    const el = box.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => setW(Math.min(500, Math.max(180, Math.floor(el.clientWidth)))));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-  const fb = site.social.facebook.url;
+  const { t, pick, openLightbox } = useSite();
+  const s = site.social;
+  const list = SOCIAL_PHOTOS.map((p) => ({ img: p, cap: t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi") }));
+  const rows: { key: "facebook" | "instagram" | "youtube"; icon: IconName; label: string; sub: string }[] = [
+    { key: "facebook", icon: "facebook", label: "Facebook", sub: `${pick(s.facebook.followers)} ${t("फॉलोअर्स", "followers")}` },
+    { key: "instagram", icon: "instagram", label: "Instagram", sub: `${pick(s.instagram.followers)} ${t("फॉलोअर्स", "followers")}` },
+    { key: "youtube", icon: "youtube", label: "YouTube", sub: s.youtube.handle },
+  ];
   return (
-    <div className="card fb-box" ref={box}>
-      <div className="fb-fallback">
-        <span className="round"><Icon name="facebook" /></span>
-        <b>{t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi")}</b>
-        <p className="muted" style={{ margin: 0 }}>{t("ताज़ा पोस्ट और घोषणाओं के लिए आधिकारिक पेज फॉलो करें।", "Follow the official page for the latest posts and announcements.")}</p>
-        <a className="btn btn-primary btn-sm" href={fb} target="_blank" rel="noopener">{t("Facebook पेज खोलें", "Open the Facebook page")}</a>
+    <div className="card social-card">
+      <div className="sc-head">
+        <Pic className="sc-avatar" src={img.hero} alt="" width={84} height={84} />
+        <div>
+          <b>{t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi")} <Icon name="check" className="sc-tick" /></b>
+          <span>{pick(site.role)}</span>
+        </div>
       </div>
-      {w > 0 && (
-        <iframe
-          title={t("Facebook पर ताज़ा पोस्ट", "Latest posts on Facebook")}
-          src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(fb)}&tabs=timeline&width=${w}&height=620&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`}
-          width={w} height={620} loading="lazy" allow="encrypted-media" style={{ margin: "0 auto", display: "block", width: w }}
-        />
-      )}
+      <div className="sc-grid">
+        {SOCIAL_PHOTOS.map((p, n) => (
+          <button key={n} type="button" onClick={() => openLightbox(list, n)} aria-label={t("फोटो बड़ा देखें", "View photo")}>
+            <Pic src={p} alt="" placeholder="blur" sizes="(max-width: 860px) 33vw, 180px" />
+          </button>
+        ))}
+      </div>
+      <ul className="sc-links">
+        {rows.map((r) => (
+          <li key={r.key}>
+            <span className={`sc-ic ${r.key}`}><Icon name={r.icon} /></span>
+            <span className="sc-txt"><b>{r.label}</b><small>{r.sub}</small></span>
+            <a className="btn btn-outline btn-sm" href={s[r.key].url} target="_blank" rel="noopener">{t("फॉलो करें", "Follow")}</a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
