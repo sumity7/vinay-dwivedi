@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Anek_Devanagari, Anek_Latin, Martel } from "next/font/google";
+import { Hind, Tiro_Devanagari_Hindi } from "next/font/google";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { Assistant } from "@/components/Assistant";
@@ -12,9 +12,8 @@ import { img } from "@/lib/images";
 import { site } from "@/lib/site";
 import "../globals.css";
 
-const martel = Martel({ weight: ["700", "800"], subsets: ["devanagari", "latin"], variable: "--font-display", display: "swap" });
-const anekLatin = Anek_Latin({ subsets: ["latin"], variable: "--font-anek-latin", display: "swap" });
-const anekDeva = Anek_Devanagari({ subsets: ["devanagari"], variable: "--font-anek-deva", display: "swap" });
+const tiro = Tiro_Devanagari_Hindi({ weight: "400", subsets: ["devanagari", "latin"], variable: "--font-display", display: "swap" });
+const hind = Hind({ weight: ["300", "400", "500", "600", "700"], subsets: ["devanagari", "latin"], variable: "--font-body", display: "swap" });
 
 export const dynamicParams = false;
 export const generateStaticParams = () => LANGS.map((lang) => ({ lang }));
@@ -37,13 +36,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 }
 
-export const viewport: Viewport = { themeColor: "#0f3a48" };
+export const viewport: Viewport = { themeColor: "#f29933" };
 
 export default async function LangLayout({ children, params }: { children: ReactNode; params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!isLang(lang)) notFound();
   return (
-    <html lang={lang} className={`${martel.variable} ${anekLatin.variable} ${anekDeva.variable}`}>
+    <html lang={lang} className={`${tiro.variable} ${hind.variable}`}>
       <body>
         <SiteProvider lang={lang}>
           <BirthdayRibbon />

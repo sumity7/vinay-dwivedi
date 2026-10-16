@@ -2,9 +2,9 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { href, tr, type Bi, type Lang } from "@/lib/i18n";
-import { site } from "@/lib/site";
+import { phoneLabel, site } from "@/lib/site";
 import { Icon, type IconName } from "./Icon";
-import { FOOTER_LINKS } from "./nav";
+import { FOOTER_PERSONA, FOOTER_QUICK } from "./nav";
 
 export const SOCIALS: { key: "facebook" | "instagram" | "youtube"; label: string; icon: IconName }[] = [
   { key: "facebook", label: "Facebook", icon: "facebook" },
@@ -22,34 +22,38 @@ export function SocialRow({ className = "soc-row" }: { className?: string }) {
   );
 }
 
+
 export function Footer({ lang }: { lang: Lang }) {
   const t = (hi: string, en: string) => (lang === "hi" ? hi : en);
   return (
     <footer>
       <div className="wrap top">
         <div>
-          <div className="brand">{tr(site.name, lang)}</div>
-          <p style={{ margin: "0 0 14px", fontWeight: 600 }}>{tr(site.roleLong, lang)}</p>
-          <p>{t("विधायक विनय कुमार द्विवेदी ‘मुन्ना भैया’ की आधिकारिक वेबसाइट।", "Official website of MLA Vinay Kumar Dwivedi ‘Munna Bhaiya’.")}</p>
+          <h3>{t("व्यक्तित्व", "Personality")}</h3>
+          <ul>
+            {FOOTER_PERSONA.map((l) => (
+              <li key={l.path}><Link href={href(lang, l.path)}><Icon name="chevRight" />{tr(l.label, lang)}</Link></li>
+            ))}
+          </ul>
+          <SocialRow />
         </div>
         <div>
-          <h3>{t("महत्वपूर्ण लिंक", "Quick Links")}</h3>
+          <h3>{t("क्विक लिंक्स", "Quick Links")}</h3>
           <ul>
-            {FOOTER_LINKS.map((l) => (
+            {FOOTER_QUICK.map((l) => (
               <li key={l.path}><Link href={href(lang, l.path)}><Icon name="chevRight" />{tr(l.label, lang)}</Link></li>
             ))}
           </ul>
         </div>
         <div>
-          <h3>{t("जुड़े रहें", "Stay Connected")}</h3>
-          <SocialRow />
-          <p style={{ margin: "0 0 6px" }}>{tr(site.office, lang)}</p>
-          <p style={{ margin: 0 }}><a href={`mailto:${site.email}`} style={{ color: "#fff" }}>{site.email}</a></p>
+          <h3>{t("संपर्क करें", "Contact")}</h3>
+          <p className="f-line"><Icon name="pin" />{tr(site.office, lang)}</p>
+          {site.phones.map((p) => <p key={p} className="f-line"><Icon name="phone" /><a href={`tel:${p}`}>{phoneLabel(p)}</a></p>)}
+          <p className="f-line"><Icon name="mail" /><a href={`mailto:${site.email}`}>{site.email}</a></p>
         </div>
       </div>
-      <div className="wrap bottom">
-        <span>© {new Date().getFullYear()} {tr(site.name, lang)}. {t("सर्वाधिकार सुरक्षित।", "All rights reserved.")}</span>
-        <span>{tr(site.area, lang)}</span>
+      <div className="bottom">
+        <div className="wrap">Copyright © {new Date().getFullYear()} {tr(site.name, lang)}. {t("सर्वाधिकार सुरक्षित।", "All rights reserved.")}</div>
       </div>
     </footer>
   );
@@ -70,22 +74,22 @@ export function PageHero({ lang, crumbs, eyebrow, title, lead, meta, aside }: {
   return (
     <div className="page-hero">
       <div className="wrap">
-        <nav className="crumbs" aria-label={lang === "hi" ? "आप यहाँ हैं" : "Breadcrumb"}>
-          {all.map((c, i) => (
-            <span key={i} style={{ display: "contents" }}>
-              {i > 0 && <Icon name="chevRight" />}
-              {i < all.length - 1 && c.path !== undefined
-                ? <Link href={href(lang, c.path)}>{tr(c.label, lang)}</Link>
-                : <span aria-current="page">{tr(c.label, lang)}</span>}
-            </span>
-          ))}
-        </nav>
-        <div className={`grid${aside ? "" : " solo"}`}>
-          <div>
+        <div className={`ph-grid${aside ? " has-aside" : ""}`}>
+          <div className="ph-main">
             {eyebrow && <span className="eyebrow">{tr(eyebrow, lang)}</span>}
             <h1>{tr(title, lang)}</h1>
             {lead && <p className="lead">{tr(lead, lang)}</p>}
             {meta}
+            <nav className="crumbs" aria-label={lang === "hi" ? "आप यहाँ हैं" : "Breadcrumb"}>
+              {all.map((c, i) => (
+                <span key={i} style={{ display: "contents" }}>
+                  {i > 0 && <Icon name="chevRight" />}
+                  {i < all.length - 1 && c.path !== undefined
+                    ? <Link href={href(lang, c.path)}>{tr(c.label, lang)}</Link>
+                    : <span aria-current="page">{tr(c.label, lang)}</span>}
+                </span>
+              ))}
+            </nav>
           </div>
           {aside}
         </div>
