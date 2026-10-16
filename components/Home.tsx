@@ -13,22 +13,26 @@ import type { Video } from "@/lib/youtube";
 import { Icon, type IconName } from "./Icon";
 import { useSite } from "./SiteProvider";
 
-export type Slide = { img: StaticImageData; alt?: Bi; pos?: string; tag?: Bi; title?: Bi; text?: Bi; points?: Bi[]; cta?: { href: string; label: Bi } };
+export type Slide = { img: StaticImageData; alt?: Bi; pos?: string; tag?: Bi; title?: Bi; text?: Bi; points?: Bi[]; cta?: { href: string; label: Bi }; cta2?: { href: string; label: Bi } };
 
-/* Full-width banner: slides move sideways, white arrows, dots below */
+/* Full-width banner: slides move sideways, white arrows, dots below.
+   It never advances on its own: the visitor moves it with the arrows, the dots, a swipe or the keyboard. */
 export function HeroSlider({ slides }: { slides: Slide[] }) {
   const { t, pick } = useSite();
   const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
-  useEffect(() => {
-    if (paused || prefersReducedMotion()) return;
-    const id = setInterval(() => setI((x) => (x + 1) % slides.length), 5500);
-    return () => clearInterval(id);
-  }, [paused, slides.length]);
+  const touchX = useRef<number | null>(null);
   const go = (d: number) => setI((x) => (x + d + slides.length) % slides.length);
 
   return (
-    <div className="hero-slider" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} aria-roledescription="carousel">
+    <div className="hero-slider" aria-roledescription="carousel" tabIndex={0}
+      onKeyDown={(e) => { if (e.key === "ArrowLeft") go(-1); else if (e.key === "ArrowRight") go(1); }}
+      onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
+      onTouchEnd={(e) => {
+        if (touchX.current === null) return;
+        const dx = e.changedTouches[0].clientX - touchX.current;
+        touchX.current = null;
+        if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+      }}>
       <div className="slider" style={{ transform: `translateX(-${i * 100}%)` }}>
         {slides.map((s, k) => (
           <div key={k} className={`slide${k === i ? " is-active" : ""}`} aria-hidden={k !== i}>
@@ -38,7 +42,12 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
                 <h2>{pick(s.title)}</h2>
                 {s.text && <p>{pick(s.text)}</p>}
                 {s.points && <ul className="slide-points">{s.points.map((x, n) => <li key={n}>{pick(x)}</li>)}</ul>}
-                {s.cta && <Link className="btn btn-orange" href={s.cta.href} tabIndex={k === i ? 0 : -1}>{pick(s.cta.label)} <Icon name="arrow" /></Link>}
+                {s.cta && (
+                  <div className="slide-btns">
+                    <Link className="btn btn-orange" href={s.cta.href} tabIndex={k === i ? 0 : -1}>{pick(s.cta.label)} <Icon name="arrow" /></Link>
+                    {s.cta2 && <Link className="btn btn-outline-light" href={s.cta2.href} tabIndex={k === i ? 0 : -1}>{pick(s.cta2.label)}</Link>}
+                  </div>
+                )}
               </div>
             )}
             {/* photo panel takes the photo's own shape, so the whole picture shows with nothing cropped */}

@@ -11,7 +11,9 @@ import { CATS } from "./utils";
 
 const both = (b: Bi) => `${b.en} / ${b.hi}`;
 
-export function buildKnowledge() {
+/** compact = English only for the long paragraphs (about a quarter shorter), for models with small per-minute token limits. */
+export function buildKnowledge(compact = false) {
+  const para = (b: Bi) => (compact ? b.en : `${b.en}\n${b.hi}`);
   const out: string[] = [];
   out.push(`# Person
 Name: ${both(site.name)} (${both(site.nickname)})
@@ -36,8 +38,7 @@ ${milestones.map((m, i) => `${i + 1}. ${both(m.title)}: ${m.text.en}`).join("\n"
 ${events.map((e) => `## ${both(e.title)}
 Date: ${e.date}. Place: ${both(e.place)}. Page: /{lang}/updates/${e.slug}
 ${e.summary.en}
-${e.body.map((b) => b.en).join(" ")}
-${e.summary.hi}`).join("\n\n")}
+${e.body.map((b) => b.en).join(" ")}${compact ? "" : `\n${e.summary.hi}`}`).join("\n\n")}
 
 Meetings & interactions (page: /{lang}/media/meetings): ${meetings.map((m) => `${m.title.en} (${m.text.en})`).join("; ")}`);
 

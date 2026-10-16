@@ -28,6 +28,9 @@ export const site = {
     youtube: { url: "https://www.youtube.com/@vinaydwivedi71", handle: "@vinaydwivedi71", channelId: "UCQmXUpUFhZ1cBPNYTe0qznw" },
   },
 
+  /* shown in the footer: who built and runs the website */
+  credit: { name: "PRAIB Advisors LLP", url: "https://praibadvisors.com/" },
+
   supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
   supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "", // e.g. https://vinaydwivedi.in, used in share links

@@ -53,7 +53,14 @@ export function Footer({ lang }: { lang: Lang }) {
         </div>
       </div>
       <div className="bottom">
-        <div className="wrap">Copyright © {new Date().getFullYear()} {tr(site.name, lang)}. {t("सर्वाधिकार सुरक्षित।", "All rights reserved.")}</div>
+        <div className="wrap bottom-row">
+          <p>Copyright © {new Date().getFullYear()} {tr(site.name, lang)}. {t("सर्वाधिकार सुरक्षित।", "All rights reserved.")}</p>
+          <a className="site-credit" href={site.credit.url} target="_blank" rel="noopener noreferrer nofollow">
+            <span className="site-credit-label">{t("वेबसाइट निर्माण एवं प्रबंधन", "Website developed & managed by")}</span>
+            <span className="site-credit-name">{site.credit.name}<Icon name="arrowUpRight" /></span>
+            <span className="sr-only">{t("(नए टैब में खुलता है)", "(opens in a new tab)")}</span>
+          </a>
+        </div>
       </div>
     </footer>
   );

@@ -636,7 +636,7 @@ footer .bottom{background:var(--navy-2);padding:18px 0;text-align:center;font-si
   .rail{left:0;right:0;top:auto;bottom:0;transform:none;border:0;border-top:1px solid var(--line);border-radius:0;padding:4px 4px calc(4px + env(safe-area-inset-bottom));grid-template-columns:repeat(4,1fr);gap:2px;box-shadow:0 -6px 20px -12px #14182740}
   .rail a{width:auto;height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
   .rail a span{position:static;transform:none;opacity:1;background:none;color:inherit;padding:0;font-size:11.5px;line-height:1.2;text-align:center;white-space:normal}
-  .ask-fab{bottom:calc(74px + env(safe-area-inset-bottom));right:12px;padding:11px 16px}
+  .ask-fab{bottom:calc(88px + env(safe-area-inset-bottom));right:12px;padding:11px 16px}
   .assistant{bottom:calc(132px + env(safe-area-inset-bottom))}
   .toast{bottom:calc(78px + env(safe-area-inset-bottom))}
 }
@@ -1048,3 +1048,33 @@ footer ul{gap:0 20px}
 .crumbs a{min-width:32px;text-align:center}
 .tag-pill{background:var(--orange-btn);color:#fff}
 .nf-code{color:var(--orange-btn)}
+
+/* ===== Hero v7: fuller slides. Bigger type, a wider text column that fills the width, two buttons per slide ===== */
+@media (min-width:901px){
+  .hero{height:min(86vh,740px);min-height:600px}
+  .hero .slide-cap{flex:1 1 auto;max-width:min(780px,calc(100% - 50%))}
+  .hero .slide-cap h2{font-size:clamp(38px,4.3vw,68px);line-height:1.12}
+  .hero .slide-cap p{font-size:clamp(17px,1.4vw,21px);max-width:60ch;line-height:1.8}
+  .slide-points{gap:12px;margin-bottom:30px}
+  .slide-points li{font-size:clamp(16px,1.2vw,19px)}
+  .slide-points li:before{width:20px;height:20px;top:.25em}
+  .slide-points li{padding-left:34px}
+}
+.slide-btns{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.hero .slide-cap .slide-btns .btn{align-self:auto}
+.hero .slide-cap .btn-outline-light{background:transparent;border-color:#ffffffb3;color:#fff;box-shadow:none}
+.hero .slide-cap .btn-outline-light:hover{background:#ffffff26;border-color:#fff}
+@media (max-width:900px){.slide-btns .btn{padding:12px 18px}}
+
+/* footer: copyright on the left, website credit on the right. The right side keeps clear of the floating assistant button. */
+footer .bottom{text-align:left}
+.bottom-row{display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap}
+.bottom-row p{margin:0}
+.site-credit{display:inline-flex;flex-direction:column;gap:2px;padding:10px 16px;border:1px solid #ffffff40;border-radius:8px;background:#ffffff0a;text-decoration:none;color:#fff;transition:border-color .2s,background .2s}
+.site-credit:hover{border-color:#ffffff99;background:#ffffff1a}
+.site-credit-label{font-size:12.5px;color:#f3b36b}
+.site-credit-name{display:inline-flex;align-items:center;gap:6px;font:400 17px/1.2 var(--display)}
+.site-credit-name svg{width:16px;height:16px;color:#f3b36b;transition:transform .2s}
+.site-credit:hover .site-credit-name svg{transform:translate(2px,-2px)}
+@media (min-width:761px){.site-credit{margin-right:190px}}
+@media (max-width:760px){.bottom-row{flex-direction:column;align-items:flex-start;padding-right:84px}footer .bottom{padding-bottom:78px}}
