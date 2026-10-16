@@ -246,3 +246,111 @@ export function YouTubeFeed({ videos }: { videos: Video[] }) {
   );
 }
 
+/* Live Facebook timeline: the official Page plugin, which scrolls inside the box and always shows the newest posts. */
+const LIVE_H = 600;
+
+export function FacebookLive() {
+  const { t } = useSite();
+  const box = useRef<HTMLDivElement>(null);
+  const [w, setW] = useState(0);
+  useEffect(() => {
+    const el = box.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setW(Math.min(500, Math.max(180, Math.floor(el.clientWidth)))));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const fb = site.social.facebook.url;
+  return (
+    <div className="card live-card">
+      <div className="live-head">
+        <span className="live-dot" aria-hidden="true" />
+        <b>Facebook</b><span>{t("ताज़ा पोस्ट", "Latest posts")}</span>
+        <a className="link-arrow" href={fb} target="_blank" rel="noopener">{t("पेज खोलें", "Open page")} <Icon name="arrowUpRight" /></a>
+      </div>
+      <div className="live-body fb-live" ref={box} style={{ height: LIVE_H }}>
+        {w > 0 && (
+          <iframe
+            title={t("Facebook पर ताज़ा पोस्ट", "Latest posts on Facebook")}
+            src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(fb)}&tabs=timeline&width=${w}&height=${LIVE_H}&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false`}
+            width={w} height={LIVE_H} loading="lazy" allow="encrypted-media" />
+        )}
+      </div>
+      <p className="live-note">{t("पोस्ट न दिखें तो ऊपर से पेज सीधे खोलें।", "If the posts do not load, open the page directly using the link above.")}</p>
+    </div>
+  );
+}
+
+/* Latest YouTube uploads: a player on top and a list below that keeps scrolling by itself (pauses on hover or while a video plays). */
+export function YouTubeLive({ videos }: { videos: Video[] }) {
+  const { lang, t } = useSite();
+  const [cur, setCur] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const list = useRef<HTMLDivElement>(null);
+  const hold = useRef(false);
+  const scrolls = videos.length > 3;
+
+  useEffect(() => {
+    const el = list.current;
+    if (!el || !scrolls || playing || prefersReducedMotion()) return;
+    const id = setInterval(() => {
+      if (hold.current) return;
+      el.scrollTop += 1;
+      const half = el.scrollHeight / 2;
+      if (el.scrollTop >= half) el.scrollTop -= half;
+    }, 35);
+    return () => clearInterval(id);
+  }, [scrolls, playing]);
+
+  const ch = site.social.youtube.url;
+  if (!videos.length) {
+    return (
+      <div className="card live-card yt-empty">
+        <p>{t("वीडियो YouTube चैनल पर देखें।", "Watch the videos on the YouTube channel.")}</p>
+        <a className="btn btn-primary btn-sm" href={ch} target="_blank" rel="noopener">{t("YouTube चैनल खोलें", "Open the YouTube channel")}</a>
+      </div>
+    );
+  }
+  const v = videos[cur];
+  const rows = scrolls ? [...videos, ...videos] : videos;
+  return (
+    <div className="card live-card">
+      <div className="live-head">
+        <span className="live-dot" aria-hidden="true" />
+        <b>YouTube</b><span>{t("नवीनतम वीडियो", "Latest videos")}</span>
+        <a className="link-arrow" href={ch} target="_blank" rel="noopener">{t("चैनल खोलें", "Open channel")} <Icon name="arrowUpRight" /></a>
+      </div>
+      <div className="live-body ytl" style={{ height: LIVE_H }}>
+        <div className="ytl-player">
+          {playing ? (
+            <iframe src={`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0`} title={v.title}
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+          ) : (
+            <button type="button" onClick={() => setPlaying(true)} aria-label={`${t("चलाएँ", "Play")}: ${v.title}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" />
+              <span className="play"><Icon name="play" /></span>
+            </button>
+          )}
+        </div>
+        <div className="ytl-now"><h4>{v.title}</h4><small>{fmtDate(v.published, lang)}</small></div>
+        <div className="ytl-list" ref={list} tabIndex={0} aria-label={t("वीडियो सूची", "Video list")}
+          onMouseEnter={() => { hold.current = true; }} onMouseLeave={() => { hold.current = false; }}
+          onFocus={() => { hold.current = true; }} onBlur={() => { hold.current = false; }}
+          onTouchStart={() => { hold.current = true; }} onTouchEnd={() => { setTimeout(() => { hold.current = false; }, 2500); }}>
+          {rows.map((x, n) => {
+            const k = n % videos.length;
+            return (
+              <button key={`${x.id}-${n}`} type="button" className="ytl-item" aria-current={k === cur} aria-hidden={n >= videos.length && scrolls ? true : undefined}
+                tabIndex={n >= videos.length && scrolls ? -1 : 0} onClick={() => { setCur(k); setPlaying(true); }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`https://i.ytimg.com/vi/${x.id}/mqdefault.jpg`} alt="" loading="lazy" />
+                <span>{x.title}<small>{fmtDate(x.published, lang)}</small></span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}

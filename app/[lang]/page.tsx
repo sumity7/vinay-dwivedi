@@ -1,10 +1,8 @@
 import { Pic } from "@/components/Pic";
 import Link from "next/link";
-import { Carousel, FacebookFeed, GalleryTabs, HeroSlider, VideoGrid, YouTubeFeed, type GalTab, type Slide } from "@/components/Home";
+import { Carousel, FacebookLive, GalleryTabs, HeroSlider, VideoGrid, YouTubeLive, type GalTab, type Slide } from "@/components/Home";
 import { Icon } from "@/components/Icon";
-import { sortedEvents } from "@/lib/content/events";
-import { ideals } from "@/lib/content/ideals";
-import { IdealCard } from "@/components/IdealsBrowser";
+import { getEvent, sortedEvents, type EventPost } from "@/lib/content/events";
 import { morePhotos } from "@/lib/content/media";
 import { bio, intro, journey } from "@/lib/content/profile";
 import { dateParts, href, tr, type Lang } from "@/lib/i18n";
@@ -21,7 +19,9 @@ const BASE_SLIDES: Slide[] = [
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params).lang as Lang;
   const t = (hi: string, en: string) => (lang === "hi" ? hi : en);
-  const videos = await getVideos();
+  const videos = await getVideos(12);
+  /* the two events highlighted on the home page; the rest are on the Events page */
+  const homeEvents = ["kisan-rahat-vitaran", "gaon-gaon-jansampark"].map(getEvent).filter((e): e is EventPost => !!e);
 
   const slides: Slide[] = [...BASE_SLIDES, ...sortedEvents.filter((e) => e.photos[0].img.width >= 900).slice(0, 4).map((e) => ({ img: e.photos[0].img, alt: e.title }))];
   const news = sortedEvents.slice(0, 3);
@@ -100,14 +100,15 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <h2 className="sec-title">{t("कार्यक्रम", "Events")}</h2>
             <Link className="btn btn-outline" href={href(lang, "/updates")}>{t("और देखें", "View more")} <Icon name="arrow" /></Link>
           </div>
-          <div className="cover-grid">
-            {sortedEvents.slice(0, 3).map((e) => {
+          <div className="cover-grid two">
+            {homeEvents.map((e) => {
               const { d, month, y } = dateParts(e.date, lang);
               return (
-                <Link key={e.slug} href={href(lang, `/updates/${e.slug}`)} className="cover">
-                  <Pic src={e.photos[0].img} alt="" placeholder="blur" sizes="(max-width: 760px) 100vw, 400px" />
-                  <span className="cover-date">{d} {month} {y}</span>
+                <Link key={e.slug} href={href(lang, `/updates/${e.slug}`)} className="cover big">
+                  <Pic src={e.photos[0].img} alt="" placeholder="blur" sizes="(max-width: 860px) 100vw, 600px" />
+                  <span className="cover-meta"><span className="tag">{tr(e.category, lang)}</span><span className="cover-date">{d} {month} {y}</span></span>
                   <b>{tr(e.title, lang)}</b>
+                  <span className="link-arrow">{t("पूरा पढ़ें", "Read more")} <Icon name="arrow" /></span>
                 </Link>
               );
             })}
@@ -143,26 +144,13 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* OUR IDEALS */}
-      <section className="ideals-home">
-        <div className="wrap">
-          <div className="sec-row">
-            <h2 className="sec-title">{t("हमारे आदर्श", "Our Ideals")}</h2>
-            <Link className="btn btn-outline" href={href(lang, "/ideals")}>{t("सभी आदर्श", "All ideals")} <Icon name="arrow" /></Link>
-          </div>
-          <Carousel className="ideals-car">
-            {ideals.map((i) => <IdealCard key={i.id} i={i} lang={lang} />)}
-          </Carousel>
-        </div>
-      </section>
-
       {/* CONNECT */}
       <section className="connect-sec">
         <div className="wrap">
           <h2 className="sec-title center">{t("हमारे से जुड़िये", "Connect with us")}</h2>
           <div className="connect">
-            <div><FacebookFeed /></div>
-            <div><YouTubeFeed videos={videos} /></div>
+            <div><FacebookLive /></div>
+            <div><YouTubeLive videos={videos} /></div>
           </div>
         </div>
       </section>
