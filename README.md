@@ -131,6 +131,19 @@ create policy "public can upload complaint photos" on storage.objects
 
 The office updates `status` (received → review → action → resolved) and `office_note` from the Supabase Table Editor; citizens see it at once on the tracking page.
 
+## Admin dashboard (`/admin`)
+A password-protected page where the office lists, searches and filters complaints, changes their status and writes the reply
+citizens see on the tracking page. One shared password, no user accounts. Set these (locally in `.env.local`, and in Vercel →
+Settings → Environment Variables, then redeploy):
+
+| Variable | Purpose |
+| --- | --- |
+| `ADMIN_PASSWORD` | The login password, at least 6 characters. Empty or shorter = admin is switched off |
+| `ADMIN_SESSION_SECRET` | Optional. Signs the login cookie; if empty the password is used, so changing the password logs everyone out |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Project Settings → API → `service_role`. Server only (never `NEXT_PUBLIC_`): the complaints table is closed to the public, so this key is how the admin reads and updates it |
+
+Login lasts 12 hours (httpOnly cookie) and is limited to 10 attempts per 15 minutes per IP. `/admin` is excluded from `robots.txt` and marked `noindex`.
+
 ## Launch checklist (Vercel)
 1. Push to GitHub, import the repo in Vercel (it is detected as Next.js).
 2. Settings → Environment Variables: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL` (and `ANTHROPIC_API_KEY` to switch the assistant on). Deploy again after changing them: the `NEXT_PUBLIC_*` values are baked in at build time.
