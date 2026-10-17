@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/Chrome";
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const e = getEvent(slug);
   if (!e) return {};
   const l = lang as Lang;
-  return { title: tr(e.title, l), description: tr(e.summary, l), openGraph: { images: [{ url: e.photos[0].img.src }] } };
+  return pageMeta(l, `/updates/${slug}`, { title: tr(e.title, l), description: tr(e.summary, l), image: e.photos[0].img, type: "article" });
 }
 
 export default async function EventPage({ params }: Props) {

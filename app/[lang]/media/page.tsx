@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { PageHero } from "@/components/Chrome";
 import { YouTubeFeed } from "@/components/Home";
@@ -13,7 +14,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "मीडिया" : "Media" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/media", {
+    title: hi ? "मीडिया" : "Media",
+    description: hi ? "विधायक विनय कुमार द्विवेदी के कार्यक्रमों, जनसंपर्क, राहत कार्य और भेंट-संवाद की फोटो गैलरी व वीडियो।" : "Photos and videos of MLA Vinay Kumar Dwivedi’s programmes, village outreach, relief work and meetings.",
+  });
 }
 
 export default async function Media({ params }: Props) {

@@ -7,8 +7,9 @@ import { Footer } from "@/components/Chrome";
 import { SideRail } from "@/components/Floating";
 import { Header } from "@/components/Header";
 import { SiteProvider } from "@/components/SiteProvider";
-import { isLang, LANGS } from "@/lib/i18n";
+import { isLang, LANGS, type Lang } from "@/lib/i18n";
 import { img } from "@/lib/images";
+import { defaultDescription, defaultTitle, siteBase } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "../globals.css";
 
@@ -20,21 +21,17 @@ const serifHindi = Noto_Serif_Devanagari({ weight: ["400", "500", "600", "700"],
 export const dynamicParams = false;
 export const generateStaticParams = () => LANGS.map((lang) => ({ lang }));
 
-const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-const siteBase = site.siteUrl || (vercelUrl ? `https://${vercelUrl}` : "");
-
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  const hi = lang === "hi";
-  const name = hi ? "विनय कुमार द्विवेदी" : "Vinay Kumar Dwivedi";
+  const l: Lang = lang === "en" ? "en" : "hi";
+  const name = site.name[l];
+  /* canonical and hreflang are set per page (see lib/seo.ts), so sub-pages don't inherit the home page's */
   return {
-    metadataBase: siteBase ? new URL(siteBase) : undefined,
-    title: { default: hi ? "विनय कुमार द्विवेदी | विधायक, मेहनौन (295), गोंडा" : "Vinay Kumar Dwivedi | MLA, Mehnaun (295), Gonda", template: `%s | ${name}` },
-    description: hi
-      ? "विधायक विनय कुमार द्विवेदी ‘मुन्ना भैया’ की आधिकारिक वेबसाइट: ई-शिकायत, ई-कार्ड, कार्यक्रम, योजनाओं की जानकारी और विकास यात्रा।"
-      : "Official website of MLA Vinay Kumar Dwivedi ‘Munna Bhaiya’: e-Shikayat complaints, e-cards, events, scheme guides and development figures.",
-    alternates: { languages: { hi: "/hi", en: "/en" } },
-    openGraph: { siteName: name, locale: hi ? "hi_IN" : "en_IN", images: [{ url: img.hero.src, width: img.hero.width, height: img.hero.height }] },
+    metadataBase: new URL(siteBase),
+    title: { default: defaultTitle[l], template: `%s | ${name}` },
+    description: defaultDescription[l],
+    openGraph: { siteName: name, locale: l === "hi" ? "hi_IN" : "en_IN", images: [{ url: img.hero.src, width: img.hero.width, height: img.hero.height }] },
+    twitter: { card: "summary_large_image" },
   };
 }
 

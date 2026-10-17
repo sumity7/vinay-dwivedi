@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleCard } from "@/components/Cards";
@@ -16,7 +17,7 @@ export const generateStaticParams = () => LANGS.flatMap((lang) => articles.map((
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
   const a = getArticle(slug);
-  return a ? { title: tr(a.title, lang as Lang), description: tr(a.summary, lang as Lang) } : {};
+  return a ? pageMeta(lang as Lang, `/vichar/${slug}`, { title: tr(a.title, lang as Lang), description: tr(a.summary, lang as Lang), type: "article" }) : {};
 }
 
 export default async function ArticlePage({ params }: Props) {

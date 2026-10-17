@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { ArticleFilter } from "@/components/ArticleFilter";
 import { ArticleCard } from "@/components/Cards";
 import { PageHero } from "@/components/Chrome";
@@ -9,7 +10,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "विचार व लेख" : "Ideas & Articles" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/vichar", {
+    title: hi ? "विचार व लेख" : "Ideas & Articles",
+    description: hi ? "विकास, जनसेवा और समाज पर विधायक विनय कुमार द्विवेदी के विचार व लेख।" : "Ideas and articles by MLA Vinay Kumar Dwivedi on development, public service and society.",
+  });
 }
 
 export default async function Vichar({ params }: Props) {

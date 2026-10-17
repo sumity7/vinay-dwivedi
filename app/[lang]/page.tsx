@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Pic } from "@/components/Pic";
 import Link from "next/link";
 import { ContactSection } from "@/components/ContactSection";
@@ -8,6 +9,7 @@ import { proPhotos } from "@/lib/content/media";
 import { bio, journey } from "@/lib/content/profile";
 import { dateParts, href, tr, type Lang } from "@/lib/i18n";
 import { img } from "@/lib/images";
+import { jsonLdHtml, pageMeta, personJsonLd } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { getVideos } from "@/lib/youtube";
 
@@ -61,6 +63,11 @@ const heroSlides = (lang: Lang): Slide[] => [
 /* order of the event categories in the home gallery (anything not listed goes last) */
 const GAL_ORDER = ["Relief", "Events", "Outreach", "Faith & culture"];
 
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const lang = (await params).lang as Lang;
+  return pageMeta(lang, "", { type: "profile" });
+}
+
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params).lang as Lang;
   const t = (hi: string, en: string) => (lang === "hi" ? hi : en);
@@ -90,6 +97,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
   return (
     <>
+      {/* structured data: who he is, for Google's knowledge panel and name searches */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(personJsonLd(lang))} />
+
       {/* HERO: three service slides, full width */}
       <section className="hero" aria-label={t("मुख्य स्लाइड", "Highlights")}>
         <HeroSlider slides={slides} />
@@ -121,7 +131,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {/* PERSONALITY */}
       <section className="persona">
         <div className="persona-photos" aria-hidden="true">
-          <Pic className="p2" src={img.villageGreeting} alt="" placeholder="blur" sizes="(max-width: 900px) 100vw, 50vw" />
+          <Pic className="p2" src={img.villageGreeting} alt={t("गाँव में लोगों का अभिवादन करते विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi greeting people in a village")} placeholder="blur" sizes="(max-width: 900px) 100vw, 50vw" />
         </div>
         <div className="persona-text">
           <h2>{t("व्यक्तित्व - ", "Personality - ")}{tr(site.name, lang)}</h2>
@@ -142,7 +152,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               const { d, month, y } = dateParts(e.date, lang);
               return (
                 <Link key={e.slug} href={href(lang, `/updates/${e.slug}`)} className="news-card">
-                  <Pic src={e.photos[0].img} alt="" placeholder="blur" sizes="(max-width: 860px) 100vw, 380px" />
+                  <Pic src={e.photos[0].img} alt={tr(e.photos[0].cap, lang)} placeholder="blur" sizes="(max-width: 860px) 100vw, 380px" />
                   <span className="news-date">{tr(e.category, lang)} · {d} {month} {y}</span>
                   <b>{tr(e.title, lang)}</b>
                   <p>{tr(e.summary, lang)}</p>

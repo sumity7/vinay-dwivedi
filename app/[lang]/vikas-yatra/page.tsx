@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { PageHero } from "@/components/Chrome";
 import { Icon } from "@/components/Icon";
@@ -10,7 +11,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "विकास यात्रा" : "Development Journey" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/vikas-yatra", {
+    title: hi ? "विकास यात्रा" : "Development Journey",
+    description: hi ? "मेहनौन विधानसभा, गोंडा में सड़क, बिजली, पानी, शिक्षा और स्वास्थ्य के विकास कार्यों का ब्योरा।" : "Development work in Mehnaun Assembly, Gonda: roads, power, water, education and health, in figures.",
+  });
 }
 
 export default async function VikasYatra({ params }: Props) {

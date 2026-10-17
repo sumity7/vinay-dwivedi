@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Image from "next/image";
 import { PageHero } from "@/components/Chrome";
 import { Icon } from "@/components/Icon";
@@ -12,7 +13,11 @@ export const revalidate = 21600; // refresh the thought of the day
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "हमारे आदर्श" : "Our Ideals" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/ideals", {
+    title: hi ? "हमारे आदर्श" : "Our Ideals",
+    description: hi ? "वे महापुरुष और विचार जिनसे विधायक विनय कुमार द्विवेदी जनसेवा की प्रेरणा लेते हैं।" : "The great figures and ideas that inspire MLA Vinay Kumar Dwivedi’s public service.",
+  });
 }
 
 export default async function Ideals({ params }: Props) {

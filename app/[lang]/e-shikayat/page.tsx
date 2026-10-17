@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { PageHero } from "@/components/Chrome";
 import { ComplaintCounts, ComplaintForm } from "@/components/Complaint";
@@ -9,7 +10,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "ई-शिकायत: शिकायत दर्ज करें" : "e-Shikayat: register a complaint" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/e-shikayat", {
+    title: hi ? "ई-शिकायत: शिकायत दर्ज करें" : "e-Shikayat: register a complaint",
+    description: hi ? "मेहनौन विधानसभा, गोंडा की सड़क, पानी, बिजली, पेंशन जैसी समस्याओं की शिकायत ऑनलाइन सीधे विधायक कार्यालय को दर्ज करें और टिकट संख्या पाएँ।" : "Register complaints about roads, water, power, pensions and more in Mehnaun Assembly, Gonda, online and straight to the MLA’s office, with a ticket number.",
+  });
 }
 
 const HELP = [["112", "पुलिस / आपातकाल", "Police / emergency"], ["108", "एम्बुलेंस", "Ambulance"], ["1090", "वुमेन पावर लाइन", "Women Power Line"], ["1076", "मुख्यमंत्री हेल्पलाइन", "CM helpline"], ["1912", "बिजली शिकायत", "Electricity"], ["102", "जननी एम्बुलेंस", "Mother & child"]] as const;

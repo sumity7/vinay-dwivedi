@@ -12,7 +12,7 @@ import { useSite } from "./SiteProvider";
 export function Logo({ lang }: { lang: Lang }) {
   return (
     <Link className="logo-block" href={href(lang)} aria-label={lang === "hi" ? "विनय कुमार द्विवेदी: होम" : "Vinay Kumar Dwivedi: Home"}>
-      <Image src={logo} alt="" priority sizes="(max-width: 1100px) 240px, 330px" />
+      <Image src={logo} alt={lang === "hi" ? "विनय कुमार द्विवेदी" : "Vinay Kumar Dwivedi"} priority sizes="(max-width: 1100px) 240px, 330px" />
     </Link>
   );
 }

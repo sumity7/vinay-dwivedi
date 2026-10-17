@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { Suspense } from "react";
 import { PageHero } from "@/components/Chrome";
 import { ECardMaker } from "@/components/ECardMaker";
@@ -8,7 +9,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "ई-कार्ड: अपने नाम से शुभकामनाएँ" : "e-Card: send greetings with your name" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/e-card", {
+    title: hi ? "ई-कार्ड: अपने नाम से शुभकामनाएँ" : "e-Card: send greetings with your name",
+    description: hi ? "अपने नाम और फोटो के साथ त्योहारों व अवसरों के शुभकामना ई-कार्ड बनाएं और व्हाट्सऐप पर साझा करें, विधायक विनय कुमार द्विवेदी की ओर से।" : "Make festival and occasion greeting e-cards with your own name and photo, from MLA Vinay Kumar Dwivedi, and share them on WhatsApp.",
+  });
 }
 
 export default async function ECard({ params }: Props) {

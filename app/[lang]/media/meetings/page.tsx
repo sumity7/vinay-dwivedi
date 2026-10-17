@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { PageHero } from "@/components/Chrome";
 import { Pic } from "@/components/Pic";
 import { meetings } from "@/lib/content/media";
@@ -8,7 +9,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "भेंट व संवाद" : "Meetings & Interactions" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/media/meetings", {
+    title: hi ? "भेंट व संवाद" : "Meetings & Interactions",
+    description: hi ? "विधायक विनय कुमार द्विवेदी की वरिष्ठ नेताओं, अधिकारियों और क्षेत्रवासियों से भेंट व संवाद की तस्वीरें।" : "Photos of MLA Vinay Kumar Dwivedi meeting senior leaders, officials and people of the constituency.",
+  });
 }
 
 export default async function Meetings({ params }: Props) {

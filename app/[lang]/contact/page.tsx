@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { PageHero } from "@/components/Chrome";
 import { ContactSection } from "@/components/ContactSection";
 import type { Lang } from "@/lib/i18n";
@@ -7,7 +8,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "संपर्क करें" : "Contact" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/contact", {
+    title: hi ? "संपर्क करें" : "Contact",
+    description: hi ? "मेहनौन विधायक विनय कुमार द्विवेदी के जनसंपर्क कार्यालय से संपर्क करें: फ़ोन, व्हाट्सऐप, ईमेल और मिलने का अनुरोध।" : "Contact the office of Mehnaun MLA Vinay Kumar Dwivedi: phone, WhatsApp, e-mail and meeting requests.",
+  });
 }
 
 export default async function Contact({ params }: Props) {

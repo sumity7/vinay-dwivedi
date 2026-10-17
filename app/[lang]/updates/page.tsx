@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { EventCard } from "@/components/Cards";
 import { EventFilter } from "@/components/EventFilter";
 import { PageHero } from "@/components/Chrome";
@@ -9,7 +10,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "अपडेट्स" : "Updates" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/updates", {
+    title: hi ? "अपडेट्स" : "Updates",
+    description: hi ? "मेहनौन विधायक विनय कुमार द्विवेदी के ताज़ा कार्यक्रम, राहत कार्य, जनसंपर्क और क्षेत्र की ख़बरें।" : "Latest programmes, relief work, outreach and constituency news from Mehnaun MLA Vinay Kumar Dwivedi.",
+  });
 }
 
 export default async function Updates({ params }: Props) {

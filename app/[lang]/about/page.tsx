@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { Pic } from "@/components/Pic";
 import Link from "next/link";
 import { PageHero } from "@/components/Chrome";
@@ -11,7 +12,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "जीवन परिचय व सफर" : "About & Journey" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/about", {
+    title: hi ? "जीवन परिचय व सफर" : "About & Journey",
+    description: hi ? "मेहनौन (295), गोंडा के विधायक विनय कुमार द्विवेदी ‘मुन्ना भैया’ का जीवन परिचय: जन्म, शिक्षा, क्षेत्र पंचायत से विधानसभा तक का सफ़र और प्राथमिकताएँ।" : "Biography of Vinay Kumar Dwivedi ‘Munna Bhaiya’, MLA from Mehnaun (295), Gonda: early life, education, his journey from the panchayat to the Assembly, and priorities.",
+  });
 }
 
 export default async function About({ params }: Props) {

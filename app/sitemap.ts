@@ -2,10 +2,9 @@ import type { MetadataRoute } from "next";
 import { articles } from "@/lib/content/articles";
 import { events } from "@/lib/content/events";
 import { LANGS } from "@/lib/i18n";
-import { site } from "@/lib/site";
+import { siteBase } from "@/lib/seo";
 
-const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-export const siteBase = site.siteUrl || (vercelUrl ? `https://${vercelUrl}` : "http://localhost:3000");
+export { siteBase };
 
 const PAGES = ["", "/about", "/updates", "/media", "/media/meetings", "/vimarsh", "/vichar", "/vikas-yatra", "/ideals", "/e-shikayat", "/e-shikayat/track", "/e-card", "/contact"];
 
@@ -21,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteBase}/${lang}${path}`,
       lastModified: date ? new Date(date) : undefined,
       priority,
-      alternates: { languages: Object.fromEntries(LANGS.map((l) => [l, `${siteBase}/${l}${path}`])) },
+      alternates: { languages: { ...Object.fromEntries(LANGS.map((l) => [l, `${siteBase}/${l}${path}`])), "x-default": `${siteBase}/hi${path}` } },
     })),
   );
 }

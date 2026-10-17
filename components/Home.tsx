@@ -101,10 +101,10 @@ export function GalleryTabs({ tabs }: { tabs: GalTab[] }) {
   const { pick, openLightbox, t } = useSite();
   const [k, setK] = useState(0);
   const tab = tabs[k];
-  const shown = tab.photos.slice(0, 8);
+  const shown = tab.photos.slice(0, 4);
   const list = tab.photos.map((p) => ({ img: p.img, cap: pick(p.cap) }));
   /* equal tiles; with fewer than 4 photos keep them at normal size, centred, instead of stretching one across the row */
-  const cols = Math.min(4, shown.length);
+  const cols = Math.min(2, shown.length);
   return (
     <div className="gal">
       <div className="gal-tabs" role="tablist" aria-label={t("श्रेणी", "Category")}>
@@ -117,7 +117,7 @@ export function GalleryTabs({ tabs }: { tabs: GalTab[] }) {
       <div className="gal-grid" key={tab.key} style={{ ["--cols" as string]: cols }}>
         {shown.map((p, n) => (
           <button key={n} type="button" onClick={() => openLightbox(list, n)} aria-label={`${t("बड़ा देखें", "View larger")}: ${pick(p.cap)}`}>
-            <Pic src={p.img} alt={pick(p.cap)} placeholder="blur" sizes="(max-width: 860px) 50vw, 300px" />
+            <Pic src={p.img} alt={pick(p.cap)} placeholder="blur" sizes="(max-width: 860px) 50vw, 560px" />
           </button>
         ))}
       </div>
@@ -148,7 +148,7 @@ export function VideoGrid({ videos }: { videos: Video[] }) {
             ) : (
               <button type="button" onClick={() => setPlaying(v.id)} aria-label={`${t("चलाएँ", "Play")}: ${v.title}`}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" />
+                <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt={v.title} loading="lazy" />
                 <span className="play"><Icon name="play" /></span>
               </button>
             )}
@@ -212,7 +212,7 @@ export function FacebookFeed() {
       <div className="sc-grid">
         {SOCIAL_PHOTOS.map((p, n) => (
           <button key={n} type="button" onClick={() => openLightbox(list, n)} aria-label={t("फोटो बड़ा देखें", "View photo")}>
-            <Pic src={p} alt="" placeholder="blur" sizes="(max-width: 860px) 33vw, 180px" />
+            <Pic src={p} alt={list[n].cap} placeholder="blur" sizes="(max-width: 860px) 33vw, 180px" />
           </button>
         ))}
       </div>
@@ -251,7 +251,7 @@ export function YouTubeFeed({ videos }: { videos: Video[] }) {
         ) : (
           <button type="button" onClick={() => setPlaying(true)} aria-label={`${t("चलाएँ", "Play")}: ${v.title}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" />
+            <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt={v.title} loading="lazy" />
             <span className="play"><Icon name="play" /></span>
           </button>
         )}
@@ -332,7 +332,7 @@ export function UpdatesLive({ items, pageUrl }: { items: UpdateItem[]; pageUrl?:
           return (
             <article key={`${e.slug}-${n}`} className="upl-item" aria-hidden={dup ? true : undefined}>
               <Link href={`/${lang}/updates/${e.slug}`} className="upl-img" tabIndex={dup ? -1 : 0} aria-label={pick(e.title)}>
-                <Pic src={e.img} alt="" placeholder="blur" sizes="160px" />
+                <Pic src={e.img} alt={pick(e.title)} placeholder="blur" sizes="160px" />
               </Link>
               <div>
                 <div className="upl-meta"><span className="tag">{pick(e.category)}</span><time dateTime={e.date}>{fmtDate(e.date, lang)}</time></div>
@@ -386,7 +386,7 @@ export function YouTubeLive({ videos }: { videos: Video[] }) {
           ) : (
             <button type="button" onClick={() => setPlaying(true)} aria-label={`${t("चलाएँ", "Play")}: ${v.title}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" />
+              <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt={v.title} />
               <span className="play"><Icon name="play" /></span>
             </button>
           )}
@@ -501,7 +501,7 @@ export function FacebookProfile({ items, photos }: { items: UpdateItem[]; photos
   return (
     <div className="card fbp" tabIndex={0} aria-label={t("Facebook पेज", "Facebook page")}>
       <div className="fbp-cover">
-        <Pic src={img.fbCover} alt="" placeholder="blur" sizes="(max-width: 860px) 100vw, 600px" />
+        <Pic src={img.fbCover} alt={t("विनय कुमार द्विवेदी का Facebook कवर फोटो", "Vinay Kumar Dwivedi’s Facebook cover photo")} placeholder="blur" sizes="(max-width: 860px) 100vw, 600px" />
         <a className="fbp-fb" href={fb.url} target="_blank" rel="noopener" aria-label="Facebook"><Icon name="facebook" /></a>
       </div>
       <div className="fbp-head">
@@ -533,7 +533,7 @@ export function FacebookProfile({ items, photos }: { items: UpdateItem[]; photos
               <h4>{pick(e.title)}</h4>
               <p>{pick(e.summary)}</p>
               <Link href={`/${lang}/updates/${e.slug}`} className="fbp-img" aria-label={pick(e.title)}>
-                <Pic src={e.img} alt="" placeholder="blur" sizes="(max-width: 860px) 100vw, 600px" />
+                <Pic src={e.img} alt={pick(e.title)} placeholder="blur" sizes="(max-width: 860px) 100vw, 600px" />
               </Link>
               <footer>
                 <Link href={`/${lang}/updates/${e.slug}`}>{t("पूरा पढ़ें", "Read more")}</Link>
@@ -547,7 +547,7 @@ export function FacebookProfile({ items, photos }: { items: UpdateItem[]; photos
         <div className="fbp-photos">
           {photos.map((p, n) => (
             <button key={n} type="button" onClick={() => openLightbox(lb, n)} aria-label={pick(p.cap)}>
-              <Pic src={p.img} alt="" placeholder="blur" sizes="200px" />
+              <Pic src={p.img} alt={pick(p.cap)} placeholder="blur" sizes="200px" />
             </button>
           ))}
         </div>

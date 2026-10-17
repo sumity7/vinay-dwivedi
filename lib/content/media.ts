@@ -26,8 +26,8 @@ export const morePhotos: Photo[] = [
   { img: img.atWork, cap: { hi: "जन समस्याओं पर कार्य", en: "Working through public grievances" } },
 ];
 
-/* Opens the home-page photo gallery: official and professional photographs first, village and festival coverage after. */
+/* Opens the home-page photo gallery: official photographs with others (no solo portraits), village and festival coverage after. */
 export const proPhotos: Photo[] = [
   ...withCM,
-  ...morePhotos.filter((p) => [img.stateMeeting, img.officialMeeting, img.addressing, img.atWork].includes(p.img)),
+  ...morePhotos.filter((p) => [img.stateMeeting].includes(p.img)),
 ];

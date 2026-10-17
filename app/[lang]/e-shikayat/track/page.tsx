@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { Suspense } from "react";
 import { PageHero } from "@/components/Chrome";
 import { TrackForm } from "@/components/Complaint";
@@ -8,7 +9,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "शिकायत की स्थिति" : "Track your complaint" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/e-shikayat/track", {
+    title: hi ? "शिकायत की स्थिति" : "Track your complaint",
+    description: hi ? "टिकट संख्या से विधायक कार्यालय, मेहनौन में दर्ज अपनी ई-शिकायत की स्थिति और कार्यवाही देखें।" : "Use your ticket number to check the status of a complaint registered with the Mehnaun MLA’s office.",
+  });
 }
 
 export default async function Track({ params }: Props) {

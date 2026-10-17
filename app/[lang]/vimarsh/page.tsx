@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { ArticleCard } from "@/components/Cards";
 import { PageHero } from "@/components/Chrome";
@@ -12,7 +13,11 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "विकास व विचार" : "Development & Ideas" };
+  const hi = lang === "hi";
+  return pageMeta(lang as Lang, "/vimarsh", {
+    title: hi ? "विकास व विचार" : "Development & Ideas",
+    description: hi ? "मेहनौन के विकास, योजनाओं और जनसेवा पर विधायक विनय कुमार द्विवेदी के विचार।" : "MLA Vinay Kumar Dwivedi on development, government schemes and public service in Mehnaun.",
+  });
 }
 
 export default async function Vimarsh({ params }: Props) {
