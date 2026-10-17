@@ -16,7 +16,7 @@ export const defaultTitle = {
   en: "Vinay Kumar Dwivedi | MLA, Mehnaun (295), Gonda",
 };
 export const defaultDescription = {
-  hi: "मेहनौन (गोंडा) के विधायक विनय कुमार द्विवेदी ‘मुन्ना भैया’ की आधिकारिक वेबसाइट: ई-शिकायत, ई-कार्ड, कार्यक्रम, योजनाओं की जानकारी और विकास यात्रा।",
+  hi: "मेहनौन (गोंडा) के विधायक विनय कुमार द्विवेदी ‘मुन्ना भैया’ की आधिकारिक वेबसाइट: ई-शिकायत, ई-कार्ड, कार्यक्रम, योजनाओं की जानकारी और उपलब्धियाँ।",
   en: "Official website of Vinay Kumar Dwivedi ‘Munna Bhaiya’, MLA from Mehnaun, Gonda: e-Shikayat complaints, e-cards, events, scheme guides and development figures.",
 };
 

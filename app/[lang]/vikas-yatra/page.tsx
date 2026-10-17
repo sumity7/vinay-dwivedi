@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const hi = lang === "hi";
   return pageMeta(lang as Lang, "/vikas-yatra", {
-    title: hi ? "विकास यात्रा" : "Development Journey",
+    title: hi ? "उपलब्धियाँ" : "Achievements",
     description: hi ? "मेहनौन विधानसभा, गोंडा में सड़क, बिजली, पानी, शिक्षा और स्वास्थ्य के विकास कार्यों का ब्योरा।" : "Development work in Mehnaun Assembly, Gonda: roads, power, water, education and health, in figures.",
   });
 }
@@ -25,8 +25,8 @@ export default async function VikasYatra({ params }: Props) {
     <>
       <PageHero
         lang={lang}
-        crumbs={[{ label: { hi: "विकास व विचार", en: "Development & Ideas" }, path: "/vimarsh" }, { label: { hi: "विकास यात्रा", en: "Development Journey" } }]}
-        title={{ hi: "विकास यात्रा: बदलाव, आँकड़ों में", en: "Vikas Yatra: the change, in figures" }}
+        crumbs={[{ label: { hi: "विकास व विचार", en: "Development & Ideas" }, path: "/vimarsh" }, { label: { hi: "उपलब्धियाँ", en: "Achievements" } }]}
+        title={{ hi: "उपलब्धियाँ: बदलाव, आँकड़ों में", en: "Achievements: the change, in figures" }}
         lead={{ hi: "नारे नहीं, आँकड़े। नीचे दिया हर आँकड़ा सरकारी स्रोत से है, जिसका नाम उसके साथ लिखा है।", en: "Figures, not slogans. Each number below comes from a government source, named under it." }}
         meta={
           <nav className="anchors" aria-label={t("इस पृष्ठ पर", "On this page")}>

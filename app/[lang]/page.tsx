@@ -42,7 +42,7 @@ const heroSlides = (lang: Lang): Slide[] => [
       { hi: "16 त्योहारों और अवसरों के कार्ड", en: "Cards for 16 festivals and occasions" },
     ],
     cta: { href: href(lang, "/e-card"), label: { hi: "ई-कार्ड बनाएं", en: "Make an e-card" } },
-    cta2: { href: href(lang, "/vikas-yatra"), label: { hi: "विकास यात्रा देखें", en: "See the development journey" } },
+    cta2: { href: href(lang, "/vikas-yatra"), label: { hi: "उपलब्धियाँ देखें", en: "See the achievements" } },
   },
   {
     img: img.heroComplaint, alt: { hi: "जन समस्याओं पर कार्य करते विधायक जी", en: "The MLA working through public grievances" },

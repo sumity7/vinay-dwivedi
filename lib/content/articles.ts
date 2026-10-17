@@ -245,7 +245,7 @@ export const articles: Article[] = [
       en: "This change has reached every citizen, from the traveller on the highway to the homemaker opening a bank account for the first time.",
     },
     steps: [
-      { hi: "पूरे आँकड़े और उनके सरकारी स्रोत ‘विकास यात्रा’ पृष्ठ पर देखें।", en: "See all the figures and their government sources on the Vikas Yatra page." },
+      { hi: "पूरे आँकड़े और उनके सरकारी स्रोत ‘उपलब्धियाँ’ पृष्ठ पर देखें।", en: "See all the figures and their government sources on the Achievements page." },
       { hi: "जन धन खाता न हो तो किसी भी बैंक शाखा में शून्य बैलेंस पर खुलवाएँ।", en: "If you don’t have a Jan Dhan account, open one with zero balance at any bank branch." },
     ],
     position: {
@@ -277,7 +277,7 @@ export const articles: Article[] = [
       en: "For people in Gonda and the Devipatan division, Ayodhya’s airport and better roads are of direct use.",
     },
     steps: [
-      { hi: "पूरी समय-रेखा ‘विकास यात्रा’ पृष्ठ पर देखें।", en: "See the full timeline on the Vikas Yatra page." },
+      { hi: "पूरी समय-रेखा ‘उपलब्धियाँ’ पृष्ठ पर देखें।", en: "See the full timeline on the Achievements page." },
       { hi: "‘एक जनपद एक उत्पाद’ से जुड़कर ऋण और प्रशिक्षण के लिए odopup.in देखें।", en: "For loans and training under ‘One District One Product’, see odopup.in." },
     ],
     position: {

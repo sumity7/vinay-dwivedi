@@ -61,7 +61,7 @@ Meetings & interactions (page: /{lang}/media/meetings): ${meetings.map((m) => `$
 - Office: ${both(site.office)} (full address to be added). Email: ${site.email}.
 - Social: Facebook ${site.social.facebook.url}, Instagram ${site.social.instagram.url}, YouTube ${site.social.youtube.url}.
 - Helplines: 112 police/emergency, 108 ambulance, 102 mother & child ambulance, 1076 CM helpline, 1090 Women Power Line, 181 women helpline, 1912 electricity complaints.
-- Other pages: Biography /{lang}/about, Media (photo and video gallery) /{lang}/media, Ideas & Articles /{lang}/vichar, Development Journey /{lang}/vikas-yatra, Our Ideals /{lang}/ideals.`);
+- Other pages: Biography /{lang}/about, Media (photo and video gallery) /{lang}/media, Ideas & Articles /{lang}/vichar, Achievements /{lang}/vikas-yatra, Our Ideals /{lang}/ideals.`);
 
   out.push(`# Government schemes explained on the site (Ideas & Articles)
 ${articles.map((a) => `## ${both(a.title)} (page: /{lang}/vichar/${a.slug})

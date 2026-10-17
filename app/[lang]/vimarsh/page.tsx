@@ -77,7 +77,7 @@ export default async function Vimarsh({ params }: Props) {
             <div className="sec-icon">
               <span className="ic"><Icon name="trend" /></span>
               <div>
-                <h2>{t("विकास यात्रा", "Development Journey")}</h2>
+                <h2>{t("उपलब्धियाँ", "Achievements")}</h2>
                 <p>{t("राजमार्ग, हवाई अड्डे, मेडिकल कॉलेज, बैंक खाते: तब और अब, हर आँकड़ा सरकारी स्रोत के साथ।", "Highways, airports, medical colleges and bank accounts, then and now, each with its official source.")}</p>
               </div>
             </div>
