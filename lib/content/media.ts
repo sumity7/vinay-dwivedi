@@ -12,6 +12,11 @@ export const meetings: { img: StaticImageData; title: Bi; text: Bi }[] = [
   { img: img.atWork, title: { hi: "कार्यालय में", en: "At the office" }, text: { hi: "जन समस्याओं पर कार्य।", en: "Working through public grievances." } },
 ];
 
+/* Shown first on the Media page. */
+export const withCM: Photo[] = [
+  { img: img.heroEcard, cap: { hi: "मुख्यमंत्री श्री योगी आदित्यनाथ जी के साथ", en: "With Chief Minister Shri Yogi Adityanath" } },
+];
+
 export const morePhotos: Photo[] = [
   { img: img.hero, cap: { hi: "जनसंवाद", en: "Speaking with residents" } },
   { img: img.addressing, cap: { hi: "जनसभा को संबोधन", en: "Addressing a gathering" } },
@@ -19,4 +24,10 @@ export const morePhotos: Photo[] = [
   { img: img.stateMeeting, cap: { hi: "क्षेत्र की माँगें शासन स्तर पर", en: "Raising the constituency’s demands with the state government" } },
   { img: img.officialMeeting, cap: { hi: "विधानसभा क्षेत्र की समीक्षा बैठक", en: "Constituency review meeting" } },
   { img: img.atWork, cap: { hi: "जन समस्याओं पर कार्य", en: "Working through public grievances" } },
+];
+
+/* Opens the home-page photo gallery: official and professional photographs first, village and festival coverage after. */
+export const proPhotos: Photo[] = [
+  ...withCM,
+  ...morePhotos.filter((p) => [img.stateMeeting, img.officialMeeting, img.addressing, img.atWork].includes(p.img)),
 ];

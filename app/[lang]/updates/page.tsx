@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { EventCard } from "@/components/Cards";
+import { EventFilter } from "@/components/EventFilter";
 import { PageHero } from "@/components/Chrome";
 import { sortedEvents } from "@/lib/content/events";
 import type { Lang } from "@/lib/i18n";
@@ -23,8 +24,8 @@ export default async function Updates({ params }: Props) {
       />
       <section>
         <h2 className="sr-only">{lang === "hi" ? "सभी अपडेट्स" : "All updates"}</h2>
-        <div className="wrap ev-list">
-          {sortedEvents.map((e) => <EventCard key={e.slug} e={e} lang={lang} wide />)}
+        <div className="wrap">
+          <EventFilter items={sortedEvents.map((e) => ({ cat: e.category, node: <EventCard key={e.slug} e={e} lang={lang} wide /> }))} />
         </div>
       </section>
     </>

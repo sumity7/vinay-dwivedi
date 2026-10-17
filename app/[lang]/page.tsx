@@ -1,13 +1,14 @@
 import { Pic } from "@/components/Pic";
 import Link from "next/link";
+import { ContactSection } from "@/components/ContactSection";
 import { Carousel, FacebookProfile, GalleryTabs, HeroSlider, YouTubeLive, type GalTab, type Slide, type UpdateItem } from "@/components/Home";
 import { Icon } from "@/components/Icon";
 import { sortedEvents, type EventPost } from "@/lib/content/events";
-import { morePhotos } from "@/lib/content/media";
+import { proPhotos } from "@/lib/content/media";
 import { bio, journey } from "@/lib/content/profile";
 import { dateParts, href, tr, type Lang } from "@/lib/i18n";
 import { img } from "@/lib/images";
-import { phoneLabel, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import { getVideos } from "@/lib/youtube";
 
 /* Hero: three slides, one per service (photos enhanced from the originals) */
@@ -15,7 +16,7 @@ const heroSlides = (lang: Lang): Slide[] => [
   {
     flip: true,
     img: img.heroAchievements, alt: { hi: "जनसभा को संबोधित करते विनय कुमार द्विवेदी", en: "Vinay Kumar Dwivedi addressing a gathering" },
-    tag: { hi: "जननायक", en: "A people’s leader" },
+    tag: { hi: "विधायक, मेहनौन (295)", en: "MLA, Mehnaun (295)" },
     title: { hi: "मेहनौन की बुलंद आवाज़", en: "The strong voice of Mehnaun" },
     text: { hi: "दो दशकों से अधिक के जनसेवा अनुभव के साथ ‘मुन्ना भैया’ गाँव-गाँव की हर बात को विधानसभा तक पूरी ताक़त से पहुँचाते हैं। 2022 में जनता ने आधे से अधिक मत देकर इस भरोसे पर ऐतिहासिक मुहर लगाई।", en: "With over two decades in public service, ‘Munna Bhaiya’ carries every village’s voice to the Assembly with full force. In 2022 the people gave him more than half of all votes, a historic seal on that trust." },
     points: [
@@ -57,6 +58,9 @@ const heroSlides = (lang: Lang): Slide[] => [
   },
 ];
 
+/* order of the event categories in the home gallery (anything not listed goes last) */
+const GAL_ORDER = ["Relief", "Events", "Outreach", "Faith & culture"];
+
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params).lang as Lang;
   const t = (hi: string, en: string) => (lang === "hi" ? hi : en);
@@ -74,10 +78,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   });
   const fresh = (ps: EventPost["photos"]) => ps.filter((p) => !shown.has(p.img.src));
   const catTabs: GalTab[] = [
-    /* one tab per category, newest event first */
-    ...sortedEvents.filter((e, n, all) => all.findIndex((x) => x.category.en === e.category.en) === n).slice(0, 3)
-      .map((e, n): GalTab => ({ key: e.slug, label: e.category, icon: (["bolt", "people", "calendar"] as const)[n], photos: fresh(e.photos) })),
-    { key: "more", label: { hi: "भेंट व संवाद", en: "Meetings" }, icon: "chat" as const, photos: fresh(morePhotos) },
+    /* official photographs first; then relief, programmes and outreach; festival and village coverage comes last */
+    { key: "more", label: { hi: "भेंट व संवाद", en: "Meetings" }, icon: "chat" as const, photos: proPhotos },
+    ...sortedEvents.filter((e, n, all) => all.findIndex((x) => x.category.en === e.category.en) === n)
+      .sort((x, y) => GAL_ORDER.indexOf(x.category.en) - GAL_ORDER.indexOf(y.category.en)).slice(0, 4)
+      .map((e, n): GalTab => ({ key: e.slug, label: e.category, icon: (["bolt", "calendar", "people", "images"] as const)[n], photos: fresh(e.photos) })),
   ].filter((g) => g.photos.length > 0);
   /* "All" first, so the gallery always opens on a full grid */
   const allPhotos = catTabs.flatMap((g) => g.photos).filter((p, n, a) => a.findIndex((x) => x.img.src === p.img.src) === n);
@@ -113,6 +118,18 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
+      {/* PERSONALITY */}
+      <section className="persona">
+        <div className="persona-photos" aria-hidden="true">
+          <Pic className="p2" src={img.villageGreeting} alt="" placeholder="blur" sizes="(max-width: 900px) 100vw, 50vw" />
+        </div>
+        <div className="persona-text">
+          <h2>{t("व्यक्तित्व - ", "Personality - ")}{tr(site.name, lang)}</h2>
+          {bio.slice(0, 2).map((p, i) => <p key={i}>{tr(p, lang)}</p>)}
+          <Link className="btn btn-orange" href={href(lang, "/about")}>{t("अधिक पढ़ें", "Read more")} <Icon name="arrow" /></Link>
+        </div>
+      </section>
+
       {/* LATEST NEWS & UPDATES */}
       <section className="news-sec" aria-labelledby="news-title">
         <div className="wrap">
@@ -128,23 +145,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                   <Pic src={e.photos[0].img} alt="" placeholder="blur" sizes="(max-width: 860px) 100vw, 380px" />
                   <span className="news-date">{tr(e.category, lang)} · {d} {month} {y}</span>
                   <b>{tr(e.title, lang)}</b>
+                  <p>{tr(e.summary, lang)}</p>
+                  <span className="link-arrow">{t("पूरा पढ़ें", "Read more")} <Icon name="arrow" /></span>
                 </Link>
               );
             })}
           </div>
-        </div>
-      </section>
-
-      {/* PERSONALITY */}
-      <section className="persona">
-        <div className="persona-photos" aria-hidden="true">
-          <Pic className="p1" src={img.hero} alt="" placeholder="blur" sizes="(max-width: 900px) 60vw, 30vw" />
-          <Pic className="p2" src={img.villageGreeting} alt="" placeholder="blur" sizes="(max-width: 900px) 45vw, 20vw" />
-        </div>
-        <div className="persona-text">
-          <h2>{t("व्यक्तित्व - ", "Personality - ")}{tr(site.name, lang)}</h2>
-          {bio.slice(0, 2).map((p, i) => <p key={i}>{tr(p, lang)}</p>)}
-          <Link className="btn btn-orange" href={href(lang, "/about")}>{t("अधिक पढ़ें", "Read more")} <Icon name="arrow" /></Link>
         </div>
       </section>
 
@@ -197,14 +203,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* CONTACT STRIP */}
-      <section className="contact-strip">
-        <div className="wrap contact-3">
-          <div><span className="ic"><Icon name="pin" /></span><b>{t("कार्यालय", "Office")}</b><p>{tr(site.office, lang)}</p></div>
-          <div><span className="ic"><Icon name="phone" /></span><b>{t("फ़ोन", "Phone")}</b>{site.phones.map((p) => <p key={p}><a href={`tel:${p}`}>{phoneLabel(p)}</a></p>)}</div>
-          <div><span className="ic"><Icon name="mail" /></span><b>{t("ईमेल", "Email")}</b><p><a href={`mailto:${site.email}`}>{site.email}</a></p><Link className="btn btn-orange btn-sm" href={href(lang, "/contact")}>{t("संदेश भेजें", "Send a message")} <Icon name="arrow" /></Link></div>
-        </div>
-      </section>
+      {/* CONTACT: the same enquiry form and details as the Contact page, right under the social section */}
+      <ContactSection lang={lang} visibleTitle />
     </>
   );
 }

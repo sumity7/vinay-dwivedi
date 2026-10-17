@@ -2,7 +2,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { href, tr, type Bi, type Lang } from "@/lib/i18n";
-import { phoneLabel, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import { Icon, type IconName } from "./Icon";
 import { FOOTER_PERSONA, FOOTER_QUICK } from "./nav";
 
@@ -48,7 +48,6 @@ export function Footer({ lang }: { lang: Lang }) {
         <div>
           <h3>{t("संपर्क करें", "Contact")}</h3>
           <p className="f-line"><Icon name="pin" />{tr(site.office, lang)}</p>
-          {site.phones.map((p) => <p key={p} className="f-line"><Icon name="phone" /><a href={`tel:${p}`}>{phoneLabel(p)}</a></p>)}
           <p className="f-line"><Icon name="mail" /><a href={`mailto:${site.email}`}>{site.email}</a></p>
         </div>
       </div>

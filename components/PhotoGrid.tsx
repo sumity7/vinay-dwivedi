@@ -8,7 +8,7 @@ export function PhotoGrid({ photos, feature, sizes = "(max-width: 860px) 50vw, 2
   const list = photos.map((p) => ({ img: p.img, cap: pick(p.cap) }));
   /* pick a layout that fills complete rows for this many photos (no empty holes) */
   const n = photos.length;
-  const layout = feature ? " feature" : n % 3 === 0 && n % 4 !== 0 ? " cols3" : n === 5 ? " feature" : n === 7 ? " feature n7" : n === 2 ? " cols2" : "";
+  const layout = n === 1 ? " one" : feature ? " feature" : n % 3 === 0 && n % 4 !== 0 ? " cols3" : n === 5 ? " feature" : n === 7 ? " feature n7" : n === 2 ? " cols2" : "";
   const big = feature || n === 5 || n === 7;
   return (
     <div className={`pgrid${layout}`}>

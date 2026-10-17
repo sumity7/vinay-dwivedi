@@ -6,7 +6,7 @@ import { meetings } from "./content/media";
 import { bio, electionStats, facts, journey, milestones, priorities, vision } from "./content/profile";
 import { indiaCompare, indiaSingle, regionMilestones, upMilestones } from "./content/vikas";
 import type { Bi } from "./i18n";
-import { phoneLabel, site } from "./site";
+import { site } from "./site";
 import { CATS } from "./utils";
 
 const both = (b: Bi) => `${b.en} / ${b.hi}`;
@@ -41,7 +41,7 @@ ${milestones.map((m, i) => `${i + 1}. ${both(m.title)}: ${m.text.en}`).join("\n"
 - His assembly / constituency: ${constituency ? `${constituency.value.en}` : "Mehnaun (295), Gonda district, Uttar Pradesh"}. He is its MLA (BJP). In 2022: ${electionStats.map((s) => `${s.label.en} ${s.value}${s.suffix ?? ""}`).join("; ")}. His priorities for Mehnaun: ${priorities.map((p) => p.title.en).join("; ")}. More: /{lang}/about.
 - His development work: the site lists his priorities for Mehnaun (above), his recent activities and relief work (/{lang}/updates), meetings and interactions (/{lang}/media/meetings) and his ideas on schemes (/{lang}/vichar). The national and Uttar Pradesh figures on /{lang}/vikas-yatra are the wider development context from government sources; they are NOT his personal record, so never present them as his achievements.
 - Recent activities: ${events.slice(0, 4).map((e) => e.title.en).join("; ")}. Full list: /{lang}/updates.
-- Contact the office: /{lang}/contact (phones and WhatsApp are under Services below).`);
+- Contact the office: /{lang}/contact (the office e-mail is under Services below; no phone number is published on the site, so never give one).`);
 
   out.push(`# Updates, i.e. events and news (page: /{lang}/updates)
 ${events.map((e) => `## ${both(e.title)}
@@ -58,7 +58,7 @@ Meetings & interactions (page: /{lang}/media/meetings): ${meetings.map((m) => `$
 - Not handled through e-Shikayat: emergencies (call 112), cases pending in court, RTI applications, job requests and transfers. State-level grievances can also go to the IGRS portal jansunwai.up.nic.in.
 - e-Card: /{lang}/e-card. Choose an occasion (festivals, national days, Munna Bhaiya's birthday on 15 October, anniversaries of national figures), add your name, village/post and optional photo; download or share on WhatsApp. The photo stays on the phone and is not uploaded.
 - Contact / meeting request / volunteering / suggestions: /{lang}/contact. The form opens WhatsApp with the message ready to send to the office (${site.officeWhatsApp}).
-- Office: ${both(site.office)} (full address to be added). Phones: ${site.phones.map(phoneLabel).join(", ")}. Email: ${site.email}.
+- Office: ${both(site.office)} (full address to be added). Email: ${site.email}.
 - Social: Facebook ${site.social.facebook.url}, Instagram ${site.social.instagram.url}, YouTube ${site.social.youtube.url}.
 - Helplines: 112 police/emergency, 108 ambulance, 102 mother & child ambulance, 1076 CM helpline, 1090 Women Power Line, 181 women helpline, 1912 electricity complaints.
 - Other pages: Biography /{lang}/about, Media (photo and video gallery) /{lang}/media, Ideas & Articles /{lang}/vichar, Development Journey /{lang}/vikas-yatra, Our Ideals /{lang}/ideals.`);

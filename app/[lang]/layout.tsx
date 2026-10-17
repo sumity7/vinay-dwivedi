@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Hind, Tiro_Devanagari_Hindi } from "next/font/google";
+import { Noto_Serif, Noto_Serif_Devanagari, Tiro_Devanagari_Hindi } from "next/font/google";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { Assistant } from "@/components/Assistant";
 import { Footer } from "@/components/Chrome";
-import { SideRail, UpcomingRibbon } from "@/components/Floating";
+import { SideRail } from "@/components/Floating";
 import { Header } from "@/components/Header";
 import { SiteProvider } from "@/components/SiteProvider";
 import { isLang, LANGS } from "@/lib/i18n";
@@ -13,7 +13,9 @@ import { site } from "@/lib/site";
 import "../globals.css";
 
 const tiro = Tiro_Devanagari_Hindi({ weight: "400", subsets: ["devanagari", "latin"], variable: "--font-display", display: "swap" });
-const hind = Hind({ weight: ["300", "400", "500", "600", "700"], subsets: ["devanagari", "latin"], variable: "--font-body", display: "swap" });
+/* body text is serif too: Noto Serif for English, Noto Serif Devanagari for Hindi */
+const serifLatin = Noto_Serif({ weight: ["400", "500", "600", "700"], subsets: ["latin"], variable: "--font-body", display: "swap" });
+const serifHindi = Noto_Serif_Devanagari({ weight: ["400", "500", "600", "700"], subsets: ["devanagari"], variable: "--font-body-hi", display: "swap" });
 
 export const dynamicParams = false;
 export const generateStaticParams = () => LANGS.map((lang) => ({ lang }));
@@ -42,10 +44,9 @@ export default async function LangLayout({ children, params }: { children: React
   const { lang } = await params;
   if (!isLang(lang)) notFound();
   return (
-    <html lang={lang} className={`${tiro.variable} ${hind.variable}`}>
+    <html lang={lang} className={`${tiro.variable} ${serifLatin.variable} ${serifHindi.variable}`}>
       <body>
         <SiteProvider lang={lang}>
-          <UpcomingRibbon />
           <Header />
           <main id="main">{children}</main>
           <Footer lang={lang} />

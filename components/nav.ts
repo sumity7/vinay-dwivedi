@@ -5,36 +5,7 @@ export type NavItem = NavLink | { label: Bi; base: string; children: NavLink[] }
 
 export const NAV: NavItem[] = [
   { path: "", label: { hi: "होम", en: "Home" } },
-  {
-    label: { hi: "व्यक्तित्व", en: "Personality" }, base: "/about",
-    children: [
-      { path: "/about", label: { hi: "परिचय", en: "Introduction" } },
-      { path: "/about#journey", label: { hi: "यात्रा", en: "Journey" } },
-      { path: "/vikas-yatra", label: { hi: "उपलब्धियाँ", en: "Achievements" } },
-    ],
-  },
-  {
-    label: { hi: "मीडिया", en: "Media" }, base: "/media",
-    children: [
-      { path: "/media", label: { hi: "फोटो गैलरी", en: "Photo Gallery" } },
-      { path: "/media#videos", label: { hi: "विडियो गैलरी", en: "Video Gallery" } },
-      { path: "/media/meetings", label: { hi: "भेंट व संवाद", en: "Meetings & Interactions" } },
-    ],
-  },
-  {
-    label: { hi: "अपडेट्स", en: "Updates" }, base: "/updates",
-    children: [
-      { path: "/updates", label: { hi: "अपडेट्स", en: "Updates" } },
-    ],
-  },
-  {
-    label: { hi: "विचार", en: "Views" }, base: "/vichar",
-    children: [
-      { path: "/vimarsh", label: { hi: "विमर्श: एक नज़र में", en: "Overview" } },
-      { path: "/vichar", label: { hi: "विचार व लेख", en: "Ideas & Articles" } },
-      { path: "/ideals", label: { hi: "उद्धरण: हमारे आदर्श", en: "Quotes: Our Ideals" } },
-    ],
-  },
+  { path: "/about", label: { hi: "जीवन परिचय", en: "Biography" } },
   {
     label: { hi: "जन सेवा", en: "Public Service" }, base: "/e-",
     children: [
@@ -43,6 +14,23 @@ export const NAV: NavItem[] = [
       { path: "/e-card", label: { hi: "ई-कार्ड बनाएं", en: "Make an e-card" }, desc: { hi: "अपने नाम व फोटो के साथ शुभकामनाएँ", en: "Greetings with your name and photo" } },
     ],
   },
+  { path: "/updates", label: { hi: "अपडेट्स", en: "Updates" } },
+  {
+    label: { hi: "मीडिया", en: "Media" }, base: "/media",
+    children: [
+      { path: "/media", label: { hi: "गैलरी", en: "Gallery" } },
+      { path: "/media/meetings", label: { hi: "भेंट व संवाद", en: "Meetings & Interactions" } },
+    ],
+  },
+  {
+    label: { hi: "विकास व विचार", en: "Development & Ideas" }, base: "/v",
+    children: [
+      { path: "/vimarsh", label: { hi: "एक नज़र में", en: "Overview" } },
+      { path: "/vichar", label: { hi: "विचार व लेख", en: "Ideas & Articles" } },
+      { path: "/vikas-yatra", label: { hi: "विकास यात्रा", en: "Development Journey" } },
+    ],
+  },
+  { path: "/ideals", label: { hi: "हमारे आदर्श", en: "Our Ideals" } },
   { path: "/contact", label: { hi: "संपर्क करें", en: "Contact" } },
 ];
 

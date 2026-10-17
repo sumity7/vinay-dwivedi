@@ -5,7 +5,7 @@ import { YouTubeFeed } from "@/components/Home";
 import { Icon } from "@/components/Icon";
 import { PhotoGrid } from "@/components/PhotoGrid";
 import { sortedEvents } from "@/lib/content/events";
-import { morePhotos } from "@/lib/content/media";
+import { morePhotos, withCM } from "@/lib/content/media";
 import { href, tr, type Lang } from "@/lib/i18n";
 import { getVideos } from "@/lib/youtube";
 
@@ -31,7 +31,12 @@ export default async function Media({ params }: Props) {
       <section>
         <h2 className="sr-only">{lang === "hi" ? "मीडिया" : "Media"}</h2>
         <div className="wrap">
+          <div className="album" id="yogi" style={{ scrollMarginTop: 100 }}>
+            <h2>{tr(withCM[0].cap, lang)}</h2>
+            <PhotoGrid photos={withCM} />
+          </div>
           <div className="occ" style={{ marginTop: 0, marginBottom: 36 }}>
+            <a className="chip" href="#yogi">{t("योगी जी के साथ", "With Yogi ji")}</a>
             {sortedEvents.map((e) => <a key={e.slug} className="chip" href={`#${e.slug}`}>{tr(e.title, lang)}</a>)}
             <a className="chip" href="#more">{t("और तस्वीरें", "More photographs")}</a>
             <a className="chip" href="#videos">{t("वीडियो", "Videos")}</a>

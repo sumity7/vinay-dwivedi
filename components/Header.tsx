@@ -1,34 +1,18 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import logo from "@/images/logo.png";
 import { href, type Lang } from "@/lib/i18n";
-import { site } from "@/lib/site";
-import { Icon, type IconName } from "./Icon";
+import { Icon } from "./Icon";
 import { NAV } from "./nav";
 import { useSite } from "./SiteProvider";
 
-const SOC: { key: "facebook" | "instagram" | "youtube"; label: string; icon: IconName }[] = [
-  { key: "facebook", label: "Facebook", icon: "facebook" },
-  { key: "instagram", label: "Instagram", icon: "instagram" },
-  { key: "youtube", label: "YouTube", icon: "youtube" },
-];
-
 export function Logo({ lang }: { lang: Lang }) {
   return (
-    <Link className="logo-block" href={href(lang)} aria-label={lang === "hi" ? "होम" : "Home"}>
-      <svg viewBox="0 0 48 48" aria-hidden="true">
-        <g fill="#fff">
-          <path d="M24 8c4 5 5 11 0 22-5-11-4-17 0-22z" />
-          <path d="M24 30c-7-3-11-8-12-15 6 1 10 6 12 15z" opacity=".9" />
-          <path d="M24 30c7-3 11-8 12-15-6 1-10 6-12 15z" opacity=".9" />
-          <path d="M24 31c-8 0-14-3-17-8 6-1 12 2 17 8z" opacity=".75" />
-          <path d="M24 31c8 0 14-3 17-8-6-1-12 2-17 8z" opacity=".75" />
-        </g>
-        <path d="M14 36h20M18 40h12" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
-      </svg>
-      <span className="sep" aria-hidden="true" />
-      <span className="name">{lang === "hi" ? <>विनय कुमार<br />द्विवेदी</> : <>Vinay Kumar<br />Dwivedi</>}</span>
+    <Link className="logo-block" href={href(lang)} aria-label={lang === "hi" ? "विनय कुमार द्विवेदी: होम" : "Vinay Kumar Dwivedi: Home"}>
+      <Image src={logo} alt="" priority sizes="(max-width: 1100px) 240px, 330px" />
     </Link>
   );
 }
@@ -96,16 +80,13 @@ export function Header() {
                 </div>
               </div>
             ) : (
-              <Link key={i} href={href(lang, item.path)} className={isActive(item.path) ? "active" : ""} aria-current={isActive(item.path) ? "page" : undefined}>
+              <Link key={i} href={href(lang, item.path)} className={`${isActive(item.path) ? "active" : ""}${item.path === "/contact" ? " nav-cta" : ""}`} aria-current={isActive(item.path) ? "page" : undefined}>
                 {pick(item.label)}
               </Link>
             ),
           )}
         </nav>
         <div className="bar-right">
-          <div className="soc-mini">
-            {SOC.map((s) => <a key={s.key} href={site.social[s.key].url} target="_blank" rel="noopener" aria-label={s.label}><Icon name={s.icon} /></a>)}
-          </div>
           <div className="lang-switch" role="group" aria-label={t("भाषा", "Language")}>
             <Link href={`/en${rest}`} aria-current={lang === "en"} lang="en">EN</Link>
             <Link href={`/hi${rest}`} aria-current={lang === "hi"} lang="hi">हिन्दी</Link>
@@ -117,7 +98,9 @@ export function Header() {
       </div>
       <nav id="drawer" className={`drawer${drawer ? " open" : ""}`} aria-label={t("मेनू", "Menu")}>
         {NAV.map((item, i) =>
-          "children" in item ? (
+          "children" in item && item.children.length === 1 ? (
+            <Link key={i} className={groupActive(item.base, item.children) ? "active" : ""} href={href(lang, item.children[0].path)}>{pick(item.label)}</Link>
+          ) : "children" in item ? (
             <div key={i}>
               <div className="group">{pick(item.label)}</div>
               {item.children.map((c) => <Link key={c.path} className={`sub${isActive(c.path) && rest === c.path ? " active" : ""}`} href={href(lang, c.path)}>{pick(c.label)}</Link>)}

@@ -8,7 +8,7 @@
   /* aliases used by a few components */
   --ink-2:var(--text); --marigold:var(--orange); --saffron-deep:var(--orange-text);
   --display:var(--font-display),"Tiro Devanagari Hindi",Georgia,serif;
-  --body:var(--font-body),"Hind",system-ui,sans-serif;
+  --body:var(--font-body),var(--font-body-hi),"Noto Serif","Noto Serif Devanagari",Georgia,serif;
   --radius:4px; --radius-lg:6px;
   --shadow:0 2px 14px #1418271a; --shadow-lift:0 12px 30px -10px #14182740;
   --ease:cubic-bezier(.22,1,.36,1);
@@ -116,7 +116,7 @@ section{padding:80px 0}
 .menu-btn svg{width:24px;height:24px;display:block;color:var(--navy-3)}
 .drawer{display:none}
 @media (max-width:1240px){.nav{--nx:9px}.nav>a,.nav .dd>.dd-top{font-size:15px}.logo-block{padding-right:52px}.logo-block .name{font-size:22px}}
-@media (max-width:1100px){
+@media (max-width:1260px){
   .hbar{height:72px;gap:12px;padding-right:16px}
   .nav,.bar-right{display:none}
   .menu-btn{display:block}
@@ -1091,17 +1091,18 @@ footer .bottom{text-align:left}
   /* mirrored slide: deep saffron behind the words (now on the right), brightening towards the photo */
   .hero .slide.flip{background:radial-gradient(90% 120% at 0% 0%,#ffffff1f 0%,#ffffff00 60%),linear-gradient(270deg,#ad4a07 0%,#bd520a 42%,#e06a10 72%,#f47b20 100%)}
 }
-/* shorter laptop screens: tighten the hero text so the whole slide fits and nothing is clipped at the top */
-@media (min-width:901px) and (max-height:860px){
-  /* the hero fills what is left of the first screen (header is about 140px), so the whole photo is in view */
-  .hero{height:max(540px,calc(100vh - 140px));min-height:0}
-  .hero .slide-cap{padding-bottom:44px}
-  .hero .slide-cap h2{font-size:clamp(32px,min(4.3vw,6.2vh),56px);margin-bottom:10px}
-  .hero .slide-cap h2:after{margin-top:12px}
-  .hero .slide-cap p{font-size:clamp(15px,2.1vh,18px);line-height:1.6;margin-bottom:12px}
-  .slide-points{gap:7px;margin-bottom:18px}
-  .slide-points li{font-size:clamp(14px,2.1vh,17px)}
-  .slide-tag{margin-bottom:10px}
+/* hero text: large and readable. Sizes follow both the width and the height of the screen, so it fills the slide on big monitors and still fits on short laptop screens. */
+@media (min-width:901px){
+  .hero{height:max(560px,min(calc(100vh - 112px),780px));min-height:0}
+  .hero .slide-cap{max-width:min(900px,calc(100% - 120px));padding-bottom:48px}
+  .hero .slide-cap h2{font-size:clamp(36px,min(4.4vw,7.2vh),76px);line-height:1.1;margin-bottom:12px}
+  .hero .slide-cap h2:after{margin-top:16px;width:84px;height:5px}
+  .hero .slide-cap p{font-size:clamp(17px,min(1.55vw,2.7vh),25px);line-height:1.6;max-width:70ch;margin-bottom:16px}
+  .slide-points{gap:clamp(8px,1.4vh,14px);margin-bottom:clamp(20px,3.2vh,34px)}
+  .slide-points li{font-size:clamp(16px,min(1.35vw,2.5vh),23px);padding-left:40px}
+  .slide-points li:before{width:24px;height:24px}
+  .slide-tag{font-size:clamp(14px,1.2vw,18px);padding:7px 18px;margin-bottom:clamp(10px,2vh,18px)}
+  .hero .slide-cap .btn{font-size:clamp(16px,1.2vw,19px);padding:clamp(12px,1.8vh,16px) clamp(22px,1.8vw,30px)}
 }
 
 /* Hero photo panel takes exactly the photo's own shape: the whole picture, flush to the edge and full height, with no blurred bands or frame around it. */
@@ -1116,3 +1117,110 @@ footer .bottom{text-align:left}
   .hero .slide-media{-webkit-mask-image:linear-gradient(90deg,transparent 0,#0000001f 5%,#00000066 10%,#000000b3 16%,#000 24%);mask-image:linear-gradient(90deg,transparent 0,#0000001f 5%,#00000066 10%,#000000b3 16%,#000 24%)}
   .hero .slide.flip .slide-media{-webkit-mask-image:linear-gradient(270deg,transparent 0,#0000001f 5%,#00000066 10%,#000000b3 16%,#000 24%);mask-image:linear-gradient(270deg,transparent 0,#0000001f 5%,#00000066 10%,#000000b3 16%,#000 24%)}
 }
+
+/* Logo: the lotus + name artwork on the white header (replaces the saffron block). */
+.logo-block,.logo-block:hover{background:none;clip-path:none;padding:0 12px 0 22px;display:flex;align-items:center}
+.logo-block img{display:block;height:72px;width:auto;max-width:100%}
+@media (max-width:1240px){.logo-block{padding-right:6px}.logo-block img{height:58px}}
+@media (max-width:1260px){.logo-block{padding:0 10px 0 14px}.logo-block img{height:46px}}
+@media (max-width:420px){.logo-block{padding:0 6px 0 10px}.logo-block img{height:38px}}
+/* home "Latest updates": a short summary and a read-more line under each card, so the section carries content */
+.news-card b{font-size:clamp(18px,1.5vw,22px)}
+.news-card p{margin:2px 0 4px;color:var(--text);font-size:15.5px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.news-card .link-arrow{padding:4px 0}
+
+/* ===== Tighter rhythm: less empty space between and inside sections ===== */
+section{padding:52px 0}
+@media (max-width:640px){section{padding:38px 0}}
+.gallery-sec{padding:52px 0 44px}
+.tiles-sec{padding:44px 0 36px}
+.news-sec{padding:36px 0 12px}
+.intro-strip{padding:26px 0}
+.page-hero{padding:40px 0 34px}
+@media (max-width:900px){.page-hero{padding:30px 0 26px}}
+.sec-title.center{margin-bottom:24px}
+.sec-head{margin-bottom:24px}
+.persona{min-height:0}
+.persona-photos{min-height:440px}
+.persona-text{padding:44px max(5%,24px) 40px 8%}
+.persona-text h2{margin-bottom:16px}
+.form-card{padding:24px}
+@media (max-width:560px){.form-card{padding:18px}}
+.nf{padding:64px 0 72px}
+@media (max-width:760px){.persona-photos{min-height:360px}.persona-text{padding:32px 20px 32px}}
+
+/* ===== Footer in the BJP colours: saffron body (same family as the hero) with a green bar at the bottom ===== */
+footer{background:linear-gradient(135deg,#b84f08 0%,#c9590a 55%,#d9650c 100%);color:#fff}
+footer .top{gap:36px;padding:44px 0 28px}
+footer h3{margin-bottom:16px}
+footer h3:after{background:#fff}
+footer p,footer ul a,.f-line a{color:#fff}
+footer ul svg,.f-line svg{color:#fff}
+footer ul a:hover,.f-line a:hover{color:#fff;text-decoration:underline}
+footer .bottom{background:#138808;padding:14px 0;color:#fff}
+footer .bottom p{color:#fff}
+.soc-row a{border-color:#ffffffaa}
+.soc-row a:hover{background:#138808;border-color:#138808}
+@media (max-width:900px){footer .top{gap:26px;padding-top:36px}}
+footer .site-credit-label,footer .site-credit-name svg{color:#fff}
+/* footer bottom bar: a deeper shade of the same saffron (no green) */
+footer .bottom{background:#a94606;border-top:1px solid #ffffff33}
+.soc-row a:hover{background:#a94606;border-color:#fff}
+
+/* ===== Compact header: slimmer bar, tighter menu, slimmer green ribbon above it ===== */
+.ribbon .wrap{padding:4px 0}
+.ribbon{font-size:14.5px}
+.hbar{height:76px;gap:14px;padding-right:20px}
+.logo-block,.logo-block:hover{padding:0 6px 0 18px}
+.logo-block img{height:60px}
+.nav{--nx:11px;gap:0}
+.nav>a,.nav .dd>.dd-top{padding:8px var(--nx);font-size:15.5px;gap:4px}
+.nav>a:after,.nav .dd>.dd-top:after{bottom:1px}
+.dd-menu{min-width:230px;padding:4px 0}
+.dd-menu a{padding:8px 18px}
+.bar-right{gap:0}
+.soc-mini{gap:2px}
+.lang-switch{gap:12px}
+@media (max-width:1240px){.nav{--nx:8px}.nav>a,.nav .dd>.dd-top{font-size:15px}.logo-block img{height:52px}.logo-block,.logo-block:hover{padding:0 4px 0 14px}}
+@media (max-width:1260px){.hbar{height:62px;gap:8px;padding-right:12px}.logo-block img{height:42px}.logo-block,.logo-block:hover{padding:0 6px 0 12px}.drawer.open{max-height:calc(100dvh - 62px)}}
+@media (max-width:420px){.logo-block img{height:36px}}
+/* on very wide screens the header content stays together instead of spreading to the edges */
+.hbar{max-width:1500px;margin-inline:auto}
+/* menu starts right after the logo (no empty gap); the spare room is pushed to the right, before the social icons */
+.nav{justify-content:flex-start;margin-left:4px}
+
+/* ===== Header: slim white bar, menu next to the logo, filled Contact button, language pill ===== */
+.bar-right{flex-direction:row;align-items:center;gap:0}
+.soc-mini{display:none}
+.lang-switch{gap:0;border:1px solid var(--line);border-radius:999px;padding:3px;background:#fff}
+.lang-switch a{padding:5px 13px;border-radius:999px;font-size:14.5px;line-height:1.2;transition:background .2s,color .2s}
+.lang-switch a[aria-current=true]{background:#17181c;color:#fff}
+.nav .nav-cta{margin-left:auto;margin-right:10px;background:var(--orange-btn);color:#fff;border-radius:7px;padding:9px 18px;font-weight:600;box-shadow:0 6px 14px -8px #92400ecc;transition:background .2s,transform .2s}
+.nav .nav-cta:after{display:none}
+.nav .nav-cta:hover,.nav .nav-cta.active{background:#92400e;color:#fff;transform:translateY(-1px)}
+@media (min-width:901px){.hero{height:max(560px,min(calc(100vh - 82px),800px))}}
+/* the desktop menu has eight entries plus the button: on mid-size laptops it gets a little tighter instead of overflowing */
+@media (min-width:1261px) and (max-width:1380px){.nav{--nx:8px}.nav>a,.nav .dd>.dd-top{font-size:15px}.logo-block img{height:52px}.logo-block,.logo-block:hover{padding:0 4px 0 14px}.nav .nav-cta{padding:8px 15px;margin-right:6px}}
+
+/* a single featured photo (top of the Media page): large, whole picture, not stretched */
+.pgrid.one{grid-template-columns:minmax(0,720px)}
+.pgrid.one button{aspect-ratio:3/2}
+.pgrid.one img{object-position:50% 28%!important}
+@media (max-width:860px){.pgrid.one{grid-template-columns:1fr}}
+
+/* footer: compact. Less padding around and between the columns and links */
+footer .top{gap:28px;padding:30px 0 16px}
+footer h3{font-size:20px;margin-bottom:12px;padding-bottom:9px}
+footer ul{gap:0;margin:0 0 12px}
+footer ul a,.f-line a{padding:5px 0}
+.f-line{margin:0 0 6px}
+footer .bottom{padding:10px 0}
+.site-credit{padding:6px 14px}
+@media (max-width:900px){footer .top{gap:20px;padding:26px 0 10px}}
+
+/* Personality: a single large photo that fills its half (the second, close-up portrait was removed) */
+.persona{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+.persona-photos{min-height:480px}
+.persona-photos .p2{inset:0;width:100%;height:100%;aspect-ratio:auto;border:0;box-shadow:none}
+.persona:hover .p2{transform:none}
+@media (max-width:900px){.persona{grid-template-columns:1fr}.persona-photos{min-height:380px}.persona-photos .p2{width:100%;bottom:0;border:0}}
