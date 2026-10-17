@@ -88,8 +88,8 @@ export function Header() {
         </nav>
         <div className="bar-right">
           <div className="lang-switch" role="group" aria-label={t("भाषा", "Language")}>
-            <Link href={`/en${rest}`} aria-current={lang === "en"} lang="en">EN</Link>
-            <Link href={`/hi${rest}`} aria-current={lang === "hi"} lang="hi">हिन्दी</Link>
+            <Link href={`/en${rest}`} aria-current={lang === "en"} lang="en" aria-label="English">EN</Link>
+            <Link href={`/hi${rest}`} aria-current={lang === "hi"} lang="hi" aria-label="हिन्दी">हिं</Link>
           </div>
         </div>
         <button className={`menu-btn${drawer ? " is-open" : ""}`} aria-label={t("मेनू", "Menu")} aria-expanded={drawer} aria-controls="drawer" onClick={() => setDrawer(!drawer)}>

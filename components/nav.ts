@@ -23,14 +23,14 @@ export const NAV: NavItem[] = [
     ],
   },
   {
-    label: { hi: "विकास व विचार", en: "Development & Ideas" }, base: "/v",
+    label: { hi: "दृष्टि व आदर्श", en: "Vision & Ideals" }, base: "/v",
     children: [
-      { path: "/vimarsh", label: { hi: "एक नज़र में", en: "Overview" } },
-      { path: "/vichar", label: { hi: "विचार व लेख", en: "Ideas & Articles" } },
-      { path: "/vikas-yatra", label: { hi: "विकास यात्रा", en: "Development Journey" } },
+      { path: "/vimarsh", label: { hi: "एक नज़र में", en: "Overview" }, desc: { hi: "विकास व विचार का सार", en: "Development and ideas at a glance" } },
+      { path: "/vichar", label: { hi: "विचार व लेख", en: "Ideas & Articles" }, desc: { hi: "योजनाओं की सरल जानकारी", en: "Schemes explained simply" } },
+      { path: "/vikas-yatra", label: { hi: "विकास यात्रा", en: "Development Journey" }, desc: { hi: "आँकड़े और पड़ाव", en: "Figures and milestones" } },
+      { path: "/ideals", label: { hi: "हमारे आदर्श", en: "Our Ideals" }, desc: { hi: "प्रेरणा देने वाले विचार", en: "Words that guide us" } },
     ],
   },
-  { path: "/ideals", label: { hi: "हमारे आदर्श", en: "Our Ideals" } },
   { path: "/contact", label: { hi: "संपर्क करें", en: "Contact" } },
 ];
 

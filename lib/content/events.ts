@@ -15,6 +15,8 @@ export type EventPost = {
   summary: Bi;
   lead: Bi;
   body: Bi[];
+  points: Bi[]; // "key points" box: short facts from the post
+  context: Bi[]; // background and "what it means for you" paragraphs (general context, no new claims about the event)
   photos: Photo[]; // first photo is the cover
   source?: string; // link to the original post
 };
@@ -24,6 +26,26 @@ const CAT = { events: { hi: "कार्यक्रम", en: "Events" }, outre
 export const events: EventPost[] = [
   {
     slug: "navratri-durga-puja-bhagwat-katha",
+    points: [
+      { hi: "चार गाँवों में पूजन: पारासराय, जमुनही हरदोपट्टी, बगाही (जगन्नाथीपुर) और नौसहरा (इटियाथोक)", en: "Prayers in four villages: Parasrai, Jamunhi Hardopatti, Bagahi (Jagannathipur) and Nausahra (Itia Thok)" },
+      { hi: "आयोजन गाँवों की पूजा समितियों द्वारा किए गए: दुर्गा पूजा और श्रीमद्भागवत कथा", en: "Organised by the villages’ own puja committees: Durga Puja and Shrimad Bhagwat Katha" },
+      { hi: "व्यासपीठ का आशीर्वाद लिया और माँ भगवती का पूजन-अर्चन किया", en: "Received the blessings of the Vyaspeeth and offered prayers to Maa Bhagwati" },
+      { hi: "समस्त क्षेत्रवासियों के सुख, शांति व समृद्धि की कामना", en: "Prayed for the happiness, peace and prosperity of everyone in the area" },
+    ],
+    context: [
+      {
+        hi: "नवरात्रि के नौ दिन माँ दुर्गा के नौ स्वरूपों की आराधना के होते हैं। गाँवों में यह पर्व किसी एक परिवार का नहीं, पूरे गाँव का होता है: पूजा समिति बनती है, पंडाल सजता है, रोज़ आरती होती है और हर घर अपनी सामर्थ्य से सहयोग करता है।",
+        en: "The nine nights of Navratri are devoted to the nine forms of Maa Durga. In villages the festival belongs to everyone, not one family: a puja committee is formed, a pandal is decorated, aarti is held every day and each household helps as it can.",
+      },
+      {
+        hi: "श्रीमद्भागवत कथा में कथावाचक व्यासपीठ से श्रीमद्भागवत पुराण का वाचन करते हैं, जो प्रायः कई दिनों तक चलता है। पूरा गाँव एक साथ बैठकर कथा सुनता है, इसलिए यह भक्ति के साथ-साथ आपसी मेल-जोल का भी अवसर बन जाता है।",
+        en: "In a Bhagwat Katha the kathavachak reads and explains the Shrimad Bhagwat Purana from the Vyaspeeth, usually over several days. The whole village sits and listens together, so it is a time for devotion and for coming together.",
+      },
+      {
+        hi: "ऐसे आयोजनों में पूरा गाँव एक जगह जुटता है, इसीलिए जनप्रतिनिधि भी इनमें पहुँचकर लोगों से सीधे मिल पाते हैं। यदि आपके गाँव में भी कोई धार्मिक या सामाजिक आयोजन है और आप विधायक जी को आमंत्रित करना चाहते हैं, तो संपर्क पृष्ठ पर आमंत्रण भेजें।",
+        en: "Because the whole village gathers at such events, public representatives can meet people directly there. If your village is holding a religious or community event and you would like to invite the MLA, send an invitation through the Contact page.",
+      },
+    ],
     date: "2026-10-16",
     category: CAT.culture,
     place: { hi: "पारासराय, जमुनही हरदोपट्टी, बगाही, नौसहरा (इटियाथोक)", en: "Parasrai, Jamunhi Hardopatti, Bagahi, Nausahra (Itia Thok)" },
@@ -64,6 +86,21 @@ export const events: EventPost[] = [
   },
   {
     slug: "binuhani-ramlila",
+    points: [
+      { hi: "बिनुहनी में श्री रामलीला का आयोजन विगत 53 वर्षों से अनवरत हो रहा है", en: "Binuhani has staged the Ramlila without a break for 53 years" },
+      { hi: "आयोजक: आदर्श रामलीला प्रबंध समिति, बिनुहनी", en: "Organiser: Adarsh Ramlila Prabandh Samiti, Binuhani" },
+      { hi: "उपस्थित: ग्राम प्रधान श्री दशरथ लाल जी, मंडल अध्यक्ष इटियाथोक श्री संतोष चौरसिया जी, ग्रामवासी व श्रद्धालु", en: "Present: village head Shri Dashrath Lal, Itia Thok mandal president Shri Santosh Chaurasiya, villagers and devotees" },
+    ],
+    context: [
+      {
+        hi: "रामलीला प्रभु श्रीराम के जीवन का मंचन है। अनेक गाँवों में इसके पात्र स्थानीय लोग ही निभाते हैं और मंच, वेशभूषा तथा आयोजन की व्यवस्था भी गाँव की समिति मिलकर करती है। इसी कारण यह परंपरा सिर्फ़ मनोरंजन नहीं, गाँव की साझा पहचान बन जाती है।",
+        en: "The Ramlila is a stage retelling of the life of Lord Ram. In many villages the roles are played by local people, and the stage, costumes and arrangements are managed by a village committee. That is why such a tradition is more than entertainment: it becomes the village’s shared identity.",
+      },
+      {
+        hi: "53 वर्ष तक बिना रुके किसी आयोजन का चलते रहना तभी संभव है जब कई पीढ़ियाँ उसे अपना मानकर आगे बढ़ाएँ। ऐसी परंपराओं को सम्मान देना और उनके आयोजकों का उत्साह बढ़ाना क्षेत्र की सांस्कृतिक विरासत को सहेजने का ही काम है।",
+        en: "An event can run for 53 years without a break only when several generations take it as their own. Honouring such traditions and encouraging their organisers is part of preserving the area’s cultural heritage.",
+      },
+    ],
     date: "2026-10-16",
     category: CAT.culture,
     place: { hi: "ग्रामसभा बिनुहनी, इटियाथोक", en: "Binuhani, Itia Thok" },
@@ -101,6 +138,26 @@ export const events: EventPost[] = [
   },
   {
     slug: "kisan-rahat-vitaran",
+    points: [
+      { hi: "चक्रवात और बाढ़ से फसल क्षति झेलने वाले किसानों के लिए कार्यक्रम", en: "A programme for farmers whose crops were damaged by the cyclone and floods" },
+      { hi: "दो तरह की मदद: आपदा राहत सहायता के चेक और कृषि निवेश अनुदान के अंतर्गत बीज", en: "Two kinds of help: disaster-relief cheques, and seeds under the agricultural input grant" },
+      { hi: "स्थान: जिला पंचायत सभागार, गोंडा", en: "Venue: Zila Panchayat hall, Gonda" },
+      { hi: "अधिकारी और क्षेत्रवासी कार्यक्रम में उपस्थित रहे", en: "Officials and residents were present" },
+    ],
+    context: [
+      {
+        hi: "दोनों मदद के काम अलग हैं। चेक उस नुकसान की भरपाई में सहारा देता है जो खेत में हो चुका है, जबकि बीज अगली बुवाई की तैयारी के लिए है, ताकि किसान को दोबारा खेती शुरू करने के लिए कर्ज़ का इंतज़ार न करना पड़े।",
+        en: "The two kinds of help do different jobs. The cheque eases the loss already suffered in the field, while the seed is for the next sowing, so a farmer can restart farming without waiting for a loan.",
+      },
+      {
+        hi: "सामान्यतः फसल क्षति का आकलन गाँव स्तर पर राजस्व और कृषि विभाग के कर्मचारी करते हैं और प्रभावित किसानों की सूची आगे भुगतान के लिए जाती है। इसलिए अपनी खेती, बैंक खाते और ज़मीन के कागज़ों की जानकारी सही और अद्यतन रखें।",
+        en: "Generally, crop losses are assessed at village level by revenue and agriculture department staff, and the list of affected farmers then goes forward for payment. So keep your farming details, bank account and land papers correct and up to date.",
+      },
+      {
+        hi: "यदि आपका नाम सूची में नहीं है, नुकसान का आकलन आपके अनुसार ठीक नहीं हुआ है या राशि नहीं मिली है, तो ई-शिकायत पोर्टल पर अपनी बात दर्ज करें। आपको टिकट संख्या मिलेगी, जिससे आप कार्यवाही की स्थिति स्वयं देख सकते हैं।",
+        en: "If your name is missing from the list, your loss was not assessed correctly or the money has not reached you, register it on the e-Shikayat portal. You will get a ticket number to follow the progress yourself.",
+      },
+    ],
     date: "2026-10-12",
     featured: true,
     category: CAT.relief,
@@ -136,6 +193,26 @@ export const events: EventPost[] = [
   },
   {
     slug: "gaon-gaon-jansampark",
+    points: [
+      { hi: "खेत की मेड़ से लेकर गाँव की गलियों और चौपाल तक सीधा संवाद", en: "Direct conversation from the edge of the fields to village lanes and the chaupal" },
+      { hi: "सड़क, बिजली, पानी और योजनाओं के लाभ से जुड़ी बातें सुनी गईं", en: "Heard concerns about roads, electricity, water and access to schemes" },
+      { hi: "सामने आई समस्याएँ संबंधित विभागों तक पहुँचाई जाएँगी", en: "The problems raised will be taken to the departments concerned" },
+      { hi: "घर बैठे शिकायत दर्ज करने का विकल्प: ई-शिकायत पोर्टल", en: "You can also complain from home: the e-Shikayat portal" },
+    ],
+    context: [
+      {
+        hi: "गाँव की कई समस्याएँ छोटी होती हैं: बिगड़ा हैंडपंप, रुकी हुई पेंशन, टूटी नाली। पर वे किसी दफ़्तर तक पहुँच ही नहीं पातीं। जनसंपर्क का असली फ़ायदा यही है कि लोग अपनी बात उसी जगह कह पाते हैं जहाँ वे रहते हैं, और बात सीधे सुनने वाले तक पहुँचती है।",
+        en: "Many village problems are small, such as a broken handpump, a stopped pension or a damaged drain, yet they never reach an office. The real value of outreach is that people can speak where they live and be heard directly.",
+      },
+      {
+        hi: "बैठक में हर बात का समाधान उसी समय संभव नहीं होता, इसलिए आगे की कार्यवाही का एक व्यवस्थित तरीका ज़रूरी है। ई-शिकायत पोर्टल यही करता है: नाम, मोबाइल, गाँव और विषय के साथ शिकायत दर्ज होती है, एक टिकट संख्या मिलती है, और स्थिति ‘प्राप्त’ से ‘जाँच में’, ‘कार्यवाही में’ और फिर ‘निस्तारित’ तक दिखती रहती है।",
+        en: "Not everything can be settled on the spot, so a clear way to follow up matters. The e-Shikayat portal does this: you file with your name, mobile, village and subject, get a ticket number, and watch the status move from ‘Received’ to ‘Under review’, ‘Action taken’ and then ‘Resolved’.",
+      },
+      {
+        hi: "शिकायत की स्थिति देखने के लिए केवल टिकट संख्या और मोबाइल के अंतिम 4 अंक चाहिए। निस्तारण के बाद आप सेवा को सितारों से रेटिंग भी दे सकते हैं।",
+        en: "To check the status you only need the ticket number and the last 4 digits of your mobile. After a complaint is resolved you can also rate the service with stars.",
+      },
+    ],
     date: "2026-10-12",
     category: CAT.outreach,
     place: { hi: "मेहनौन विधानसभा क्षेत्र", en: "Mehnaun Assembly constituency" },
@@ -174,6 +251,21 @@ export const events: EventPost[] = [
   },
   {
     slug: "samajik-karyakram",
+    points: [
+      { hi: "श्रद्धांजलि सभा में पुष्पांजलि अर्पित कर शोकाकुल परिवार को सांत्वना दी", en: "Offered flowers at a tribute gathering and consoled the bereaved family" },
+      { hi: "क्षेत्रवासियों ने स्मृति-चिह्न भेंट कर स्वागत किया", en: "Residents welcomed him with mementos" },
+      { hi: "अंगवस्त्र पहनाकर अतिथियों का सम्मान किया", en: "Honoured guests with a ceremonial stole" },
+    ],
+    context: [
+      {
+        hi: "गाँव और कस्बों के जीवन में शोक की घड़ी में पहुँचना या किसी आयोजन में शामिल होना सम्मान और अपनत्व की निशानी माना जाता है। लोग याद रखते हैं कि कठिन समय में कौन उनके साथ खड़ा था।",
+        en: "In village and town life, being present at a time of grief or at someone’s event is a mark of respect and belonging. People remember who stood with them in a hard time.",
+      },
+      {
+        hi: "स्मृति-चिह्न और अंगवस्त्र जैसे सम्मान हमारी परंपरा में आदर प्रकट करने के सहज तरीके हैं। इनसे अधिक महत्त्वपूर्ण वह संवाद है जो ऐसे कार्यक्रमों में लोगों के बीच बनता है, और जिससे क्षेत्र की ज़रूरतें सीधे सुनने को मिलती हैं।",
+        en: "A memento or a stole are simple, traditional ways of showing respect. More important is the conversation that happens between people at such programmes, through which the area’s needs are heard first-hand.",
+      },
+    ],
     date: "2026-10-13",
     category: CAT.events,
     place: { hi: "गोंडा", en: "Gonda" },

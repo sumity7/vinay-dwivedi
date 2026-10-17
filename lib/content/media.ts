@@ -17,11 +17,12 @@ export const withCM: Photo[] = [
   { img: img.heroEcard, cap: { hi: "मुख्यमंत्री श्री योगी आदित्यनाथ जी के साथ", en: "With Chief Minister Shri Yogi Adityanath" } },
 ];
 
+/* Order matters: leadership meetings first, then public addresses, then the review meeting and office work. */
 export const morePhotos: Photo[] = [
-  { img: img.hero, cap: { hi: "जनसंवाद", en: "Speaking with residents" } },
-  { img: img.addressing, cap: { hi: "जनसभा को संबोधन", en: "Addressing a gathering" } },
   { img: img.meetingGreeting, cap: { hi: "भेंट एवं स्वागत", en: "A courtesy meeting" } },
   { img: img.stateMeeting, cap: { hi: "क्षेत्र की माँगें शासन स्तर पर", en: "Raising the constituency’s demands with the state government" } },
+  { img: img.hero, cap: { hi: "जनसंवाद", en: "Speaking with residents" } },
+  { img: img.addressing, cap: { hi: "जनसभा को संबोधन", en: "Addressing a gathering" } },
   { img: img.officialMeeting, cap: { hi: "विधानसभा क्षेत्र की समीक्षा बैठक", en: "Constituency review meeting" } },
   { img: img.atWork, cap: { hi: "जन समस्याओं पर कार्य", en: "Working through public grievances" } },
 ];

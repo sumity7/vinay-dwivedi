@@ -16,18 +16,30 @@ import { useSite } from "./SiteProvider";
 export type Slide = { flip?: boolean; img: StaticImageData; alt?: Bi; pos?: string; tag?: Bi; title?: Bi; text?: Bi; points?: Bi[]; cta?: { href: string; label: Bi }; cta2?: { href: string; label: Bi } };
 
 /* Full-width banner: slides move sideways, white arrows, dots below.
-   It never advances on its own: the visitor moves it with the arrows, the dots, a swipe or the keyboard. */
+   It advances by itself every few seconds; it stops while the visitor hovers or focuses it (or if their device asks for less motion),
+   and the arrows, dots, a swipe or the keyboard still work. */
+const SLIDE_MS = 7000;
 export function HeroSlider({ slides }: { slides: Slide[] }) {
   const { t, pick } = useSite();
   const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
   const touchX = useRef<number | null>(null);
   const go = (d: number) => setI((x) => (x + d + slides.length) % slides.length);
 
+  useEffect(() => {
+    if (paused || slides.length < 2 || prefersReducedMotion()) return;
+    const id = setTimeout(() => setI((x) => (x + 1) % slides.length), SLIDE_MS);
+    return () => clearTimeout(id);
+  }, [i, paused, slides.length]);
+
   return (
     <div className="hero-slider" aria-roledescription="carousel" tabIndex={0}
+      onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
+      onFocus={(e) => { if (e.target.matches(":focus-visible")) setPaused(true); }} onBlur={() => setPaused(false)}
       onKeyDown={(e) => { if (e.key === "ArrowLeft") go(-1); else if (e.key === "ArrowRight") go(1); }}
-      onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
+      onTouchStart={(e) => { touchX.current = e.touches[0].clientX; setPaused(true); }}
       onTouchEnd={(e) => {
+        setPaused(false);
         if (touchX.current === null) return;
         const dx = e.changedTouches[0].clientX - touchX.current;
         touchX.current = null;
