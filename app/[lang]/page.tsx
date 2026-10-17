@@ -16,7 +16,6 @@ import { getVideos } from "@/lib/youtube";
 /* Hero: three slides, one per service (photos enhanced from the originals) */
 const heroSlides = (lang: Lang): Slide[] => [
   {
-    flip: true,
     img: img.heroAchievements, alt: { hi: "जनसभा को संबोधित करते विनय कुमार द्विवेदी", en: "Vinay Kumar Dwivedi addressing a gathering" },
     tag: { hi: "विधायक, मेहनौन (295)", en: "MLA, Mehnaun (295)" },
     title: { hi: "मेहनौन की बुलंद आवाज़", en: "The strong voice of Mehnaun" },
