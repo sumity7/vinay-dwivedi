@@ -3,7 +3,7 @@
 import { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { Pic } from "./Pic";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import type { Photo } from "@/lib/content/events";
 import { fmtDate, type Bi } from "@/lib/i18n";
 import { img } from "@/lib/images";
@@ -13,7 +13,7 @@ import type { Video } from "@/lib/youtube";
 import { Icon, type IconName } from "./Icon";
 import { useSite } from "./SiteProvider";
 
-export type Slide = { img: StaticImageData; alt?: Bi; pos?: string; tag?: Bi; title?: Bi; text?: Bi; points?: Bi[]; cta?: { href: string; label: Bi }; cta2?: { href: string; label: Bi } };
+export type Slide = { flip?: boolean; img: StaticImageData; alt?: Bi; pos?: string; tag?: Bi; title?: Bi; text?: Bi; points?: Bi[]; cta?: { href: string; label: Bi }; cta2?: { href: string; label: Bi } };
 
 /* Full-width banner: slides move sideways, white arrows, dots below.
    It never advances on its own: the visitor moves it with the arrows, the dots, a swipe or the keyboard. */
@@ -35,7 +35,7 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
       }}>
       <div className="slider" style={{ transform: `translateX(-${i * 100}%)` }}>
         {slides.map((s, k) => (
-          <div key={k} className={`slide${k === i ? " is-active" : ""}`} aria-hidden={k !== i}>
+          <div key={k} className={`slide${k === i ? " is-active" : ""}${s.flip ? " flip" : ""}`} aria-hidden={k !== i}>
             {s.title && (
               <div className="slide-cap">
                 {s.tag && <span className="slide-tag">{pick(s.tag)}</span>}
@@ -51,7 +51,7 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
               </div>
             )}
             {/* photo panel takes the photo's own shape, so the whole picture shows with nothing cropped */}
-            <div className="slide-media" style={{ aspectRatio: `${s.img.width} / ${s.img.height}` }}>
+            <div className="slide-media" style={{ aspectRatio: `${s.img.width} / ${s.img.height}`, "--ar": `${s.img.width} / ${s.img.height}` } as CSSProperties}>
               {/* soft blurred copy fills the panel around the photo, so the photo itself is never cropped */}
               <Pic className="slide-bg" src={s.img} alt="" aria-hidden="true" fill sizes="(max-width: 900px) 50vw, 25vw" style={{ objectFit: "cover" }} />
               <Pic className="slide-img" src={s.img} alt={s.alt ? pick(s.alt) : t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi")} fill sizes="(max-width: 900px) 100vw, 50vw"

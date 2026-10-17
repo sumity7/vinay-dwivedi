@@ -11,8 +11,8 @@ Multi-page bilingual site (Hindi at `/hi`, English at `/en`). Next.js (App Route
 | `/hi/e-shikayat` | Register a complaint (ticket number, photo, consent, helplines) |
 | `/hi/e-shikayat/track` | Track by ticket number + last 4 digits of mobile; reminder after 7 days; star rating after resolution |
 | `/hi/e-card` | 16 occasions + upcoming anniversaries of our ideals (with countdown); name, village, photo; download / share |
-| `/hi/updates`, `/hi/updates/[slug]` | Events with photo albums |
-| `/hi/media`, `/hi/media/meetings` | Gallery (albums, lightbox, videos), meetings & interactions |
+| `/hi/updates`, `/hi/updates/[slug]` | Updates (events) with photo albums |
+| `/hi/media`, `/hi/media/meetings` | Media (photo gallery, lightbox, videos), meetings & interactions |
 | `/hi/vimarsh`, `/hi/vichar`, `/hi/vichar/[slug]` | Development & Ideas overview, scheme articles with category filter |
 | `/hi/vikas-yatra` | Development figures (then/now, with sources) and UP / regional milestones |
 | `/hi/ideals` | Quotes by category, thought of the day |

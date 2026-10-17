@@ -100,8 +100,8 @@ export default async function About({ params }: Props) {
             ))}
           </div>
           <div className="foot-links">
-            <Link className="link-arrow" href={href(lang, "/media")}>{t("फोटो गैलरी", "Gallery")} <Icon name="arrow" /></Link>
-            <Link className="link-arrow" href={href(lang, "/updates")}>{t("कार्यक्रम", "Events")} <Icon name="arrow" /></Link>
+            <Link className="link-arrow" href={href(lang, "/media")}>{t("मीडिया", "Media")} <Icon name="arrow" /></Link>
+            <Link className="link-arrow" href={href(lang, "/updates")}>{t("अपडेट्स", "Updates")} <Icon name="arrow" /></Link>
           </div>
         </div>
       </section>

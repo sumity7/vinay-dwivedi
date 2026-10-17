@@ -43,6 +43,12 @@ export function Header() {
   const [openDd, setOpenDd] = useState<number | null>(null);
   const [drawer, setDrawer] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const pointer = useRef("mouse");
+  const closeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  /* Hover (mouse only) opens a menu; leaving closes it after a short grace period so it never flickers. */
+  const hoverOpen = (i: number) => { clearTimeout(closeTimer.current); setOpenDd(i); };
+  const hoverClose = () => { clearTimeout(closeTimer.current); closeTimer.current = setTimeout(() => setOpenDd(null), 140); };
 
   useEffect(() => { setOpenDd(null); setDrawer(false); }, [pathname]);
   useEffect(() => {
@@ -63,12 +69,24 @@ export function Header() {
         <Logo lang={lang} />
         <nav className="nav" aria-label={t("मुख्य", "Main")} ref={navRef}>
           {NAV.map((item, i) =>
-            "children" in item ? (
-              <div key={i} className={`dd${openDd === i ? " open" : ""}`} onMouseEnter={() => setOpenDd(i)} onMouseLeave={() => setOpenDd(null)}>
-                <button type="button" aria-expanded={openDd === i} className={groupActive(item.base, item.children) ? "active" : ""}
-                  onClick={() => setOpenDd(openDd === i ? null : i)}>
+            "children" in item && item.children.length === 1 ? (
+              /* a group with a single page needs no dropdown: it is just a link */
+              <Link key={i} href={href(lang, item.children[0].path)} className={groupActive(item.base, item.children) ? "active" : ""}>
+                {pick(item.label)}
+              </Link>
+            ) : "children" in item ? (
+              <div key={i} className={`dd${openDd === i ? " open" : ""}`}
+                onMouseEnter={() => { if (pointer.current === "mouse") hoverOpen(i); }}
+                onMouseLeave={() => { if (pointer.current === "mouse") hoverClose(); }}
+                onFocus={() => hoverOpen(i)}
+                onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) hoverClose(); }}>
+                {/* The label is a real link to the section's main page; on touch screens the first tap only opens the menu. */}
+                <Link href={href(lang, item.children[0].path)} className={`dd-top${groupActive(item.base, item.children) ? " active" : ""}`}
+                  aria-haspopup="true" aria-expanded={openDd === i}
+                  onPointerDown={(e) => { pointer.current = e.pointerType; }}
+                  onClick={(e) => { if (pointer.current !== "mouse" && openDd !== i) { e.preventDefault(); setOpenDd(i); } }}>
                   {pick(item.label)} <Icon name="chevDown" />
-                </button>
+                </Link>
                 <div className="dd-menu">
                   {item.children.map((c) => (
                     <Link key={c.path} href={href(lang, c.path)} className={isActive(c.path) && rest === c.path ? "active" : ""}>

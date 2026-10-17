@@ -7,8 +7,8 @@ import { useSite } from "./SiteProvider";
 type Msg = { role: "user" | "assistant"; content: string };
 
 const SUGGEST = {
-  hi: ["शिकायत कैसे दर्ज करें?", "विनय जी का राजनीतिक सफर क्या है?", "हाल में कौन से कार्यक्रम हुए?", "आयुष्मान कार्ड कैसे बनेगा?"],
-  en: ["How do I register a complaint?", "What is his political journey?", "What events were held recently?", "How do I get an Ayushman card?"],
+  hi: ["विनय कुमार द्विवेदी कौन हैं?", "उनकी विधानसभा कौन-सी है?", "विकास के लिए क्या काम हुए?", "‘मुन्ना भैया’ नाम से क्यों जाने जाते हैं?", "शिकायत कैसे दर्ज करें?", "आयुष्मान कार्ड कैसे बनेगा?"],
+  en: ["Who is Vinay Kumar Dwivedi?", "Which assembly does he represent?", "What development work has been done?", "Why is he called ‘Munna Bhaiya’?", "How do I register a complaint?", "How do I get an Ayushman card?"],
 };
 
 /* Turn "/hi/e-shikayat" style paths in answers into links. */

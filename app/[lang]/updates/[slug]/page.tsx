@@ -32,7 +32,7 @@ export default async function EventPage({ params }: Props) {
     <>
       <PageHero
         lang={lang}
-        crumbs={[{ label: { hi: "कार्यक्रम", en: "Events" }, path: "/updates" }, { label: e.title }]}
+        crumbs={[{ label: { hi: "अपडेट्स", en: "Updates" }, path: "/updates" }, { label: e.title }]}
         eyebrow={{ hi: `${e.category.hi} · ${e.place.hi}`, en: `${e.category.en} · ${e.place.en}` }}
         title={e.title}
         lead={e.lead}
@@ -51,8 +51,8 @@ export default async function EventPage({ params }: Props) {
           </article>
         </div>
         <div className="wrap foot-links">
-          <Link className="link-arrow" href={href(lang, "/updates")}>{t("सभी कार्यक्रम", "All events")} <Icon name="arrow" /></Link>
-          <Link className="link-arrow" href={href(lang, "/media")}>{t("फोटो गैलरी", "Gallery")} <Icon name="arrow" /></Link>
+          <Link className="link-arrow" href={href(lang, "/updates")}>{t("सभी अपडेट्स", "All updates")} <Icon name="arrow" /></Link>
+          <Link className="link-arrow" href={href(lang, "/media")}>{t("मीडिया", "Media")} <Icon name="arrow" /></Link>
         </div>
       </section>
     </>

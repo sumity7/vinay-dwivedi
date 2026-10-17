@@ -8,7 +8,7 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "कार्यक्रम" : "Events" };
+  return { title: lang === "hi" ? "अपडेट्स" : "Updates" };
 }
 
 export default async function Updates({ params }: Props) {
@@ -17,12 +17,12 @@ export default async function Updates({ params }: Props) {
     <>
       <PageHero
         lang={lang}
-        crumbs={[{ label: { hi: "कार्यक्रम", en: "Events" } }]}
-        title={{ hi: "कार्यक्रम", en: "Events" }}
+        crumbs={[{ label: { hi: "अपडेट्स", en: "Updates" } }]}
+        title={{ hi: "अपडेट्स", en: "Updates" }}
         lead={{ hi: "मेहनौन और गोंडा से ताज़ा गतिविधियाँ, जनसंपर्क, राहत कार्य और सार्वजनिक कार्यक्रम।", en: "Latest activities, outreach, relief work and public programmes from Mehnaun and Gonda." }}
       />
       <section>
-        <h2 className="sr-only">{lang === "hi" ? "सभी कार्यक्रम" : "All events"}</h2>
+        <h2 className="sr-only">{lang === "hi" ? "सभी अपडेट्स" : "All updates"}</h2>
         <div className="wrap ev-list">
           {sortedEvents.map((e) => <EventCard key={e.slug} e={e} lang={lang} wide />)}
         </div>

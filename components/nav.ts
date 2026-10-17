@@ -14,7 +14,7 @@ export const NAV: NavItem[] = [
     ],
   },
   {
-    label: { hi: "गैलरी", en: "Gallery" }, base: "/media",
+    label: { hi: "मीडिया", en: "Media" }, base: "/media",
     children: [
       { path: "/media", label: { hi: "फोटो गैलरी", en: "Photo Gallery" } },
       { path: "/media#videos", label: { hi: "विडियो गैलरी", en: "Video Gallery" } },
@@ -22,9 +22,9 @@ export const NAV: NavItem[] = [
     ],
   },
   {
-    label: { hi: "मीडिया", en: "Media" }, base: "/updates",
+    label: { hi: "अपडेट्स", en: "Updates" }, base: "/updates",
     children: [
-      { path: "/updates", label: { hi: "कार्यक्रम व समाचार", en: "Events & News" } },
+      { path: "/updates", label: { hi: "अपडेट्स", en: "Updates" } },
     ],
   },
   {
@@ -57,7 +57,7 @@ export const FOOTER_PERSONA: NavLink[] = [
 export const FOOTER_QUICK: NavLink[] = [
   { path: "/media", label: { hi: "फोटो गैलरी", en: "Photo Gallery" } },
   { path: "/media#videos", label: { hi: "विडियो गैलरी", en: "Video Gallery" } },
-  { path: "/updates", label: { hi: "कार्यक्रम व समाचार", en: "Events & News" } },
+  { path: "/updates", label: { hi: "अपडेट्स", en: "Updates" } },
   { path: "/vichar", label: { hi: "विचार व लेख", en: "Ideas & Articles" } },
   { path: "/e-shikayat", label: { hi: "ई-शिकायत", en: "Register a complaint" } },
   { path: "/e-card", label: { hi: "ई-कार्ड", en: "e-Card" } },

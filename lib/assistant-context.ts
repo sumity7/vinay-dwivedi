@@ -34,7 +34,16 @@ ${journey.map((j) => `- ${j.tag.en}: ${both(j.title)}. ${j.text.en}`).join("\n")
 Milestones:
 ${milestones.map((m, i) => `${i + 1}. ${both(m.title)}: ${m.text.en}`).join("\n")}`);
 
-  out.push(`# Events (page: /{lang}/updates)
+  const constituency = facts.find((f) => /constituency/i.test(f.label.en));
+  out.push(`# Quick answers to the most common questions (use these first; they come from the site's own pages)
+- Who is he? ${bio[0].en} More: /{lang}/about.
+- Why "Munna Bhaiya"? ${site.nickname.en} (${site.nickname.hi}) is the name by which the people of the area affectionately call ${site.name.en}. The site does not give any other story behind the name, so do not invent one.
+- His assembly / constituency: ${constituency ? `${constituency.value.en}` : "Mehnaun (295), Gonda district, Uttar Pradesh"}. He is its MLA (BJP). In 2022: ${electionStats.map((s) => `${s.label.en} ${s.value}${s.suffix ?? ""}`).join("; ")}. His priorities for Mehnaun: ${priorities.map((p) => p.title.en).join("; ")}. More: /{lang}/about.
+- His development work: the site lists his priorities for Mehnaun (above), his recent activities and relief work (/{lang}/updates), meetings and interactions (/{lang}/media/meetings) and his ideas on schemes (/{lang}/vichar). The national and Uttar Pradesh figures on /{lang}/vikas-yatra are the wider development context from government sources; they are NOT his personal record, so never present them as his achievements.
+- Recent activities: ${events.slice(0, 4).map((e) => e.title.en).join("; ")}. Full list: /{lang}/updates.
+- Contact the office: /{lang}/contact (phones and WhatsApp are under Services below).`);
+
+  out.push(`# Updates, i.e. events and news (page: /{lang}/updates)
 ${events.map((e) => `## ${both(e.title)}
 Date: ${e.date}. Place: ${both(e.place)}. Page: /{lang}/updates/${e.slug}
 ${e.summary.en}
@@ -52,7 +61,7 @@ Meetings & interactions (page: /{lang}/media/meetings): ${meetings.map((m) => `$
 - Office: ${both(site.office)} (full address to be added). Phones: ${site.phones.map(phoneLabel).join(", ")}. Email: ${site.email}.
 - Social: Facebook ${site.social.facebook.url}, Instagram ${site.social.instagram.url}, YouTube ${site.social.youtube.url}.
 - Helplines: 112 police/emergency, 108 ambulance, 102 mother & child ambulance, 1076 CM helpline, 1090 Women Power Line, 181 women helpline, 1912 electricity complaints.
-- Other pages: Biography /{lang}/about, Gallery /{lang}/media, Ideas & Articles /{lang}/vichar, Development Journey /{lang}/vikas-yatra, Our Ideals /{lang}/ideals.`);
+- Other pages: Biography /{lang}/about, Media (photo and video gallery) /{lang}/media, Ideas & Articles /{lang}/vichar, Development Journey /{lang}/vikas-yatra, Our Ideals /{lang}/ideals.`);
 
   out.push(`# Government schemes explained on the site (Ideas & Articles)
 ${articles.map((a) => `## ${both(a.title)} (page: /{lang}/vichar/${a.slug})
@@ -81,4 +90,6 @@ How to answer:
 - When a page helps, give its path with the visitor's language in place of {lang}, for example /hi/e-shikayat or /en/e-shikayat.
 - Speak about the MLA in the third person and respectfully. Do not make commitments on his behalf, attack other parties or people, or give opinions beyond what the site states.
 - Do not ask for personal details in chat. To report a problem, send them to the complaint form. For emergencies, tell them to call 112 first.
+- Questions about him, his constituency, his development work or the name "Munna Bhaiya" are the most common. Answer them warmly and directly from "Quick answers", then add the page link that gives more. Mention only Mehnaun-specific facts as his work; keep national and state figures clearly separate.
+- If a visitor only says hello or asks what you can do, reply in one friendly line and list a few things to ask: his journey, Mehnaun, recent activities, how to file a complaint, schemes.
 - Latency-sensitive; begin your visible answer immediately.`;

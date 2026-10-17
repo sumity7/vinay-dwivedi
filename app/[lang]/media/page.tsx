@@ -13,7 +13,7 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === "hi" ? "फोटो गैलरी" : "Gallery" };
+  return { title: lang === "hi" ? "मीडिया" : "Media" };
 }
 
 export default async function Media({ params }: Props) {
@@ -24,12 +24,12 @@ export default async function Media({ params }: Props) {
     <>
       <PageHero
         lang={lang}
-        crumbs={[{ label: { hi: "फोटो गैलरी", en: "Gallery" } }]}
-        title={{ hi: "फोटो गैलरी", en: "Gallery" }}
+        crumbs={[{ label: { hi: "मीडिया", en: "Media" } }]}
+        title={{ hi: "मीडिया", en: "Media" }}
         lead={{ hi: "सार्वजनिक जीवन के आधिकारिक चित्र और यादगार पल। फोटो दबाकर बड़ा देखें और साझा करें।", en: "Official photographs and moments from public life. Tap a photo to view it larger and share it." }}
       />
       <section>
-        <h2 className="sr-only">{lang === "hi" ? "गैलरी" : "Gallery"}</h2>
+        <h2 className="sr-only">{lang === "hi" ? "मीडिया" : "Media"}</h2>
         <div className="wrap">
           <div className="occ" style={{ marginTop: 0, marginBottom: 36 }}>
             {sortedEvents.map((e) => <a key={e.slug} className="chip" href={`#${e.slug}`}>{tr(e.title, lang)}</a>)}

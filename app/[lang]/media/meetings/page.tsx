@@ -17,7 +17,7 @@ export default async function Meetings({ params }: Props) {
     <>
       <PageHero
         lang={lang}
-        crumbs={[{ label: { hi: "फोटो गैलरी", en: "Gallery" }, path: "/media" }, { label: { hi: "भेंट व संवाद", en: "Meetings & Interactions" } }]}
+        crumbs={[{ label: { hi: "मीडिया", en: "Media" }, path: "/media" }, { label: { hi: "भेंट व संवाद", en: "Meetings & Interactions" } }]}
         title={{ hi: "भेंट व संवाद", en: "Meetings & Interactions" }}
         lead={{ hi: "सार्वजनिक जीवन की चुनिंदा मुलाकातें, बैठकें और संवाद।", en: "Selected meetings and interactions from public life." }}
       />

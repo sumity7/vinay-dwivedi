@@ -13,6 +13,7 @@ import { getVideos } from "@/lib/youtube";
 /* Hero: three slides, one per service (photos enhanced from the originals) */
 const heroSlides = (lang: Lang): Slide[] => [
   {
+    flip: true,
     img: img.heroAchievements, alt: { hi: "जनसभा को संबोधित करते विनय कुमार द्विवेदी", en: "Vinay Kumar Dwivedi addressing a gathering" },
     tag: { hi: "जननायक", en: "A people’s leader" },
     title: { hi: "मेहनौन की बुलंद आवाज़", en: "The strong voice of Mehnaun" },
@@ -61,7 +62,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const t = (hi: string, en: string) => (lang === "hi" ? hi : en);
   const videos = await getVideos(12);
   const slides = heroSlides(lang);
-  const news = sortedEvents.slice(0, 3);
+  /* the two stories shown on the home page; the rest are on the Updates page */
+  const news = ["kisan-rahat-vitaran", "gaon-gaon-jansampark"].map((slug) => sortedEvents.find((e) => e.slug === slug)!);
   /* photos already shown higher on the page are left out of the gallery, so nothing repeats */
   const shown = new Set([img.hero, img.villageGreeting, img.addressing, img.atWork, img.meetingGreeting, ...news.map((e) => e.photos[0].img)].map((p) => p.src));
   /* Facebook card: each post shows a photo not used above (the cover is on the news card) */
@@ -115,7 +117,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <section className="news-sec" aria-labelledby="news-title">
         <div className="wrap">
           <div className="news-bar">
-            <h2 id="news-title">{t("ताज़ा समाचार और कार्यक्रम", "Latest news & events")}</h2>
+            <h2 id="news-title">{t("ताज़ा अपडेट्स", "Latest updates")}</h2>
             <Link href={href(lang, "/updates")}>{t("सभी देखें", "View all")} <Icon name="arrow" /></Link>
           </div>
           <div className="news-grid">
