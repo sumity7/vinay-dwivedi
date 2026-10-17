@@ -92,8 +92,8 @@ export function Header() {
             <Link href={`/hi${rest}`} aria-current={lang === "hi"} lang="hi">हिन्दी</Link>
           </div>
         </div>
-        <button className="menu-btn" aria-label={t("मेनू", "Menu")} aria-expanded={drawer} aria-controls="drawer" onClick={() => setDrawer(!drawer)}>
-          <Icon name={drawer ? "close" : "menu"} />
+        <button className={`menu-btn${drawer ? " is-open" : ""}`} aria-label={t("मेनू", "Menu")} aria-expanded={drawer} aria-controls="drawer" onClick={() => setDrawer(!drawer)}>
+          <span className="menu-lines" aria-hidden="true"><i /><i /><i /></span>
         </button>
       </div>
       <nav id="drawer" className={`drawer${drawer ? " open" : ""}`} aria-label={t("मेनू", "Menu")}>
