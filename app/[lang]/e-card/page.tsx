@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Khand, Mukta, Rozha_One } from "next/font/google";
 import { pageMeta } from "@/lib/seo";
 import { Suspense } from "react";
 import { PageHero } from "@/components/Chrome";
@@ -6,6 +7,11 @@ import { ECardMaker } from "@/components/ECardMaker";
 import type { Lang } from "@/lib/i18n";
 
 type Props = { params: Promise<{ lang: string }> };
+
+/* poster type for the card, loaded on this page only: Rozha One headlines, Khand names, Mukta text */
+const cardTitle = Rozha_One({ weight: "400", subsets: ["devanagari", "latin"], variable: "--ec-title", display: "swap" });
+const cardName = Khand({ weight: ["600", "700"], subsets: ["devanagari", "latin"], variable: "--ec-name", display: "swap" });
+const cardBody = Mukta({ weight: ["500", "600", "700"], subsets: ["devanagari", "latin"], variable: "--ec-body", display: "swap" });
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
@@ -26,7 +32,7 @@ export default async function ECard({ params }: Props) {
         title={{ hi: "ई-कार्ड: अपने नाम से शुभकामनाएँ भेजें", en: "e-Card: send greetings with your name" }}
         lead={{ hi: "अवसर चुनें, अपना नाम और फोटो जोड़ें, और कार्ड डाउनलोड करें या सीधे WhatsApp पर साझा करें।", en: "Choose an occasion, add your name and photo, and download the card or share it straight to WhatsApp." }}
       />
-      <section>
+      <section className={`ec-sec ${cardTitle.variable} ${cardName.variable} ${cardBody.variable}`}>
         <h2 className="sr-only">{lang === "hi" ? "ई-कार्ड बनाएं" : "Make your card"}</h2>
         <div className="wrap">
           <Suspense><ECardMaker /></Suspense>

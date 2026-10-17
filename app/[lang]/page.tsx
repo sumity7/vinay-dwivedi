@@ -131,7 +131,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {/* PERSONALITY */}
       <section className="persona">
         <div className="persona-photos" aria-hidden="true">
-          <Pic className="p2" src={img.villageGreeting} alt={t("गाँव में लोगों का अभिवादन करते विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi greeting people in a village")} placeholder="blur" sizes="(max-width: 900px) 100vw, 50vw" />
+          <Pic className="p1" src={img.hero} alt="" placeholder="blur" sizes="(max-width: 900px) 60vw, 30vw" />
+          <Pic className="p2" src={img.villageGreeting} alt={t("गाँव में लोगों का अभिवादन करते विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi greeting people in a village")} placeholder="blur" sizes="(max-width: 900px) 45vw, 20vw" />
         </div>
         <div className="persona-text">
           <h2>{t("व्यक्तित्व - ", "Personality - ")}{tr(site.name, lang)}</h2>
@@ -187,6 +188,60 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <h2 className="sec-title center">{t("फोटो गैलरी", "Photo Gallery")}</h2>
           <GalleryTabs tabs={galTabs} />
           <div className="center"><Link className="btn btn-orange" href={href(lang, "/media")}>{t("और देखें", "View more")} <Icon name="arrow" /></Link></div>
+        </div>
+      </section>
+
+      {/* PUBLIC SERVICE: complaint portal and e-card, just above the social section */}
+      <section className="service-sec" aria-labelledby="service-title">
+        <div className="wrap">
+          <h2 id="service-title" className="sr-only">{t("जन सेवा", "Public Service")}</h2>
+          <div className="sv-grid">
+            <article className="sv-card sv-complaint">
+              <div className="sv-visual">
+                <Pic src={img.farmerField} alt="" placeholder="blur" fill sizes="(max-width: 900px) 100vw, 50vw" />
+              </div>
+              <div className="sv-body">
+                <span className="sv-ic"><Icon name="doc" /></span>
+                <h3>{t("आपकी समस्या, हमारी ज़िम्मेदारी", "Your problem, our responsibility")}</h3>
+                <p>{t("शिकायत कुछ ही मिनटों में ऑनलाइन दर्ज करें। टिकट संख्या के साथ वह सीधे विधायक कार्यालय पहुँचती है, और आप कभी भी उसकी प्रगति देख सकते हैं।", "File your complaint online in a few minutes. It reaches the MLA’s office with a ticket number, and you can check its progress at any time.")}</p>
+                <ul className="sv-pills">
+                  <li><Icon name="form" />{t("समस्या लिखें", "Describe the problem")}</li>
+                  <li><Icon name="ticket" />{t("टिकट संख्या पाएँ", "Receive a ticket number")}</li>
+                  <li><Icon name="checkCircle" />{t("प्रगति देखें", "Follow the progress")}</li>
+                </ul>
+                <div className="sv-btns">
+                  <Link className="btn sv-btn-light" href={href(lang, "/e-shikayat")}>{t("शिकायत दर्ज करें", "Register a complaint")} <Icon name="arrow" /></Link>
+                  <Link className="btn sv-btn-line" href={href(lang, "/e-shikayat/track")}><Icon name="search" />{t("स्थिति देखें", "Check status")}</Link>
+                </div>
+              </div>
+            </article>
+            <article className="sv-card sv-ecard">
+              <div className="sv-visual" aria-hidden="true">
+                <div className="mock-back" />
+                <div className="mock-card">
+                  <div className="mock-text">
+                    <b>{t("शुभकामनाएँ", "Warm wishes")}</b>
+                    <span className="mock-line" />
+                    <span className="mock-name"><Icon name="photoAdd" /><em>{t("आपका नाम", "Your name")}<small>{t("आपका गाँव", "Your village")}</small></em></span>
+                  </div>
+                  <Pic className="mock-photo" src={img.portrait} alt="" sizes="260px" />
+                </div>
+              </div>
+              <div className="sv-body">
+                <span className="sv-ic"><Icon name="card" /></span>
+                <h3>{t("आपके नाम से शुभकामना", "Greetings, in your own name")}</h3>
+                <p>{t("त्योहार या अवसर चुनें, अपना नाम और फोटो जोड़ें, और कार्ड अपने परिवार व गाँव के साथ साझा करें।", "Pick a festival or occasion, add your name and photo, and share the card with your family and village.")}</p>
+                <ul className="sv-pills sv-pills-light">
+                  <li><Icon name="images" />{t("अवसर चुनें", "Choose an occasion")}</li>
+                  <li><Icon name="pen" />{t("नाम व फोटो जोड़ें", "Add name and photo")}</li>
+                  <li><Icon name="download" />{t("डाउनलोड या साझा करें", "Download or share")}</li>
+                </ul>
+                <div className="sv-btns">
+                  <Link className="btn btn-orange" href={href(lang, "/e-card")}>{t("ई-कार्ड बनाएं", "Make an e-card")} <Icon name="arrow" /></Link>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
