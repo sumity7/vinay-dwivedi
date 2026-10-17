@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { Assistant } from "@/components/Assistant";
 import { Footer } from "@/components/Chrome";
 import { SideRail } from "@/components/Floating";
+import { ScrollTop } from "@/components/ScrollTop";
 import { Header } from "@/components/Header";
 import { SiteProvider } from "@/components/SiteProvider";
 import { isLang, LANGS, type Lang } from "@/lib/i18n";
@@ -47,6 +48,7 @@ export default async function LangLayout({ children, params }: { children: React
           <Header />
           <main id="main">{children}</main>
           <Footer lang={lang} />
+          <ScrollTop />
           <SideRail />
           {/* the "Ask assistant" button only appears once the AI key is set (see .env.example) */}
           {process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN || process.env.GROQ_API_KEY ? <Assistant /> : null}
