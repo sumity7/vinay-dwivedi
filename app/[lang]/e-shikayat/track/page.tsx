@@ -13,6 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMeta(lang as Lang, "/e-shikayat/track", {
     title: hi ? "शिकायत की स्थिति" : "Track your complaint",
     description: hi ? "टिकट संख्या से विधायक कार्यालय, मेहनौन में दर्ज अपनी ई-शिकायत की स्थिति और कार्यवाही देखें।" : "Use your ticket number to check the status of a complaint registered with the Mehnaun MLA’s office.",
+    noindex: true,
   });
 }
 

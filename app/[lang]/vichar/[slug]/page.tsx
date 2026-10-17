@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd, jsonLdHtml, pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleCard } from "@/components/Cards";
@@ -31,6 +31,10 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml([
+        articleJsonLd(lang, `/vichar/${slug}`, { title: tr(a.title, lang), description: tr(a.summary, lang), date: a.published }),
+        breadcrumbJsonLd(lang, [{ name: t("विचार व लेख", "Ideas & Articles"), path: "/vichar" }, { name: tr(a.title, lang) }]),
+      ])} />
       <PageHero
         lang={lang}
         crumbs={[{ label: { hi: "विकास व विचार", en: "Development & Ideas" }, path: "/vimarsh" }, { label: { hi: "विचार व लेख", en: "Ideas & Articles" }, path: "/vichar" }, { label: a.title }]}

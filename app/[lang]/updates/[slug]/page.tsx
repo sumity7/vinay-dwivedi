@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd, jsonLdHtml, pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/Chrome";
@@ -31,6 +31,10 @@ export default async function EventPage({ params }: Props) {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml([
+        articleJsonLd(lang, `/updates/${slug}`, { title: tr(e.title, lang), description: tr(e.summary, lang), date: e.date, image: e.photos[0].img }),
+        breadcrumbJsonLd(lang, [{ name: t("अपडेट्स", "Updates"), path: "/updates" }, { name: tr(e.title, lang) }]),
+      ])} />
       <PageHero
         lang={lang}
         crumbs={[{ label: { hi: "अपडेट्स", en: "Updates" }, path: "/updates" }, { label: e.title }]}

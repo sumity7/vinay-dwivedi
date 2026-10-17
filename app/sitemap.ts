@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     ...PAGES.map((p) => ({ path: p, priority: p === "" ? 1 : 0.7, date: undefined as string | undefined })),
     ...events.map((e) => ({ path: `/updates/${e.slug}`, priority: 0.6, date: e.date })),
-    ...articles.map((a) => ({ path: `/vichar/${a.slug}`, priority: 0.5, date: undefined as string | undefined })),
+    ...articles.map((a) => ({ path: `/vichar/${a.slug}`, priority: 0.5, date: a.published })),
   ];
   return paths.flatMap(({ path, priority, date }) =>
     LANGS.map((lang) => ({

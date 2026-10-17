@@ -20,10 +20,15 @@ export const defaultDescription = {
   en: "Official website of Vinay Kumar Dwivedi ‘Munna Bhaiya’, MLA from Mehnaun, Gonda: e-Shikayat complaints, e-cards, events, scheme guides and development figures.",
 };
 
-type PageOpts = { title?: string; description?: string; image?: StaticImageData | string; type?: "website" | "article" | "profile" };
+export const keywords = {
+  hi: ["विनय कुमार द्विवेदी", "मुन्ना भैया", "मेहनौन विधायक", "विधायक मेहनौन गोंडा", "मेहनौन विधानसभा 295", "गोंडा विधायक", "ई-शिकायत", "भाजपा विधायक गोंडा"],
+  en: ["Vinay Kumar Dwivedi", "Munna Bhaiya", "Mehnaun MLA", "Mehnaun Assembly 295", "Gonda MLA", "MLA Gonda Uttar Pradesh", "e-Shikayat", "BJP MLA Gonda"],
+};
+
+type PageOpts = { title?: string; description?: string; image?: StaticImageData | string; type?: "website" | "article" | "profile"; noindex?: boolean };
 
 /** Metadata for one page. `path` is the route without the language prefix: "" for home, "/about", "/updates/x". */
-export function pageMeta(lang: Lang, path: string, { title, description, image, type = "website" }: PageOpts = {}): Metadata {
+export function pageMeta(lang: Lang, path: string, { title, description, image, type = "website", noindex }: PageOpts = {}): Metadata {
   const name = site.name[lang];
   const desc = description ?? defaultDescription[lang];
   const pic = image ?? img.hero;
@@ -31,6 +36,7 @@ export function pageMeta(lang: Lang, path: string, { title, description, image, 
   return {
     ...(title ? { title } : {}),
     description: desc,
+    ...(noindex ? { robots: { index: false, follow: false } } : {}),
     alternates: {
       canonical: `/${lang}${path}`,
       languages: { ...Object.fromEntries(LANGS.map((l) => [l, `/${l}${path}`])), "x-default": `/hi${path}` },
@@ -85,6 +91,39 @@ export function personJsonLd(lang: Lang) {
         publisher: { "@id": `${siteBase}/#person` },
       },
     ],
+  };
+}
+
+/** schema.org Article for an update or a scheme guide, with the site's Person as publisher. */
+export function articleJsonLd(lang: Lang, path: string, a: { title: string; description: string; date: string; image?: StaticImageData | string }) {
+  const pic = a.image ?? img.hero;
+  const src = typeof pic === "string" ? pic : pic.src;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: a.title,
+    description: a.description,
+    datePublished: a.date,
+    dateModified: a.date,
+    inLanguage: lang === "hi" ? "hi-IN" : "en-IN",
+    image: src.startsWith("http") ? src : `${siteBase}${src}`,
+    mainEntityOfPage: `${siteBase}/${lang}${path}`,
+    author: { "@id": `${siteBase}/#person` },
+    publisher: { "@id": `${siteBase}/#person` },
+  };
+}
+
+/** schema.org BreadcrumbList. `trail` items without a path (the current page) get no link. */
+export function breadcrumbJsonLd(lang: Lang, trail: { name: string; path?: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [{ name: site.name[lang], path: "" }, ...trail].map((t, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: t.name,
+      ...(t.path !== undefined ? { item: `${siteBase}/${lang}${t.path}` } : {}),
+    })),
   };
 }
 

@@ -5,6 +5,7 @@ import type { Article } from "@/lib/content/articles";
 import { articleCats } from "@/lib/content/articles";
 import type { EventPost } from "@/lib/content/events";
 import { dateParts, href, tr, type Lang } from "@/lib/i18n";
+import { articleCover, coverOf } from "@/lib/content/covers";
 import { Icon } from "./Icon";
 
 export function EventCard({ e, lang, wide }: { e: EventPost; lang: Lang; wide?: boolean }) {
@@ -34,7 +35,8 @@ export function ArticleCard({ a, lang }: { a: Article; lang: Lang }) {
   const cat = articleCats.find((c) => c.id === a.cat)!;
   return (
     <Link className="ev-card art-card" href={href(lang, `/vichar/${a.slug}`)}>
-      <div className="art-cover">
+      <div className="art-cover has-photo">
+        <Pic src={coverOf(articleCover[a.slug])} alt="" fill sizes="(max-width: 620px) 100vw, (max-width: 960px) 50vw, 33vw" className="art-photo" />
         {a.figure ? <><b>{tr(a.figure.value, lang)}</b><small>{tr(a.figure.label, lang)}</small></> : <Icon name={a.icon} className="cov-ic" />}
       </div>
       <div className="body">

@@ -10,7 +10,7 @@ import { Header } from "@/components/Header";
 import { SiteProvider } from "@/components/SiteProvider";
 import { isLang, LANGS, type Lang } from "@/lib/i18n";
 import { img } from "@/lib/images";
-import { defaultDescription, defaultTitle, siteBase } from "@/lib/seo";
+import { defaultDescription, defaultTitle, keywords, siteBase } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "../globals.css";
 
@@ -31,6 +31,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     metadataBase: new URL(siteBase),
     title: { default: defaultTitle[l], template: `%s | ${name}` },
     description: defaultDescription[l],
+    keywords: keywords[l],
+    authors: [{ name: site.name[l], url: siteBase }],
+    creator: site.credit.name,
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
+    /* Google Search Console "HTML tag" token, optional (see .env.example) */
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } } : {}),
     openGraph: { siteName: name, locale: l === "hi" ? "hi_IN" : "en_IN", images: [{ url: img.hero.src, width: img.hero.width, height: img.hero.height }] },
     twitter: { card: "summary_large_image" },
   };

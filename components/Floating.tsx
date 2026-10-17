@@ -33,14 +33,16 @@ export function SideRail() {
     return () => { ro.disconnect(); root.style.removeProperty("--rail-h"); };
   }, []);
   useEffect(() => {
-    const check = () => {
-      const room = document.documentElement.scrollHeight - innerHeight;
-      setShown(scrollY > 240 || room < 600);
-    };
-    check();
-    addEventListener("scroll", check, { passive: true });
-    addEventListener("resize", check);
-    return () => { removeEventListener("scroll", check); removeEventListener("resize", check); };
+    let raf = 0, room = 0;
+    const measure = () => { room = document.documentElement.scrollHeight - innerHeight; };
+    const check = () => { raf = 0; setShown(scrollY > 240 || room < 600); };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(check); };
+    const onResize = () => { measure(); onScroll(); };
+    measure(); check();
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onResize);
+    const ro = new ResizeObserver(measure); ro.observe(document.body);
+    return () => { removeEventListener("scroll", onScroll); removeEventListener("resize", onResize); ro.disconnect(); if (raf) cancelAnimationFrame(raf); };
   }, [rest]);
   return (
     <nav ref={navRef} className={`rail${shown ? "" : " is-hidden"}`} aria-label={t("त्वरित सेवाएँ", "Quick services")}>
