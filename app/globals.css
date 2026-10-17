@@ -327,6 +327,12 @@ section{padding:80px 0}
 .crumbs svg{width:13px;height:13px}
 .crumbs [aria-current]{color:var(--orange-text);font-weight:600}
 @media (max-width:900px){.ph-grid.has-aside{grid-template-columns:1fr;gap:28px}.page-hero{padding:40px 0}}
+/* "← Back" pill at the top-left of every inner page */
+.ph-back{display:flex;width:fit-content;align-items:center;gap:8px;margin:-18px 0 22px;padding:8px 16px 8px 12px;border:1px solid #e3d3c3;border-radius:999px;background:#ffffffcc;color:var(--navy-3);font-weight:600;font-size:15px;line-height:1.2;text-decoration:none;box-shadow:0 2px 8px #1418270f;transition:border-color .15s,color .15s,transform .15s}
+.ph-back:hover{border-color:var(--orange);color:var(--orange-text);transform:translateX(-2px)}
+.ph-back:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.ph-back-ic{width:17px;height:17px;transform:scaleX(-1)}
+@media (max-width:900px){.ph-back{margin:-10px 0 16px;font-size:14.5px;padding:7px 14px 7px 10px}}
 .soft-photo{position:relative;overflow:hidden;border-radius:4px;box-shadow:var(--shadow-lift);border-bottom:5px solid var(--orange)}
 .soft-photo img{width:100%;aspect-ratio:4/4.6;object-fit:cover;object-position:center 15%}
 
@@ -396,6 +402,21 @@ input[type=file]{padding:9px}
 .stars{display:flex;gap:6px;margin:8px 0}
 .stars button{background:none;border:0;font-size:30px;line-height:1;cursor:pointer;color:#d3d6df;padding:0}
 .stars button.on{color:var(--orange)}
+
+/* category filter chips (Updates, Ideas & Articles) */
+.occ{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 30px}
+.occ button{display:inline-flex;align-items:center;gap:8px;border:1px solid #e3d8cc;background:#fff;border-radius:999px;padding:9px 16px;font:inherit;font-size:15.5px;font-weight:500;line-height:1.2;color:var(--navy-3);cursor:pointer;box-shadow:0 1px 2px #1418270a;transition:border-color .15s,background .15s,color .15s}
+.occ button:hover{border-color:var(--orange)}
+.occ button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.occ button small{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#f6efe9;color:var(--muted);font-size:12.5px;font-weight:700}
+.occ button[aria-pressed=true]{border-color:var(--orange-btn);background:var(--orange-btn);color:#fff;font-weight:600}
+.occ button[aria-pressed=true] small{background:#ffffff33;color:#fff}
+@media (max-width:640px){
+  .occ{flex-wrap:nowrap;overflow-x:auto;gap:8px;margin:0 -18px 24px;padding:2px 18px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+  .occ::-webkit-scrollbar{display:none}
+  .occ button{flex:none;white-space:nowrap;font-size:14.5px;padding:8px 14px;scroll-snap-align:start}
+  .occ .chip{flex:none;white-space:nowrap;scroll-snap-align:start}
+}
 
 /* e-card maker: controls on the left, the live card on a dark stage on the right */
 .ec-sec{padding:56px 0 88px;background:linear-gradient(180deg,#fbf7f2,#fff 60%)}
@@ -685,13 +706,21 @@ footer .bottom{background:var(--navy-2);padding:18px 0;text-align:center;font-si
   .rail{left:0;right:0;top:auto;bottom:0;transform:none;border:0;border-top:1px solid var(--line);border-radius:0;padding:4px 4px calc(4px + env(safe-area-inset-bottom));grid-template-columns:repeat(4,1fr);gap:2px;box-shadow:0 -6px 20px -12px #14182740}
   .rail a{width:auto;height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
   .rail a span{position:static;transform:none;opacity:1;background:none;color:inherit;padding:0;font-size:11.5px;line-height:1.2;text-align:center;white-space:normal}
-  .ask-fab{bottom:calc(88px + env(safe-area-inset-bottom));right:12px;padding:11px 16px}
-  .assistant{bottom:calc(132px + env(safe-area-inset-bottom))}
   .toast{bottom:calc(78px + env(safe-area-inset-bottom))}
 }
-.ask-fab{position:fixed;right:18px;bottom:18px;z-index:80;display:inline-flex;align-items:center;gap:8px;background:var(--orange-btn);color:#fff;border:0;border-radius:999px;padding:13px 20px;font-weight:600;font-size:15.5px;cursor:pointer;box-shadow:0 12px 26px -10px #92400ecc;transition:background .2s,transform .2s}
-.ask-fab svg{width:20px;height:20px}
-.ask-fab:hover{background:#92400e;transform:translateY(-2px)}
+.ask-fab{position:fixed;right:18px;bottom:18px;z-index:80;display:inline-flex;align-items:center;height:58px;padding:0;border:0;border-radius:999px;color:#fff;cursor:pointer;background:linear-gradient(145deg,#f8ae4a,#e8821a 48%,#b4530f);box-shadow:0 14px 30px -12px #92400ed9,inset 0 1px 0 #ffffff59,inset 0 -2px 0 #0000001f;transition:transform .2s var(--ease),box-shadow .2s,bottom .35s var(--ease)}
+.ask-fab:hover{transform:translateY(-2px);box-shadow:0 18px 34px -12px #92400ee6,inset 0 1px 0 #ffffff59}
+.ask-fab:focus-visible{outline:3px solid #f2993380;outline-offset:3px}
+.ask-fab-ic{position:relative;width:58px;height:58px;flex:none;display:grid;place-items:center}
+.ask-fab-ic svg{width:27px;height:27px}
+/* soft glow ring that pulses a few times so the button is noticed, then rests */
+.ask-fab:before{content:"";position:absolute;right:0;top:0;width:58px;height:58px;border-radius:50%;box-shadow:0 0 0 0 #f29933aa;animation:askPulse 2.4s ease-out 1.2s 3;pointer-events:none}
+@keyframes askPulse{0%{box-shadow:0 0 0 0 #f29933aa}70%{box-shadow:0 0 0 16px #f2993300}100%{box-shadow:0 0 0 0 #f2993300}}
+/* the label stays tucked away and slides out on hover or keyboard focus */
+.ask-fab-lbl{max-width:0;overflow:hidden;opacity:0;white-space:nowrap;font-weight:600;font-size:15.5px;padding-left:0;transition:max-width .35s var(--ease),opacity .2s,padding .35s var(--ease)}
+@media (hover:hover){.ask-fab:hover .ask-fab-lbl{max-width:240px;opacity:1;padding-left:22px}}
+.ask-fab:focus-visible .ask-fab-lbl{max-width:240px;opacity:1;padding-left:22px}
+@media (prefers-reduced-motion:reduce){.ask-fab:before{animation:none}.ask-fab-lbl{transition:none}}
 .assistant{position:fixed;right:18px;bottom:84px;z-index:90;width:min(390px,calc(100vw - 24px));height:min(560px,calc(100vh - 120px));background:var(--grey);border:1px solid var(--line);border-radius:8px;box-shadow:0 24px 60px -20px #14182780;display:flex;flex-direction:column;overflow:hidden;animation:fade .3s var(--ease)}
 .assistant header{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--orange-btn);color:#fff;padding:14px 16px}
 .assistant header b{font:400 19px var(--display)}
@@ -716,6 +745,21 @@ footer .bottom{background:var(--navy-2);padding:18px 0;text-align:center;font-si
 .toast.show{transform:translate(-50%,0);visibility:visible}
 .meta svg{width:16px;height:16px;vertical-align:-3px}
 @media print{.topbar,.rail,.ask-fab,.assistant,footer,.ribbon{display:none!important}}
+/* phones: the assistant button and its chat window sit above the bottom quick-links bar, never on top of it.
+   (Kept after the base .ask-fab/.assistant rules so it wins.) */
+.rail a{text-decoration:none}
+@media (max-width:760px){
+  /* a smaller round button, always just above the quick-links bar (its real height comes from --rail-h) */
+  .ask-fab{right:12px;height:52px;bottom:calc(var(--rail-h, 76px) + 12px)}
+  .ask-fab-ic,.ask-fab:before{width:52px;height:52px}
+  .ask-fab-ic svg{width:24px;height:24px}
+  .assistant{right:12px;bottom:calc(var(--rail-h, 76px) + 74px);height:min(520px,calc(100dvh - var(--rail-h, 76px) - 140px))}
+  /* when the bar slides away on scroll, the button follows it down */
+  .rail.is-hidden ~ .ask-fab{bottom:calc(14px + env(safe-area-inset-bottom))}
+  .rail.is-hidden ~ .assistant{bottom:calc(76px + env(safe-area-inset-bottom))}
+  /* room under the footer so the floating button never covers the credit line at the very end */
+  body footer .bottom{padding-bottom:64px}
+}
 
 /* home: two big event cards */
 .cover-grid.two{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}

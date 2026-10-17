@@ -2,7 +2,7 @@
 /* Quick-action side rail and the upcoming-occasion ribbon. */
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { nextOccurrence, occasions } from "@/lib/content/ecard";
 import { ideals } from "@/lib/content/ideals";
 import { href, type Bi } from "@/lib/i18n";
@@ -22,6 +22,16 @@ export function SideRail() {
   const { lang, t } = useSite();
   const rest = usePathname().replace(/^\/(hi|en)/, "");
   const [shown, setShown] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+  /* publish the bar's real height (it grows when labels wrap or the phone's text size is large),
+     so the assistant button can sit just above it instead of on top of the links */
+  useEffect(() => {
+    const el = navRef.current; if (!el || typeof ResizeObserver === "undefined") return;
+    const root = document.documentElement;
+    const ro = new ResizeObserver(() => root.style.setProperty("--rail-h", `${Math.ceil(el.getBoundingClientRect().height)}px`));
+    ro.observe(el);
+    return () => { ro.disconnect(); root.style.removeProperty("--rail-h"); };
+  }, []);
   useEffect(() => {
     const check = () => {
       const room = document.documentElement.scrollHeight - innerHeight;
@@ -33,7 +43,7 @@ export function SideRail() {
     return () => { removeEventListener("scroll", check); removeEventListener("resize", check); };
   }, [rest]);
   return (
-    <nav className={`rail${shown ? "" : " is-hidden"}`} aria-label={t("त्वरित सेवाएँ", "Quick services")}>
+    <nav ref={navRef} className={`rail${shown ? "" : " is-hidden"}`} aria-label={t("त्वरित सेवाएँ", "Quick services")}>
       {RAIL.map((r) => (
         <Link key={r.path} href={href(lang, r.path)} className={rest === r.path ? "active" : ""} aria-label={t(r.hi, r.en)}>
           <Icon name={r.icon} /><span>{t(r.hi, r.en)}</span>

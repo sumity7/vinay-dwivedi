@@ -101,8 +101,19 @@ export function Assistant() {
           </form>
         </div>
       )}
-      <button type="button" className="ask-fab" onClick={() => setOpen(!open)} aria-expanded={open}>
-        <Icon name="chat" />{t("सहायक से पूछें", "Ask assistant")}
+      <button type="button" className="ask-fab" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={t("सहायक से पूछें", "Ask assistant")}>
+        <span className="ask-fab-lbl" aria-hidden="true">{open ? t("बंद करें", "Close") : t("सहायक से पूछें", "Ask assistant")}</span>
+        <span className="ask-fab-ic" aria-hidden="true">
+          {open ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          ) : (
+            /* chat bubble with a small spark: "ask the assistant" */
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20.5 11.6a8 8 0 0 1-11.9 7L3.5 20l1.5-4.6a8 8 0 1 1 15.5-3.8z" />
+              <path d="M12 7.4l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="currentColor" stroke="none" />
+            </svg>
+          )}
+        </span>
       </button>
     </>
   );

@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { href, tr, type Bi, type Lang } from "@/lib/i18n";
 import { site } from "@/lib/site";
+import { BackButton } from "./BackButton";
 import { Icon, type IconName } from "./Icon";
 import { FOOTER_PERSONA, FOOTER_QUICK } from "./nav";
 
@@ -77,9 +78,12 @@ export function PageHero({ lang, crumbs, eyebrow, title, lead, meta, aside }: {
   aside?: ReactNode;
 }) {
   const all: Crumb[] = [{ label: { hi: "होम", en: "Home" }, path: "" }, ...crumbs];
+  /* the back button's fallback: the nearest crumb above this page that has a link (else home) */
+  const parent = [...all.slice(0, -1)].reverse().find((c) => c.path !== undefined);
   return (
     <div className="page-hero">
       <div className="wrap">
+        <BackButton fallback={href(lang, parent?.path ?? "")} label={lang === "hi" ? "वापस" : "Back"} />
         <div className={`ph-grid${aside ? " has-aside" : ""}`}>
           <div className="ph-main">
             {eyebrow && <span className="eyebrow">{tr(eyebrow, lang)}</span>}
