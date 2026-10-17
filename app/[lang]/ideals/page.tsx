@@ -29,7 +29,7 @@ export default async function Ideals({ params }: Props) {
         lang={lang}
         crumbs={[{ label: { hi: "हमारे आदर्श", en: "Our Ideals" } }]}
         title={{ hi: "हमारे आदर्श", en: "Our Ideals" }}
-        lead={{ hi: "राष्ट्र प्रथम, अंत्योदय और संगठन: जिन विचारों पर हम चलते हैं, वे संघ और भाजपा के इन्हीं प्रेरक व्यक्तित्वों से आते हैं।", en: "Nation first, Antyodaya and organisation: the ideas we work by come from these leaders of the Sangh and the BJP." }}
+        lead={{ hi: "राष्ट्र प्रथम, अंत्योदय और संगठन: जिन विचारों पर हम चलते हैं, वे संघ, भाजपा और स्वामी विवेकानंद व डॉ. कलाम जैसे राष्ट्र-निर्माताओं के प्रेरक जीवन से आते हैं।", en: "Nation first, Antyodaya and organisation: the ideas we work by come from the leaders of the Sangh and the BJP, and from nation builders like Swami Vivekananda and Dr. Kalam." }}
         aside={
           <div className="quote-card">
             <Icon name="quote" className="q" />

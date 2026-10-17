@@ -91,8 +91,8 @@ function Lightbox({ state, setState }: {
       {multi && <button type="button" className="lb-btn lb-l" aria-label={t("पिछली", "Previous")} onClick={() => step(-1)}><Icon name="chevLeft" /></button>}
       {multi && <button type="button" className="lb-btn lb-r" aria-label={t("अगली", "Next")} onClick={() => step(1)}><Icon name="chevRight" /></button>}
       {it && (
-        <div>
-          <Image src={it.img} alt={it.cap} sizes="100vw" />
+        <div className="lb-body">
+          <Image src={it.img} alt={it.cap} sizes="(max-width: 1100px) 100vw, 1100px" quality={90} priority />
           <p className="cap">{it.cap}</p>
           <div className="share-row">
             <a target="_blank" rel="noopener" href={waLink(`${it.cap} — ${t("विनय कुमार द्विवेदी, विधायक मेहनौन", "Vinay Kumar Dwivedi, MLA Mehnaun")} ${absUrl(location.pathname)}`)}>

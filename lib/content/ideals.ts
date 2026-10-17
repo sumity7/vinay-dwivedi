@@ -4,20 +4,21 @@
    Portraits: /images/ideals, cropped 4:5 from Wikimedia Commons — license and source in `credit`. */
 import type { StaticImageData } from "next/image";
 import atal from "@/images/ideals/atal.jpg";
-import deendayal from "@/images/ideals/deendayal.jpg";
 import golwalkar from "@/images/ideals/golwalkar.jpg";
 import hedgewar from "@/images/ideals/hedgewar.jpg";
+import kalam from "@/images/ideals/kalam.jpg";
 import modi from "@/images/ideals/modi.jpg";
-import mookerjee from "@/images/ideals/mookerjee.jpg";
 import nanaji from "@/images/ideals/nanaji.jpg";
 import rajmata from "@/images/ideals/rajmata.jpg";
+import vivekananda from "@/images/ideals/vivekananda.jpg";
 import type { Bi } from "../i18n";
 
-export type IdealGroup = "sangh" | "bjp";
+export type IdealGroup = "sangh" | "bjp" | "nation";
 
 export const idealGroups: { id: IdealGroup; label: Bi }[] = [
   { id: "sangh", label: { hi: "राष्ट्रीय स्वयंसेवक संघ", en: "Rashtriya Swayamsevak Sangh" } },
-  { id: "bjp", label: { hi: "जनसंघ एवं भाजपा", en: "Jana Sangh and BJP" } },
+  { id: "bjp", label: { hi: "भारतीय जनता पार्टी", en: "Bharatiya Janata Party" } },
+  { id: "nation", label: { hi: "राष्ट्र-निर्माता", en: "Nation builders" } },
 ];
 
 export type Ideal = {
@@ -62,24 +63,6 @@ export const ideals: Ideal[] = [
     credit: { by: "India Post, Government of India", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Nanaji_Deshmukh_2017_stamp_of_India.jpg" },
   },
   {
-    id: "mookerjee", group: "bjp", years: "1901–1953", birth: "07-06", death: "06-23", img: mookerjee,
-    name: { hi: "डॉ. श्यामा प्रसाद मुखर्जी", en: "Dr. Syama Prasad Mookerjee" },
-    role: { hi: "भारतीय जनसंघ के संस्थापक (1951)", en: "Founder, Bharatiya Jana Sangh (1951)" },
-    line: { kind: "quote", text: {
-      hi: "एक देश में दो विधान, दो प्रधान और दो निशान नहीं चलेंगे।",
-      en: "One country cannot have two constitutions, two heads and two flags." } },
-    credit: { by: "Ministry of Parliamentary Affairs", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Shyama_Prasad_Mukherjee_portrait_in_Parliament.jpg" },
-  },
-  {
-    id: "deendayal", group: "bjp", years: "1916–1968", birth: "09-25", death: "02-11", img: deendayal,
-    name: { hi: "पं. दीनदयाल उपाध्याय", en: "Pt. Deendayal Upadhyaya" },
-    role: { hi: "एकात्म मानववाद के प्रणेता, जनसंघ के अध्यक्ष", en: "Thinker of Integral Humanism, President of the Jana Sangh" },
-    line: { kind: "about", text: {
-      hi: "एकात्म मानववाद का दर्शन दिया और अंत्योदय, यानी समाज की अंतिम पंक्ति में खड़े व्यक्ति के उदय को, विकास की कसौटी बनाया।",
-      en: "Gave the philosophy of Integral Humanism and made Antyodaya, the rise of the person in the last row of society, the test of development." } },
-    credit: { by: "India Post, Government of India", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Deendayal_Upadhyaya_2018_stamp_of_India_(cropped).jpg" },
-  },
-  {
     id: "atal", group: "bjp", years: "1924–2018", birth: "12-25", death: "08-16", img: atal,
     name: { hi: "भारत रत्न श्री अटल बिहारी वाजपेयी", en: "Bharat Ratna Shri Atal Bihari Vajpayee" },
     role: { hi: "भाजपा के संस्थापक अध्यक्ष, पूर्व प्रधानमंत्री", en: "Founding President of the BJP, former Prime Minister" },
@@ -93,8 +76,8 @@ export const ideals: Ideal[] = [
     name: { hi: "राजमाता विजयाराजे सिंधिया", en: "Rajmata Vijaya Raje Scindia" },
     role: { hi: "भाजपा की संस्थापक उपाध्यक्ष", en: "Founding Vice-President of the BJP" },
     line: { kind: "about", text: {
-      hi: "जनसंघ और भाजपा को जन-जन तक पहुँचाने में अग्रणी रहीं; सादगी और जनसेवा से ‘राजमाता’ के रूप में घर-घर में सम्मान पाया।",
-      en: "A leading force in taking the Jana Sangh and BJP to the people, honoured in every home as ‘Rajmata’ for her simplicity and service." } },
+      hi: "भाजपा को जन-जन तक पहुँचाने में अग्रणी रहीं; सादगी और जनसेवा से ‘राजमाता’ के रूप में घर-घर में सम्मान पाया।",
+      en: "A leading force in taking the BJP to the people, honoured in every home as ‘Rajmata’ for her simplicity and service." } },
     credit: { by: "India Post, Government of India", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Vijaya_Raje_Scindia_2001_cover_of_India_crop.jpg" },
   },
   {
@@ -105,6 +88,24 @@ export const ideals: Ideal[] = [
       hi: "सबका साथ, सबका विकास, सबका विश्वास, सबका प्रयास।",
       en: "Together with all, development for all, the trust of all, the effort of all." } },
     credit: { by: "Prime Minister's Office", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:Shri_Narendra_Modi,_Prime_Minister_of_India.jpg" },
+  },
+  {
+    id: "vivekananda", group: "nation", years: "1863–1902", birth: "01-12", death: "07-04", img: vivekananda,
+    name: { hi: "स्वामी विवेकानंद", en: "Swami Vivekananda" },
+    role: { hi: "युवाओं के प्रेरणास्रोत, वेदांत के प्रवक्ता", en: "Inspirer of the youth, exponent of Vedanta" },
+    line: { kind: "quote", text: {
+      hi: "उठो, जागो और तब तक मत रुको जब तक लक्ष्य प्राप्त न हो जाए।",
+      en: "Arise, awake, and stop not till the goal is reached." } },
+    credit: { by: "Photograph, Chicago, September 1893 (via Wikimedia Commons)", license: "Public domain", url: "https://commons.wikimedia.org/wiki/File:Swami_Vivekananda-1893-09-signed.jpg" },
+  },
+  {
+    id: "kalam", group: "nation", years: "1931–2015", birth: "10-15", death: "07-27", img: kalam,
+    name: { hi: "भारत रत्न डॉ. ए. पी. जे. अब्दुल कलाम", en: "Bharat Ratna Dr. A. P. J. Abdul Kalam" },
+    role: { hi: "‘मिसाइल मैन’, भारत के 11वें राष्ट्रपति", en: "The ‘Missile Man’, 11th President of India" },
+    line: { kind: "quote", text: {
+      hi: "सपने वो नहीं जो आप सोते समय देखते हैं, सपने वो हैं जो आपको सोने नहीं देते।",
+      en: "Dreams are not what you see in your sleep; dreams are what do not let you sleep." } },
+    credit: { by: "Government of India", license: "GODL-India", url: "https://commons.wikimedia.org/wiki/File:A._P._J._Abdul_Kalam_(cropped)_3x4.jpg" },
   },
 ];
 
