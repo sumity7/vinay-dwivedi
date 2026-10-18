@@ -3,7 +3,7 @@
 .rh-sec{padding:0}
 .rh{--rh-x:max(72px,calc((100cqw - var(--w)) / 2));--rh-h:clamp(600px,calc(100vh - 78px),800px);
   position:relative;overflow:hidden;container-type:inline-size;color:#17110c;
-  background:linear-gradient(100deg,#fbf6ec 0%,#f6ead2 55%,#f0dcb6 100%)}
+  --rh-bg:linear-gradient(100deg,#fbf6ec 0%,#f6ead2 55%,#f0dcb6 100%);background:var(--rh-bg)}
 .rh-track{display:flex;transition:transform .8s var(--ease)}
 .rh-slide{flex:0 0 100%;min-width:0;overflow:hidden;min-height:var(--rh-h);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);padding-left:var(--rh-x)}
 
@@ -39,12 +39,18 @@ html[lang="en"] .rh-snap dt{letter-spacing:.16em;text-transform:uppercase}
 /* photograph */
 .rh-photo{position:relative;min-height:0;align-self:stretch}
 .rh-photo img{object-fit:cover}
-.rh-slide:not(.is-cut) .rh-photo{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26%);mask-image:linear-gradient(90deg,transparent 0,#000 26%)}
-.rh-slide.is-cut .rh-photo:before,.rh-slide.is-cut .rh-photo:after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);border-radius:999px 999px 0 0}
-.rh-slide.is-cut .rh-photo:before{width:min(82%,600px);height:86%;background:#ecd3a14d}
-.rh-slide.is-cut .rh-photo:after{width:min(54%,400px);height:58%;background:#f8e9c9}
-.rh-slide.is-cut .rh-photo img{z-index:1;transform:scale(1.03);transform-origin:50% 100%}
+.rh-slide:not(.is-studio):not(.is-wide) .rh-photo{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26%);mask-image:linear-gradient(90deg,transparent 0,#000 26%)}
 
+/* studio portrait: the light wall is multiplied into the cream page, so he stands straight on the slide with no box around him.
+   The slide paints the page gradient itself because the track is its own stacking context and the blend needs something to blend with. */
+.rh-slide.is-studio{background:var(--rh-bg)}
+.rh-slide.is-studio .rh-photo:before{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(86%,560px);height:90%;border-radius:999px 999px 0 0;background:linear-gradient(180deg,#f6b66a55,#e98a3a33)}
+.rh-slide.is-studio .rh-photo img{mix-blend-mode:multiply;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 32%,#000 78%,transparent 100%),linear-gradient(180deg,transparent 0,#000 24%);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 32%,#000 78%,transparent 100%),linear-gradient(180deg,transparent 0,#000 24%);mask-composite:intersect}
+
+/* wide scene: the photograph runs under the copy from the right edge, its own empty wall fades into the page colour */
+.rh-slide.is-wide{position:relative;background:var(--rh-bg)}
 /* side numbers, arrows */
 .rh-side{position:absolute;left:30px;top:22%;z-index:3;display:none;flex-direction:column;align-items:center;gap:14px;margin:0;padding:0;list-style:none}
 .rh-side li:after{content:"";display:block;width:1px;height:26px;margin:14px auto 0;background:#00000030}
@@ -78,11 +84,17 @@ html[lang="en"] .rh-bar{letter-spacing:.2em;text-transform:uppercase}
 .facts-grid dt{margin-bottom:6px;font-size:14px;font-weight:600;color:#f29933}
 .facts-grid dd{margin:0;font-size:17px;line-height:1.5;color:#fff}
 
+/* wide scene placement (desktop only; on phones every slide is photo-on-top) */
+@media (min-width:901px){
+  .rh-slide.is-wide .rh-photo{position:absolute;top:0;right:0;bottom:0;width:64%;z-index:1;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 34%);mask-image:linear-gradient(90deg,transparent 0,#000 34%)}
+}
+
 /* phone and small tablet: photograph on top, copy below */
 @media (max-width:900px){
   .rh-slide{display:flex;flex-direction:column;min-height:0;padding-left:0}
   .rh-photo{order:-1;height:clamp(300px,82vw,470px);flex:none}
-  .rh-slide:not(.is-cut) .rh-photo{-webkit-mask-image:none;mask-image:none}
+  .rh-slide .rh-photo{-webkit-mask-image:none;mask-image:none}
+  .rh-slide.is-studio .rh-photo:before{width:84%}
   .rh-copy{padding:24px 20px 80px}
   .rh-title{font-size:clamp(30px,8.6vw,42px)}
   html[lang="hi"] .rh-title{font-size:clamp(28px,8vw,38px)}

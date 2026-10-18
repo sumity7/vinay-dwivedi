@@ -16,7 +16,7 @@ import "./hero.css";
 
 export type Slide = {
   img: StaticImageData; alt: Bi; pos?: string;
-  cut?: boolean; // transparent-background portrait: shown on an arch instead of fading into the page colour
+  look?: "studio" | "wide"; // studio: light-wall portrait blended into the cream page, on the right; wide: scene fills the slide, copy sits on its empty side
   eyebrow: Bi; title: Bi; sub?: Bi; text: Bi;
   cta: { href: string; label: Bi }; cta2: { href: string; label: Bi };
   snapLabel: Bi; snap: { k: Bi; v: Bi }[]; // "snapshot" row under the buttons: three short facts
@@ -61,7 +61,7 @@ export function HeroSlider({ slides, tags }: { slides: Slide[]; tags: Bi[] }) {
         {slides.map((s, k) => {
           const Title = k === 0 ? "h1" : "h2"; // the first slide carries the page's main heading
           return (
-            <article key={k} className={`rh-slide${k === i ? " is-active" : ""}${s.cut ? " is-cut" : ""}`} aria-hidden={k !== i} aria-roledescription="slide" aria-label={`${k + 1} / ${slides.length}`}>
+            <article key={k} className={`rh-slide${k === i ? " is-active" : ""}${s.look ? ` is-${s.look}` : ""}`} aria-hidden={k !== i} aria-roledescription="slide" aria-label={`${k + 1} / ${slides.length}`}>
               <div className="rh-copy">
                 <p className="rh-eyebrow"><b>{pad2(k + 1)}</b>{pick(s.eyebrow)}</p>
                 <Title className="rh-title">{pick(s.title)}</Title>
@@ -78,7 +78,7 @@ export function HeroSlider({ slides, tags }: { slides: Slide[]; tags: Bi[] }) {
               </div>
               <div className="rh-photo">
                 <Pic src={s.img} alt={pick(s.alt)} fill sizes="(max-width: 900px) 100vw, 50vw" preload={k === 0}
-                  style={{ objectFit: s.cut ? "contain" : "cover", objectPosition: s.cut ? "50% 100%" : (s.pos ?? "50% 25%") }} />
+                  style={{ objectFit: "cover", objectPosition: s.pos ?? "50% 25%" }} />
               </div>
             </article>
           );

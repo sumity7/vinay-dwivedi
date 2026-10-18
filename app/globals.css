@@ -177,19 +177,6 @@ section{padding:80px 0}
 .tile:hover .tile-bar svg{transform:translateX(5px)}
 @media (max-width:760px){.tiles{grid-template-columns:1fr}.tiles-sec{padding:44px 0 36px}}
 
-/* personality */
-.persona{display:grid;grid-template-columns:1fr 1fr;background:var(--beige);padding:0;min-height:660px}
-.persona-photos{position:relative;min-height:520px;overflow:hidden}
-.persona-photos img{position:absolute;object-fit:cover}
-.persona-photos .p1{left:0;top:0;width:72%;height:100%}
-.persona-photos .p2{right:6%;bottom:9%;width:42%;aspect-ratio:3/4;height:auto;border:8px solid #fff;box-shadow:0 18px 40px -14px #0008;transition:transform .6s var(--ease)}
-.persona:hover .p2{transform:translateY(-6px)}
-.persona-text{padding:80px max(5%,24px) 70px 8%;align-self:center}
-.persona-text h2{font-size:clamp(26px,2.6vw,34px);margin-bottom:26px;color:var(--navy-3)}
-.persona-text blockquote{margin:0 0 20px;background:#f8f9fc;border-left:3px solid var(--orange-d);padding:14px 22px;color:var(--ink);font-size:17px;line-height:1.65}
-.persona-text p{color:var(--muted);line-height:1.85}
-.persona-text .btn{margin-top:14px;float:right}
-@media (max-width:900px){.persona{grid-template-columns:1fr}.persona-photos{min-height:420px}.persona-photos .p2{width:44%;bottom:6%;border-width:6px}.persona-text{padding:44px 20px}.persona-text .btn{float:none}}
 
 /* gallery */
 .gallery-sec{padding:84px 0 70px}
@@ -1236,14 +1223,9 @@ section{padding:52px 0}
 @media (max-width:900px){.page-hero{padding:30px 0 26px}}
 .sec-title.center{margin-bottom:24px}
 .sec-head{margin-bottom:24px}
-.persona{min-height:0}
-.persona-photos{min-height:440px}
-.persona-text{padding:44px max(5%,24px) 40px 8%}
-.persona-text h2{margin-bottom:16px}
 .form-card{padding:24px}
 @media (max-width:560px){.form-card{padding:18px}}
 .nf{padding:64px 0 72px}
-@media (max-width:760px){.persona-photos{min-height:360px}.persona-text{padding:32px 20px 32px}}
 
 /* ===== Footer in the BJP colours: saffron body (same family as the hero) with a green bar at the bottom ===== */
 footer{background:linear-gradient(135deg,#b84f08 0%,#c9590a 55%,#d9650c 100%);color:#fff}
@@ -1341,8 +1323,6 @@ footer .bottom{padding:10px 0}
   html[lang="hi"] .nav>a,html[lang="hi"] .nav .dd>.dd-top{padding-left:13px;padding-right:13px}
   html[lang="hi"] .nav>a:after,html[lang="hi"] .nav .dd>.dd-top:after{left:13px;right:13px}
 }
-.persona-text{padding-right:max(24px,calc((100vw - var(--w)) / 2))}
-@media (max-width:900px){.persona-text{padding-right:24px}}
 /* mid-size laptops: the header takes a little more of the width so everything still fits on one line */
 @media (min-width:1261px) and (max-width:1420px){
   .hbar{width:calc(100% - 28px)}

@@ -6,17 +6,18 @@ import { Carousel, FacebookProfile, GalleryTabs, HeroSlider, YouTubeLive, type G
 import { Icon } from "@/components/Icon";
 import { sortedEvents, type EventPost } from "@/lib/content/events";
 import { proPhotos } from "@/lib/content/media";
-import { bio, facts, journey } from "@/lib/content/profile";
+import { facts, journey, profileRows } from "@/lib/content/profile";
 import { dateParts, href, tr, type Bi, type Lang } from "@/lib/i18n";
 import { img } from "@/lib/images";
 import { jsonLdHtml, pageMeta, personJsonLd } from "@/lib/seo";
 import { site } from "@/lib/site";
+import "@/components/persona.css";
 import { getVideos } from "@/lib/youtube";
 
-/* Hero: three slides. The first is the formal portrait (cut out, on an arch); the others use the candid photographs. */
+/* Hero: three slides. The first is the studio portrait, the second the wide desk scene, the third a candid photograph. */
 const heroSlides = (lang: Lang): Slide[] => [
   {
-    img: img.portraitCut, cut: true, alt: { hi: "विधायक विनय कुमार द्विवेदी", en: "MLA Vinay Kumar Dwivedi" },
+    img: img.heroStudio, look: "studio", pos: "50% 12%", alt: { hi: "विधायक विनय कुमार द्विवेदी", en: "MLA Vinay Kumar Dwivedi" },
     eyebrow: { hi: "विधायक, मेहनौन (295)", en: "MLA, Mehnaun (295)" },
     title: site.name, sub: { hi: `(${site.nickname.hi})`, en: `(${site.nickname.en})` },
     text: { hi: "दो दशकों की जनसेवा। गाँव की पंचायत से विधानसभा तक का सफ़र।", en: "Two decades of public service, from the village panchayat to the Assembly." },
@@ -27,6 +28,20 @@ const heroSlides = (lang: Lang): Slide[] => [
       { k: { hi: "पद", en: "Role" }, v: { hi: "विधायक, मेहनौन (295)", en: "MLA, Mehnaun (295)" } },
       { k: { hi: "कार्यकाल", en: "Terms" }, v: { hi: "2 बार (2017, 2022)", en: "2 (2017, 2022)" } },
       { k: { hi: "मत, 2022", en: "Votes, 2022" }, v: { hi: "50.05%", en: "50.05%" } },
+    ],
+  },
+  {
+    img: img.heroDesk, look: "wide", pos: "100% 50%", alt: { hi: "जन समस्याओं के काग़ज़ात देखते विधायक जी", en: "The MLA going through public grievances at his desk" },
+    eyebrow: { hi: "ई-शिकायत", en: "e-Shikayat" },
+    title: { hi: "हर शिकायत पर स्वयं ध्यान", en: "Every complaint, personally seen to" },
+    text: { hi: "अपनी बात सीधे विधायक कार्यालय तक पहुँचाएँ और कार्यवाही के हर कदम की जानकारी ऑनलाइन पाएँ।", en: "Send your concern straight to the MLA’s office and follow every step of the action online." },
+    cta: { href: href(lang, "/e-shikayat"), label: { hi: "शिकायत दर्ज करें", en: "Register a complaint" } },
+    cta2: { href: href(lang, "/e-shikayat/track"), label: { hi: "शिकायत की स्थिति", en: "Track a complaint" } },
+    snapLabel: { hi: "कैसे काम करता है", en: "How it works" },
+    snap: [
+      { k: { hi: "दर्ज करें", en: "File" }, v: { hi: "ऑनलाइन, मिनटों में", en: "Online, in minutes" } },
+      { k: { hi: "देखें", en: "Track" }, v: { hi: "टिकट संख्या से", en: "With your ticket number" } },
+      { k: { hi: "पहुँचे", en: "Reaches" }, v: { hi: "सीधे कार्यालय तक", en: "The office directly" } },
     ],
   },
   {
@@ -41,20 +56,6 @@ const heroSlides = (lang: Lang): Slide[] => [
       { k: { hi: "हर गाँव में", en: "Every village" }, v: { hi: "सड़क, बिजली, पानी", en: "Roads, power, water" } },
       { k: { hi: "सम्मान", en: "Respect for" }, v: { hi: "किसान, युवा, महिलाएँ", en: "Farmers, youth, women" } },
       { k: { hi: "शुभकामना", en: "Greetings" }, v: { hi: "16 अवसरों के ई-कार्ड", en: "e-cards for 16 occasions" } },
-    ],
-  },
-  {
-    img: img.heroComplaint, alt: { hi: "जन समस्याओं पर कार्य करते विधायक जी", en: "The MLA working through public grievances" }, pos: "50% 18%",
-    eyebrow: { hi: "ई-शिकायत", en: "e-Shikayat" },
-    title: { hi: "हर शिकायत पर स्वयं ध्यान", en: "Every complaint, personally seen to" },
-    text: { hi: "अपनी बात सीधे विधायक कार्यालय तक पहुँचाएँ और कार्यवाही के हर कदम की जानकारी ऑनलाइन पाएँ।", en: "Send your concern straight to the MLA’s office and follow every step of the action online." },
-    cta: { href: href(lang, "/e-shikayat"), label: { hi: "शिकायत दर्ज करें", en: "Register a complaint" } },
-    cta2: { href: href(lang, "/e-shikayat/track"), label: { hi: "शिकायत की स्थिति", en: "Track a complaint" } },
-    snapLabel: { hi: "कैसे काम करता है", en: "How it works" },
-    snap: [
-      { k: { hi: "दर्ज करें", en: "File" }, v: { hi: "ऑनलाइन, मिनटों में", en: "Online, in minutes" } },
-      { k: { hi: "देखें", en: "Track" }, v: { hi: "टिकट संख्या से", en: "With your ticket number" } },
-      { k: { hi: "पहुँचे", en: "Reaches" }, v: { hi: "सीधे कार्यालय तक", en: "The office directly" } },
     ],
   },
 ];
@@ -123,16 +124,24 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* PERSONALITY */}
-      <section className="persona">
-        <div className="persona-photos" aria-hidden="true">
-          <Pic className="p1" src={img.hero} alt="" placeholder="blur" sizes="(max-width: 900px) 60vw, 30vw" />
-          <Pic className="p2" src={img.villageGreeting} alt={t("गाँव में लोगों का अभिवादन करते विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi greeting people in a village")} placeholder="blur" sizes="(max-width: 900px) 45vw, 20vw" />
-        </div>
-        <div className="persona-text">
-          <h2>{t("व्यक्तित्व - ", "Personality - ")}{tr(site.name, lang)}</h2>
-          {bio.slice(0, 2).map((p, i) => <p key={i}>{tr(p, lang)}</p>)}
-          <Link className="btn btn-orange" href={href(lang, "/about")}>{t("अधिक पढ़ें", "Read more")} <Icon name="arrow" /></Link>
+      {/* PERSONALITY: one photograph, the biography as three labelled rows */}
+      <section className="persona" aria-labelledby="persona-title">
+        <div className="wrap persona-grid">
+          <figure className="persona-fig">
+            <Pic src={img.hero} alt={t("माइक पर जनसभा को संबोधित करते विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi addressing a public gathering")} placeholder="blur" sizes="(max-width: 900px) 90vw, 480px" />
+            <figcaption><b>{tr(site.nickname, lang)}</b>{t("विधायक, मेहनौन (295)", "MLA, Mehnaun (295)")}</figcaption>
+          </figure>
+          <div className="persona-body">
+            <span className="eyebrow">{t("व्यक्तित्व", "Personality")}</span>
+            <h2 id="persona-title">{tr(site.name, lang)}</h2>
+            <dl className="persona-rows">
+              {profileRows.map((r, n) => <div key={n}><dt><b>{String(n + 1).padStart(2, "0")}</b>{tr(r.label, lang)}</dt><dd>{tr(r.text, lang)}</dd></div>)}
+            </dl>
+            <div className="persona-actions">
+              <Link className="btn btn-orange" href={href(lang, "/about")}>{t("पूरा परिचय", "Full biography")} <Icon name="arrow" /></Link>
+              <Link className="link-arrow" href={href(lang, "/about#journey")}>{t("जीवन यात्रा", "Life journey")} <Icon name="arrow" /></Link>
+            </div>
+          </div>
         </div>
       </section>
 

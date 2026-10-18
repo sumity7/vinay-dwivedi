@@ -53,6 +53,19 @@ export const facts: { label: Bi; value: Bi }[] = [
   { label: { hi: "रुचि", en: "Interests" }, value: { hi: "जनसेवा, क्रिकेट, पुस्तकें पढ़ना", en: "Public service, cricket, reading" } },
 ];
 
+/* Home-page profile block: the biography in three short labelled rows (the full text is on the about page) */
+export const profileRows: { label: Bi; text: Bi }[] = [
+  { label: { hi: "परिचय", en: "Who he is" },
+    text: { hi: "‘मुन्ना भैया’ के नाम से लोकप्रिय, गोंडा जनपद की मेहनौन विधानसभा (295) से विधायक। जन्म 15 अक्टूबर 1971 को गोंडा में; पैतृक गाँव श्रीनगर (बाबागंज), इटियाथोक।",
+            en: "Known across the area as ‘Munna Bhaiya’, MLA from Mehnaun Assembly (295) in Gonda district. Born in Gonda on 15 October 1971; native village Srinagar (Babaganj), Itia Thok." } },
+  { label: { hi: "शिक्षा व पेशा", en: "Education & work" },
+    text: { hi: "1993 में लाल बहादुर शास्त्री महाविद्यालय, गोंडा से स्नातक और डॉ. राम मनोहर लोहिया अवध विश्वविद्यालय से परास्नातक। पेशे से किसान और व्यापारी।",
+            en: "Graduate (1993) of Lal Bahadur Shastri College, Gonda; post-graduate from Dr. Ram Manohar Lohia Avadh University. A farmer and businessman by profession." } },
+  { label: { hi: "सार्वजनिक जीवन", en: "Public life" },
+    text: { hi: "2004 में भाजपा से जुड़े। क्षेत्र पंचायत और जिला पंचायत सदस्य के बाद 2017 में पहली बार विधायक चुने गए; 2022 में आधे से अधिक मत देकर जनता ने दोबारा भरोसा जताया।",
+            en: "Joined the BJP in 2004. After the Kshetra and Zila Panchayats, first elected MLA in 2017; re-elected in 2022 with more than half of all votes." } },
+];
+
 /* Four turning points (home page cards and the about page sidebar) */
 export const journey: { tag: Bi; title: Bi; text: Bi }[] = [
   { tag: { hi: "2006", en: "2006" }, title: { hi: "क्षेत्र पंचायत सदस्य", en: "Kshetra Panchayat member" }, text: { hi: "क्षेत्र पंचायत सदस्य के रूप में निर्वाचित होकर ग्राम स्तर से जनसेवा की शुरुआत।", en: "Elected to the Kshetra Panchayat, beginning public service at village level." } },
