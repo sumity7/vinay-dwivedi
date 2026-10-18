@@ -97,15 +97,6 @@ export default async function VikasYatra({ params }: Props) {
         </div>
         <div className="wrap">
           <p className="hint" style={{ marginTop: 32 }}>{t("आँकड़े स्रोत द्वारा बताई गई तिथि के अनुसार हैं। जहाँ योजना पहले नहीं थी, वहाँ आँकड़ा शुरुआत से अब तक की उपलब्धि दिखाता है।", "Figures are as published by the source on the date shown. Where a scheme did not exist before, the figure shows what it has reached since launch.")}</p>
-          {/* CC BY-SA needs the credit to stay on the site; it is folded away like the Ideals page so it doesn't clutter the page */}
-          <details className="credits" style={{ marginTop: 18 }}>
-            <summary>{t("चित्र स्रोत", "Photo credits")}</summary>
-            <ul>
-              <li>{t("रेल विद्युतीकरण", "Railway electrification")}: Ravi Dwivedi, <a href="https://commons.wikimedia.org/wiki/File:Meerut_City%E2%80%93Lucknow_Vande_Bharat_Express.jpg" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
-              <li>{t("बहुआयामी गरीबी", "Multidimensional poverty")}: Hk31122002, <a href="https://commons.wikimedia.org/wiki/File:A_cooking_pot_placed_on_a_earthen_stove_called_Chulha,_North_India.jpg" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
-              <li>Wikimedia Commons, PIB (GODL-India)</li>
-            </ul>
-          </details>
           <div className="foot-links">
             <Link className="link-arrow" href={href(lang, "/vichar/bharat-2014-ke-baad")}>{t("पढ़ें: 2014 के बाद का भारत", "Read: India after 2014")} <Icon name="arrow" /></Link>
             <Link className="link-arrow" href={href(lang, "/vichar/uttar-pradesh-2017-ke-baad")}>{t("पढ़ें: 2017 के बाद उत्तर प्रदेश", "Read: UP after 2017")} <Icon name="arrow" /></Link>

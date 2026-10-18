@@ -1,12 +1,10 @@
 /* Server-rendered cards shared across pages (events and articles). */
-import Image from "next/image";
 import { Pic } from "./Pic";
 import Link from "next/link";
 import type { Article } from "@/lib/content/articles";
 import { articleCats } from "@/lib/content/articles";
 import type { EventPost } from "@/lib/content/events";
 import { dateParts, href, tr, type Lang } from "@/lib/i18n";
-import { articlePhoto } from "@/lib/content/covers";
 import { Icon } from "./Icon";
 
 export function EventCard({ e, lang, wide }: { e: EventPost; lang: Lang; wide?: boolean }) {
@@ -36,8 +34,7 @@ export function ArticleCard({ a, lang }: { a: Article; lang: Lang }) {
   const cat = articleCats.find((c) => c.id === a.cat)!;
   return (
     <Link className="ev-card art-card" href={href(lang, `/vichar/${a.slug}`)}>
-      <div className="art-cover has-photo">
-        {articlePhoto[a.slug] && <Image src={articlePhoto[a.slug]} alt="" fill quality={90} placeholder="blur" sizes="(max-width: 620px) 100vw, (max-width: 960px) 50vw, 400px" className="art-photo" />}
+      <div className="art-cover">
         {a.figure ? <><b>{tr(a.figure.value, lang)}</b><small>{tr(a.figure.label, lang)}</small></> : <Icon name={a.icon} className="cov-ic" />}
       </div>
       <div className="body">

@@ -12,70 +12,96 @@ import { fmtIN, prefersReducedMotion } from "@/lib/utils";
 import type { Video } from "@/lib/youtube";
 import { Icon, type IconName } from "./Icon";
 import { useSite } from "./SiteProvider";
+import "./hero.css";
 
-export type Slide = { flip?: boolean; img: StaticImageData; alt?: Bi; pos?: string; tag?: Bi; title?: Bi; text?: Bi; points?: Bi[]; cta?: { href: string; label: Bi }; cta2?: { href: string; label: Bi } };
+export type Slide = {
+  img: StaticImageData; alt: Bi; pos?: string;
+  cut?: boolean; // transparent-background portrait: shown on an arch instead of fading into the page colour
+  eyebrow: Bi; title: Bi; sub?: Bi; text: Bi;
+  cta: { href: string; label: Bi }; cta2: { href: string; label: Bi };
+  snapLabel: Bi; snap: { k: Bi; v: Bi }[]; // "snapshot" row under the buttons: three short facts
+};
 
-/* Full-width banner: slides move sideways, white arrows, dots below.
-   It advances by itself every few seconds; it stops while the visitor hovers or focuses it (or if their device asks for less motion),
-   and the arrows, dots, a swipe or the keyboard still work. */
+/* Home hero: warm cream page colour, big bold name, three-fact snapshot, the photograph on the right.
+   It advances by itself every SLIDE_MS; it stops while the visitor hovers or focuses it, or after they press pause
+   (and never starts if their device asks for less motion). Arrows, side numbers, a swipe and the keyboard also work. */
 const SLIDE_MS = 7000;
-export function HeroSlider({ slides }: { slides: Slide[] }) {
+const pad2 = (n: number) => String(n).padStart(2, "0");
+export function HeroSlider({ slides, tags }: { slides: Slide[]; tags: Bi[] }) {
   const { t, pick } = useSite();
   const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hover, setHover] = useState(false);
+  const [manual, setManual] = useState(false); // visitor pressed pause
+  const [still, setStill] = useState(false); // device prefers reduced motion
   const touchX = useRef<number | null>(null);
   const go = (d: number) => setI((x) => (x + d + slides.length) % slides.length);
+  const paused = hover || manual || still;
 
+  useEffect(() => { setStill(prefersReducedMotion()); }, []);
   useEffect(() => {
-    if (paused || slides.length < 2 || prefersReducedMotion()) return;
+    if (paused) return;
     const id = setTimeout(() => setI((x) => (x + 1) % slides.length), SLIDE_MS);
     return () => clearTimeout(id);
   }, [i, paused, slides.length]);
 
   return (
-    <div className="hero-slider" aria-roledescription="carousel" tabIndex={0}
-      onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
-      onFocus={(e) => { if (e.target.matches(":focus-visible")) setPaused(true); }} onBlur={() => setPaused(false)}
+    <div className="rh" role="group" aria-roledescription="carousel" aria-label={t("मुख्य स्लाइड", "Highlights")}
+      onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+      onFocus={(e) => { if (e.target.matches(":focus-visible")) setHover(true); }} onBlur={() => setHover(false)}
       onKeyDown={(e) => { if (e.key === "ArrowLeft") go(-1); else if (e.key === "ArrowRight") go(1); }}
-      onTouchStart={(e) => { touchX.current = e.touches[0].clientX; setPaused(true); }}
+      onTouchStart={(e) => { touchX.current = e.touches[0].clientX; setHover(true); }}
       onTouchEnd={(e) => {
-        setPaused(false);
+        setHover(false);
         if (touchX.current === null) return;
         const dx = e.changedTouches[0].clientX - touchX.current;
         touchX.current = null;
         if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
       }}>
-      <div className="slider" style={{ transform: `translateX(-${i * 100}%)` }}>
-        {slides.map((s, k) => (
-          <div key={k} className={`slide${k === i ? " is-active" : ""}${s.flip ? " flip" : ""}`} aria-hidden={k !== i}>
-            {s.title && (
-              <div className="slide-cap">
-                {s.tag && <span className="slide-tag">{pick(s.tag)}</span>}
-                <h2>{pick(s.title)}</h2>
-                {s.text && <p>{pick(s.text)}</p>}
-                {s.points && <ul className="slide-points">{s.points.map((x, n) => <li key={n}>{pick(x)}</li>)}</ul>}
-                {s.cta && (
-                  <div className="slide-btns">
-                    <Link className="btn btn-orange" href={s.cta.href} tabIndex={k === i ? 0 : -1}>{pick(s.cta.label)} <Icon name="arrow" /></Link>
-                    {s.cta2 && <Link className="btn btn-outline-light" href={s.cta2.href} tabIndex={k === i ? 0 : -1}>{pick(s.cta2.label)}</Link>}
-                  </div>
-                )}
+      <div className="rh-track" style={{ transform: `translateX(-${i * 100}%)` }}>
+        {slides.map((s, k) => {
+          const Title = k === 0 ? "h1" : "h2"; // the first slide carries the page's main heading
+          return (
+            <article key={k} className={`rh-slide${k === i ? " is-active" : ""}${s.cut ? " is-cut" : ""}`} aria-hidden={k !== i} aria-roledescription="slide" aria-label={`${k + 1} / ${slides.length}`}>
+              <div className="rh-copy">
+                <p className="rh-eyebrow"><b>{pad2(k + 1)}</b>{pick(s.eyebrow)}</p>
+                <Title className="rh-title">{pick(s.title)}</Title>
+                {s.sub && <p className="rh-sub">{pick(s.sub)}</p>}
+                <p className="rh-text">{pick(s.text)}</p>
+                <div className="rh-actions">
+                  <Link className="btn btn-orange" href={s.cta.href} tabIndex={k === i ? 0 : -1}>{pick(s.cta.label)} <Icon name="arrow" /></Link>
+                  <Link className="btn btn-ghost" href={s.cta2.href} tabIndex={k === i ? 0 : -1}>{pick(s.cta2.label)} <Icon name="arrow" /></Link>
+                </div>
+                <div className="rh-snap">
+                  <p className="rh-snap-label">{pick(s.snapLabel)}</p>
+                  <dl>{s.snap.map((x, n) => <div key={n}><dt>{pick(x.k)}</dt><dd>{pick(x.v)}</dd></div>)}</dl>
+                </div>
               </div>
-            )}
-            {/* photo panel takes the photo's own shape, so the whole picture shows with nothing cropped */}
-            <div className="slide-media" style={{ aspectRatio: `${s.img.width} / ${s.img.height}`, "--ar": `${s.img.width} / ${s.img.height}` } as CSSProperties}>
-              {/* soft blurred copy fills the panel around the photo, so the photo itself is never cropped */}
-              <Pic className="slide-bg" src={s.img} alt="" aria-hidden="true" fill sizes="(max-width: 900px) 50vw, 25vw" style={{ objectFit: "cover" }} />
-              <Pic className="slide-img" src={s.img} alt={s.alt ? pick(s.alt) : t("विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi")} fill sizes="(max-width: 900px) 100vw, 50vw"
-                preload={k === 0} style={{ objectFit: "cover" }} />
-            </div>
-          </div>
-        ))}
+              <div className="rh-photo">
+                <Pic src={s.img} alt={pick(s.alt)} fill sizes="(max-width: 900px) 100vw, 50vw" preload={k === 0}
+                  style={{ objectFit: s.cut ? "contain" : "cover", objectPosition: s.cut ? "50% 100%" : (s.pos ?? "50% 25%") }} />
+              </div>
+            </article>
+          );
+        })}
       </div>
-      <button type="button" className="sl-arrow prev" onClick={() => go(-1)} aria-label={t("पिछली", "Previous")}><Icon name="chevLeft" /></button>
-      <button type="button" className="sl-arrow next" onClick={() => go(1)} aria-label={t("अगली", "Next")}><Icon name="chevRight" /></button>
-      <div className="dots">
-        {slides.map((_, k) => <button key={k} type="button" className={k === i ? "active" : ""} aria-current={k === i} aria-label={`${k + 1}`} onClick={() => setI(k)} />)}
+
+      <ol className="rh-side" aria-hidden="true">
+        {slides.map((_, k) => <li key={k} className={k === i ? "on" : ""}><button type="button" tabIndex={-1} onClick={() => setI(k)}>{pad2(k + 1)}</button></li>)}
+      </ol>
+      <button type="button" className="rh-arrow prev" onClick={() => go(-1)} aria-label={t("पिछली", "Previous")}><Icon name="chevLeft" /></button>
+      <button type="button" className="rh-arrow next" onClick={() => go(1)} aria-label={t("अगली", "Next")}><Icon name="chevRight" /></button>
+
+      <div className="rh-bar">
+        <ul>{tags.map((x, k) => <li key={k}>{pick(x)}</li>)}</ul>
+        <div className="rh-bar-r">
+          <span className="rh-scroll">{t("नीचे देखें", "Scroll to explore")} <i aria-hidden="true">↓</i></span>
+          <span className="rh-count"><b>{pad2(i + 1)}</b> / {pad2(slides.length)}</span>
+          <button type="button" className="rh-pause" onClick={() => setManual((m) => !m)} aria-pressed={manual || still} aria-label={manual || still ? t("चलाएँ", "Play slideshow") : t("रोकें", "Pause slideshow")}>
+            {manual || still
+              ? <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              : <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>}
+          </button>
+        </div>
       </div>
     </div>
   );

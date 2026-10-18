@@ -6,58 +6,61 @@ import { Carousel, FacebookProfile, GalleryTabs, HeroSlider, YouTubeLive, type G
 import { Icon } from "@/components/Icon";
 import { sortedEvents, type EventPost } from "@/lib/content/events";
 import { proPhotos } from "@/lib/content/media";
-import { bio, journey } from "@/lib/content/profile";
-import { dateParts, href, tr, type Lang } from "@/lib/i18n";
+import { bio, facts, journey } from "@/lib/content/profile";
+import { dateParts, href, tr, type Bi, type Lang } from "@/lib/i18n";
 import { img } from "@/lib/images";
 import { jsonLdHtml, pageMeta, personJsonLd } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { getVideos } from "@/lib/youtube";
 
-/* Hero: three slides, one per service (photos enhanced from the originals) */
+/* Hero: three slides. The first is the formal portrait (cut out, on an arch); the others use the candid photographs. */
 const heroSlides = (lang: Lang): Slide[] => [
   {
-    flip: true,
-    img: img.heroAchievements, alt: { hi: "जनसभा को संबोधित करते विनय कुमार द्विवेदी", en: "Vinay Kumar Dwivedi addressing a gathering" },
-    tag: { hi: "विधायक, मेहनौन (295)", en: "MLA, Mehnaun (295)" },
-    title: { hi: "मेहनौन की बुलंद आवाज़", en: "The strong voice of Mehnaun" },
-    text: { hi: "दो दशकों से अधिक के जनसेवा अनुभव के साथ ‘मुन्ना भैया’ गाँव-गाँव की हर बात को विधानसभा तक पूरी ताक़त से पहुँचाते हैं। 2022 में जनता ने आधे से अधिक मत देकर इस भरोसे पर ऐतिहासिक मुहर लगाई।", en: "With over two decades in public service, ‘Munna Bhaiya’ carries every village’s voice to the Assembly with full force. In 2022 the people gave him more than half of all votes, a historic seal on that trust." },
-    points: [
-      { hi: "लगातार दूसरी बार विधायक", en: "MLA for a second straight term" },
-      { hi: "1,07,327 मतों का जनादेश (50.05%)", en: "A mandate of 1,07,327 votes (50.05%)" },
-      { hi: "23,218 मतों के अंतर से शानदार जीत", en: "A resounding 23,218-vote win" },
-      { hi: "क्षेत्र पंचायत से विधानसभा तक का सफ़र", en: "From the panchayat to the Assembly" },
+    img: img.portraitCut, cut: true, alt: { hi: "विधायक विनय कुमार द्विवेदी", en: "MLA Vinay Kumar Dwivedi" },
+    eyebrow: { hi: "विधायक, मेहनौन (295)", en: "MLA, Mehnaun (295)" },
+    title: site.name, sub: { hi: `(${site.nickname.hi})`, en: `(${site.nickname.en})` },
+    text: { hi: "दो दशकों की जनसेवा। गाँव की पंचायत से विधानसभा तक का सफ़र।", en: "Two decades of public service, from the village panchayat to the Assembly." },
+    cta: { href: href(lang, "/about"), label: { hi: "पूरा परिचय", en: "Full biography" } },
+    cta2: { href: href(lang, "/vikas-yatra"), label: { hi: "उपलब्धियाँ", en: "Achievements" } },
+    snapLabel: { hi: "संक्षिप्त परिचय", en: "Profile snapshot" },
+    snap: [
+      { k: { hi: "पद", en: "Role" }, v: { hi: "विधायक, मेहनौन (295)", en: "MLA, Mehnaun (295)" } },
+      { k: { hi: "कार्यकाल", en: "Terms" }, v: { hi: "2 बार (2017, 2022)", en: "2 (2017, 2022)" } },
+      { k: { hi: "मत, 2022", en: "Votes, 2022" }, v: { hi: "50.05%", en: "50.05%" } },
     ],
-    cta: { href: href(lang, "/vikas-yatra"), label: { hi: "उपलब्धियाँ देखें", en: "See the achievements" } },
-    cta2: { href: href(lang, "/about"), label: { hi: "पूरा परिचय", en: "Full biography" } },
   },
   {
-    img: img.heroEcard, alt: { hi: "मुख्यमंत्री योगी आदित्यनाथ जी के साथ", en: "With Chief Minister Yogi Adityanath" },
-    tag: { hi: "डबल इंजन का विकास", en: "Double-engine development" },
+    img: img.heroEcard, alt: { hi: "मुख्यमंत्री योगी आदित्यनाथ जी के साथ", en: "With Chief Minister Yogi Adityanath" }, pos: "50% 28%",
+    eyebrow: { hi: "डबल इंजन का विकास", en: "Double-engine development" },
     title: { hi: "योगी जी के नेतृत्व में, नया मेहनौन", en: "A new Mehnaun under Yogi ji" },
-    text: { hi: "प्रधानमंत्री श्री नरेन्द्र मोदी जी के विज़न और मुख्यमंत्री श्री योगी आदित्यनाथ जी के सुशासन को मेहनौन के हर घर तक पहुँचाना ही उनका संकल्प है। हर पर्व की खुशी अपनों के साथ बाँटें।", en: "Taking Prime Minister Shri Narendra Modi’s vision and Chief Minister Shri Yogi Adityanath’s good governance to every home in Mehnaun is his resolve. Share the joy of every festival with your own." },
-    points: [
-      { hi: "सड़क, बिजली, पानी, हर गाँव तक", en: "Roads, power and water to every village" },
-      { hi: "किसान, युवा और महिलाओं का सम्मान", en: "Respect for farmers, youth and women" },
-      { hi: "अपने नाम-फोटो के साथ शुभकामना कार्ड", en: "Greeting cards with your name and photo" },
-      { hi: "16 त्योहारों और अवसरों के कार्ड", en: "Cards for 16 festivals and occasions" },
+    text: { hi: "प्रधानमंत्री श्री नरेन्द्र मोदी जी के विज़न और मुख्यमंत्री श्री योगी आदित्यनाथ जी के सुशासन को मेहनौन के हर घर तक पहुँचाना उनका संकल्प है।", en: "Taking Prime Minister Shri Narendra Modi’s vision and Chief Minister Shri Yogi Adityanath’s governance to every home in Mehnaun is his resolve." },
+    cta: { href: href(lang, "/vikas-yatra"), label: { hi: "उपलब्धियाँ देखें", en: "See the achievements" } },
+    cta2: { href: href(lang, "/e-card"), label: { hi: "ई-कार्ड बनाएं", en: "Make an e-card" } },
+    snapLabel: { hi: "संकल्प", en: "The resolve" },
+    snap: [
+      { k: { hi: "हर गाँव में", en: "Every village" }, v: { hi: "सड़क, बिजली, पानी", en: "Roads, power, water" } },
+      { k: { hi: "सम्मान", en: "Respect for" }, v: { hi: "किसान, युवा, महिलाएँ", en: "Farmers, youth, women" } },
+      { k: { hi: "शुभकामना", en: "Greetings" }, v: { hi: "16 अवसरों के ई-कार्ड", en: "e-cards for 16 occasions" } },
     ],
-    cta: { href: href(lang, "/e-card"), label: { hi: "ई-कार्ड बनाएं", en: "Make an e-card" } },
-    cta2: { href: href(lang, "/vikas-yatra"), label: { hi: "उपलब्धियाँ देखें", en: "See the achievements" } },
   },
   {
-    img: img.heroComplaint, alt: { hi: "जन समस्याओं पर कार्य करते विधायक जी", en: "The MLA working through public grievances" },
-    tag: { hi: "ई-शिकायत", en: "e-Complaint" },
+    img: img.heroComplaint, alt: { hi: "जन समस्याओं पर कार्य करते विधायक जी", en: "The MLA working through public grievances" }, pos: "50% 18%",
+    eyebrow: { hi: "ई-शिकायत", en: "e-Shikayat" },
     title: { hi: "हर शिकायत पर स्वयं ध्यान", en: "Every complaint, personally seen to" },
-    text: { hi: "मुन्ना भैया के लिए क्षेत्र की हर समस्या व्यक्तिगत ज़िम्मेदारी है। अब घर बैठे अपनी बात सीधे विधायक कार्यालय तक पहुँचाएँ और कार्यवाही के हर कदम की जानकारी पाएँ।", en: "For Munna Bhaiya every problem in the area is a personal responsibility. Now send your concern straight to the MLA’s office from home and follow every step of the action taken." },
-    points: [
-      { hi: "मिनटों में ऑनलाइन शिकायत", en: "File online in minutes" },
-      { hi: "टिकट संख्या से स्थिति जानें", en: "Track it with your ticket number" },
-      { hi: "सीधे विधायक कार्यालय तक", en: "Straight to the MLA’s office" },
-      { hi: "सड़क, पानी, बिजली, पेंशन की समस्याएँ", en: "Roads, water, power, pension problems" },
-    ],
+    text: { hi: "अपनी बात सीधे विधायक कार्यालय तक पहुँचाएँ और कार्यवाही के हर कदम की जानकारी ऑनलाइन पाएँ।", en: "Send your concern straight to the MLA’s office and follow every step of the action online." },
     cta: { href: href(lang, "/e-shikayat"), label: { hi: "शिकायत दर्ज करें", en: "Register a complaint" } },
     cta2: { href: href(lang, "/e-shikayat/track"), label: { hi: "शिकायत की स्थिति", en: "Track a complaint" } },
+    snapLabel: { hi: "कैसे काम करता है", en: "How it works" },
+    snap: [
+      { k: { hi: "दर्ज करें", en: "File" }, v: { hi: "ऑनलाइन, मिनटों में", en: "Online, in minutes" } },
+      { k: { hi: "देखें", en: "Track" }, v: { hi: "टिकट संख्या से", en: "With your ticket number" } },
+      { k: { hi: "पहुँचे", en: "Reaches" }, v: { hi: "सीधे कार्यालय तक", en: "The office directly" } },
+    ],
   },
+];
+
+const heroTags: Bi[] = [
+  { hi: "मेहनौन", en: "Mehnaun" }, { hi: "जनसेवा", en: "Public service" }, { hi: "विकास", en: "Development" }, { hi: "ई-शिकायत", en: "e-Shikayat" },
 ];
 
 /* order of the event categories in the home gallery (anything not listed goes last) */
@@ -73,6 +76,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const t = (hi: string, en: string) => (lang === "hi" ? hi : en);
   const videos = await getVideos(12);
   const slides = heroSlides(lang);
+  const fact = (en: string) => facts.find((f) => f.label.en === en)!;
+  const keyFacts4: { label: Bi; value: Bi }[] = [
+    fact("Born"), fact("Education"),
+    { label: { hi: "व्यवसाय", en: "Occupation" }, value: { hi: "किसान और व्यापारी", en: "Farmer and businessman" } },
+    fact("Party"),
+  ];
   /* the two stories shown on the home page; the rest are on the Updates page */
   const news = ["kisan-rahat-vitaran", "gaon-gaon-jansampark"].map((slug) => sortedEvents.find((e) => e.slug === slug)!);
   /* photos already shown higher on the page are left out of the gallery, so nothing repeats */
@@ -100,31 +109,17 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {/* structured data: who he is, for Google's knowledge panel and name searches */}
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(personJsonLd(lang))} />
 
-      {/* HERO: three service slides, full width */}
-      <section className="hero" aria-label={t("मुख्य स्लाइड", "Highlights")}>
-        <HeroSlider slides={slides} />
+      {/* HERO: three slides, full width (the first one carries the page's h1) */}
+      <section className="rh-sec" aria-label={t("मुख्य स्लाइड", "Highlights")}>
+        <HeroSlider slides={slides} tags={heroTags} />
       </section>
 
-      {/* INTRODUCTION: plain strip under the hero, no card */}
-      <section className="intro-strip" aria-labelledby="hero-name">
-        <div className="wrap intro-row">
-          <div className="intro-who">
-            <span className="intro-role">{tr(site.roleLong, lang)}</span>
-            <h1 id="hero-name">{tr(site.name, lang)}</h1>
-            <p className="intro-nick">‘{tr(site.nickname, lang)}’</p>
-          </div>
-          <div className="intro-mid">
-            <p>{t("गाँव की पगडंडियों से विधानसभा तक का सफ़र तय करने वाले मुन्ना भैया मेहनौन के सबसे भरोसेमंद जननायक हैं: सरल स्वभाव, हर गाँव से सीधा रिश्ता और हर ज़रूरतमंद के लिए हमेशा खुला द्वार।", "Having walked from village lanes to the Assembly, Munna Bhaiya is Mehnaun’s most trusted leader: a simple manner, a direct bond with every village and a door always open to anyone in need.")}</p>
-            <dl className="intro-stats">
-              <div><dt>{t("बार विधायक", "terms as MLA")}</dt><dd>2</dd></div>
-              <div><dt>{t("मत, 2022", "vote share, 2022")}</dt><dd>50.05%</dd></div>
-              <div><dt>{t("वर्ष जनसेवा", "years of service")}</dt><dd>20+</dd></div>
-            </dl>
-          </div>
-          <div className="intro-actions">
-            <Link className="btn btn-orange" href={href(lang, "/about")}>{t("पूरा परिचय", "Full biography")} <Icon name="arrow" /></Link>
-            <Link className="btn btn-outline" href={href(lang, "/contact")}>{t("संपर्क करें", "Contact")}</Link>
-          </div>
+      {/* FACTS: four plain facts under the hero */}
+      <section className="facts-strip" aria-label={t("संक्षिप्त तथ्य", "Key facts")}>
+        <div className="wrap">
+          <dl className="facts-grid">
+            {keyFacts4.map((f, n) => <div key={n}><dt>{tr(f.label, lang)}</dt><dd>{tr(f.value, lang)}</dd></div>)}
+          </dl>
         </div>
       </section>
 

@@ -1632,3 +1632,25 @@ a,button,[role=button],label,input,select,textarea{touch-action:manipulation;-we
 .vm-steps p{font-size:15.5px;color:var(--muted)}
 @media (max-width:960px){.vm-steps{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.vm-steps{grid-template-columns:1fr}}
+
+/* ===== Hero alignment: every slide's text starts on the same left edge (the page container, never closer than 72px so the arrow stays clear), and the dots sit under it ===== */
+@media (min-width:901px){
+  .hero{--hero-x:max(72px,calc((100% - var(--w)) / 2))}
+  .hero .slide,.hero .slide.flip{padding-left:var(--hero-x);padding-right:0}
+  .hero .slide-cap{margin-inline:0;max-width:min(760px,calc(100% - 50% - var(--hero-x)));padding-right:clamp(16px,2vw,40px)}
+  .hero .dots{padding-left:var(--hero-x)}
+}
+/* wide screens: the text column is narrower once it lines up with the page container, so the type steps down a little */
+@media (min-width:1500px){
+  .hero .slide-cap h2{font-size:clamp(40px,min(3.5vw,8vh),68px)}
+  .hero .slide-cap p{font-size:clamp(17px,min(1.2vw,2.6vh),22px);max-width:none}
+  .slide-points li{font-size:clamp(16px,min(1.1vw,2.4vh),20px)}
+}
+
+/* ===== Cards carry no photographs: flat brand colour headers, no gradients ===== */
+.art-cover{background:#e0701a}
+.art-grid>*:nth-child(3n+2) .art-cover{background:#0f8a3c}
+.art-grid>*:nth-child(3n) .art-cover{background:#141b38}
+.cmp-head{background:#e0701a;min-height:150px}
+.cmp-head.h1,.cmp-head.h4{background:#0f8a3c}
+.cmp-head.h2,.cmp-head.h5{background:#141b38}
