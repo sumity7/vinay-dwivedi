@@ -17,7 +17,7 @@ import { getVideos } from "@/lib/youtube";
 /* Hero: three slides. The first is the studio portrait, the second the wide desk scene, the third a candid photograph. */
 const heroSlides = (lang: Lang): Slide[] => [
   {
-    img: img.heroStudio, look: "studio", pos: "50% 12%", alt: { hi: "विधायक विनय कुमार द्विवेदी", en: "MLA Vinay Kumar Dwivedi" },
+    img: img.heroStudio, look: "studio", alt: { hi: "विधायक विनय कुमार द्विवेदी", en: "MLA Vinay Kumar Dwivedi" },
     eyebrow: { hi: "विधायक, मेहनौन (295)", en: "MLA, Mehnaun (295)" },
     title: site.name, sub: { hi: `(${site.nickname.hi})`, en: `(${site.nickname.en})` },
     text: { hi: "दो दशकों की जनसेवा। गाँव की पंचायत से विधानसभा तक का सफ़र।", en: "Two decades of public service, from the village panchayat to the Assembly." },
@@ -126,21 +126,18 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* PERSONALITY: one photograph, the biography as three labelled rows */}
       <section className="persona" aria-labelledby="persona-title">
-        <div className="wrap persona-grid">
-          <figure className="persona-fig">
-            <Pic src={img.hero} alt={t("माइक पर जनसभा को संबोधित करते विनय कुमार द्विवेदी", "Vinay Kumar Dwivedi addressing a public gathering")} placeholder="blur" sizes="(max-width: 900px) 90vw, 480px" />
-            <figcaption><b>{tr(site.nickname, lang)}</b>{t("विधायक, मेहनौन (295)", "MLA, Mehnaun (295)")}</figcaption>
-          </figure>
-          <div className="persona-body">
-            <span className="eyebrow">{t("व्यक्तित्व", "Personality")}</span>
-            <h2 id="persona-title">{tr(site.name, lang)}</h2>
-            <dl className="persona-rows">
-              {profileRows.map((r, n) => <div key={n}><dt><b>{String(n + 1).padStart(2, "0")}</b>{tr(r.label, lang)}</dt><dd>{tr(r.text, lang)}</dd></div>)}
-            </dl>
-            <div className="persona-actions">
-              <Link className="btn btn-orange" href={href(lang, "/about")}>{t("पूरा परिचय", "Full biography")} <Icon name="arrow" /></Link>
-              <Link className="link-arrow" href={href(lang, "/about#journey")}>{t("जीवन यात्रा", "Life journey")} <Icon name="arrow" /></Link>
-            </div>
+        <figure className="persona-fig">
+          <Pic src={img.persona} alt={t("विधायक विनय कुमार द्विवेदी", "MLA Vinay Kumar Dwivedi")} placeholder="blur" sizes="(max-width: 900px) 100vw, 42vw" />
+        </figure>
+        <div className="persona-body">
+          <span className="eyebrow">{t("व्यक्तित्व", "Personality")}</span>
+          <h2 id="persona-title">{tr(site.name, lang)}</h2>
+          <dl className="persona-rows">
+            {profileRows.map((r, n) => <div key={n}><dt><b>{String(n + 1).padStart(2, "0")}</b>{tr(r.label, lang)}</dt><dd>{tr(r.text, lang)}</dd></div>)}
+          </dl>
+          <div className="persona-actions">
+            <Link className="btn btn-orange" href={href(lang, "/about")}>{t("पूरा परिचय", "Full biography")} <Icon name="arrow" /></Link>
+            <Link className="link-arrow" href={href(lang, "/about#journey")}>{t("जीवन यात्रा", "Life journey")} <Icon name="arrow" /></Link>
           </div>
         </div>
       </section>

@@ -1,13 +1,9 @@
-/* Home "Personality" block: one photograph on the left, the biography as three labelled rows on the right. */
-.persona{padding:clamp(48px,7vw,96px) 0;background:var(--beige-2)}
-.persona-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,88px);align-items:center}
+/* Home "Personality" block: a full-height photograph runs edge to edge on the left (no frame, no card), the biography sits beside it as three labelled rows. */
+.persona{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);background:var(--beige-2)}
+.persona-fig{position:relative;margin:0;min-height:560px;background:#111}
+.persona-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
 
-.persona-fig{position:relative;margin:0 0 0 14px;max-width:480px;justify-self:center;width:100%}
-.persona-fig:before{content:"";position:absolute;inset:18px -14px -14px 18px;border-radius:18px;background:#f29933;opacity:.28}
-.persona-fig img{position:relative;display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:18px;box-shadow:0 24px 50px -24px #0009}
-.persona-fig figcaption{position:absolute;left:16px;bottom:16px;right:16px;display:flex;flex-direction:column;gap:2px;padding:12px 16px;border-radius:12px;background:#17120fcc;color:#ffffffd9;font-size:13.5px;backdrop-filter:blur(4px)}
-.persona-fig figcaption b{font-size:17px;font-weight:600;color:#fff}
-
+.persona-body{align-self:center;padding:clamp(44px,6vw,88px) max(24px,calc((100vw - var(--w)) / 2)) clamp(44px,6vw,88px) clamp(32px,5vw,84px)}
 .persona-body .eyebrow{margin-bottom:10px}
 html[lang="en"] .persona-body .eyebrow{font-size:12.5px;letter-spacing:.22em;text-transform:uppercase}
 .persona-body h2{font-size:clamp(30px,3.4vw,46px);line-height:1.15;color:var(--navy-3)}
@@ -22,7 +18,8 @@ html[lang="en"] .persona-body .eyebrow{font-size:12.5px;letter-spacing:.22em;tex
 .persona-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;margin-top:28px}
 
 @media (max-width:900px){
-  .persona-grid{grid-template-columns:1fr}
-  .persona-fig{max-width:420px;margin:0 14px 0 0}
+  .persona{grid-template-columns:1fr}
+  .persona-fig{min-height:0;height:min(120vw,520px)}
+  .persona-body{padding:32px 20px 44px}
   .persona-rows>div{grid-template-columns:1fr;padding:16px 0}
 }

@@ -78,7 +78,7 @@ export function HeroSlider({ slides, tags }: { slides: Slide[]; tags: Bi[] }) {
               </div>
               <div className="rh-photo">
                 <Pic src={s.img} alt={pick(s.alt)} fill sizes="(max-width: 900px) 100vw, 50vw" preload={k === 0}
-                  style={{ objectFit: "cover", objectPosition: s.pos ?? "50% 25%" }} />
+                  style={s.look === "studio" ? { objectFit: "contain", objectPosition: "50% 100%" } : { objectFit: "cover", objectPosition: s.pos ?? "50% 25%" }} />
               </div>
             </article>
           );
