@@ -72,7 +72,7 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
                 <dl className="rh-snap">{s.snap.map((x, n) => <div key={n}><dt>{pick(x.k)}</dt><dd>{pick(x.v)}</dd></div>)}</dl>
               </div>
               <div className="rh-photo">
-                <Pic src={s.img} alt={pick(s.alt)} fill sizes="(max-width: 900px) 100vw, 50vw" preload={k === 0}
+                <Pic src={s.img} alt={pick(s.alt)} fill sizes="(max-width: 900px) 100vw, 50vw" preload={k === 0} loading={k === 0 ? "eager" : "lazy"}
                   style={s.cutout ? { objectFit: "contain", objectPosition: "100% 100%" } : { objectFit: "cover", objectPosition: s.pos ?? "50% 25%" }} />
               </div>
             </article>
