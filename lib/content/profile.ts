@@ -47,7 +47,7 @@ export const facts: { label: Bi; value: Bi }[] = [
   { label: { hi: "जनपद", en: "District" }, value: { hi: "गोंडा, उत्तर प्रदेश", en: "Gonda, Uttar Pradesh" } },
   { label: { hi: "दल", en: "Party" }, value: { hi: "भारतीय जनता पार्टी", en: "Bharatiya Janata Party" } },
   { label: { hi: "जन्म", en: "Born" }, value: { hi: "15 अक्टूबर 1971, गोंडा", en: "15 October 1971, Gonda" } },
-  { label: { hi: "शिक्षा", en: "Education" }, value: { hi: "स्नातक (1993), लाल बहादुर शास्त्री महाविद्यालय, गोंडा; परास्नातक, डॉ. राम मनोहर लोहिया अवध विश्वविद्यालय", en: "Graduate (1993), LBS College, Gonda; Post-graduate, Dr. RML Avadh University" } },
+  { label: { hi: "शिक्षा", en: "Education" }, value: { hi: "स्नातक (1993), लाल बहादुर शास्त्री महाविद्यालय, गोंडा; परास्नातक, डॉ. राम मनोहर लोहिया अवध विश्वविद्यालय", en: "Graduate (1993), LBS College, Gonda; post-graduate, Dr. RML Avadh University" } },
   { label: { hi: "पैतृक गाँव", en: "Native village" }, value: { hi: "श्रीनगर (बाबागंज), इटियाथोक, गोंडा", en: "Srinagar (Babaganj), Itia Thok, Gonda" } },
   { label: { hi: "परिवार", en: "Family" }, value: { hi: "पत्नी श्रीमती पूनम द्विवेदी; एक पुत्र, तीन पुत्रियाँ", en: "Wife Smt. Poonam Dwivedi; one son, three daughters" } },
   { label: { hi: "रुचि", en: "Interests" }, value: { hi: "जनसेवा, क्रिकेट, पुस्तकें पढ़ना", en: "Public service, cricket, reading" } },

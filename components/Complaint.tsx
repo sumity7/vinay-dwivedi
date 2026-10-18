@@ -219,7 +219,7 @@ function StatusView({ id, c, onRate }: { id: string; c: ComplaintStatus; onRate:
               : t("कार्यालय 7 दिन में कार्यवाही का प्रयास करता है। उसके बाद आप स्मरण भेज सकते हैं।", "The office aims to act within 7 days. After that you can send a reminder.")}
           </p>
           {late && <a className="btn btn-primary btn-sm" style={{ marginTop: 12 }} target="_blank" rel="noopener"
-            href={waLink(`स्मरण / Reminder: शिकायत संख्या ${id} (${cat}, ${c.village}) — ${days} दिन से लंबित।`, site.officeWhatsApp)}>{t("स्मरण भेजें", "Send reminder")}</a>}
+            href={waLink(`स्मरण / Reminder: शिकायत संख्या ${id} (${cat}, ${c.village}): ${days} दिन से लंबित।`, site.officeWhatsApp)}>{t("स्मरण भेजें", "Send reminder")}</a>}
         </>
       ) : (
         <>

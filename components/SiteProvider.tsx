@@ -95,7 +95,8 @@ function Lightbox({ state, setState }: {
           <Image src={it.img} alt={it.cap} sizes="(max-width: 1100px) 100vw, 1100px" quality={90} priority />
           <p className="cap">{it.cap}</p>
           <div className="share-row">
-            <a target="_blank" rel="noopener" href={waLink(`${it.cap} — ${t("विनय कुमार द्विवेदी, विधायक मेहनौन", "Vinay Kumar Dwivedi, MLA Mehnaun")} ${absUrl(location.pathname)}`)}>
+            <a target="_blank" rel="noopener" href={waLink(`${it.cap}
+${t("विनय कुमार द्विवेदी, विधायक मेहनौन", "Vinay Kumar Dwivedi, MLA Mehnaun")} ${absUrl(location.pathname)}`)}>
               {t("WhatsApp पर साझा करें", "Share on WhatsApp")}
             </a>
           </div>

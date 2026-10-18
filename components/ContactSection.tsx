@@ -23,7 +23,7 @@ export function ContactSection({ lang, visibleTitle }: { lang: Lang; visibleTitl
               <li key={s.key}><span className="ic"><Icon name={s.icon} /></span><a href={site.social[s.key].url} target="_blank" rel="noopener">{s.label}<small>{site.social[s.key].handle}</small></a></li>
             ))}
             <li><span className="ic"><Icon name="mail" /></span><a href={`mailto:${site.email}`}>{site.email}</a></li>
-            <li style={{ borderBottom: 0 }}><span className="ic"><Icon name="pin" /></span><span>{tr(site.office, lang)}<small>{t("पूरा पता जल्द जोड़ा जाएगा", "Full address to be added")}</small></span></li>
+            <li style={{ borderBottom: 0 }}><span className="ic"><Icon name="pin" /></span><span>{tr(site.office, lang)}</span></li>
           </ul>
           <p className="hint" style={{ margin: 0 }}>{t("हर संदेश सीधे विधायक कार्यालय को ईमेल से पहुँचता है।", "Every message reaches the MLA’s office directly by e-mail.")}</p>
         </aside>

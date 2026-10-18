@@ -20,6 +20,9 @@ export function Logo({ lang }: { lang: Lang }) {
 /** "/hi/about" -> "/about" */
 const stripLang = (p: string) => p.replace(/^\/(hi|en)(?=\/|$)/, "") || "";
 
+/* the two languages are separate pages, so remember where the visitor was: the next page puts them back at the same spot (see the effect in Header) */
+const keepScroll = () => { try { sessionStorage.setItem("langY", String(Math.round(window.scrollY))); } catch { /* private mode: they just start at the top */ } };
+
 export function Header() {
   const { lang, pick, t } = useSite();
   const pathname = usePathname();
@@ -35,6 +38,20 @@ export function Header() {
   const hoverClose = () => { clearTimeout(closeTimer.current); closeTimer.current = setTimeout(() => setOpenDd(null), 140); };
 
   useEffect(() => { setOpenDd(null); setDrawer(false); }, [pathname]);
+  /* after a language switch, put the visitor back where they were (the new page may still be growing, so keep trying for a moment) */
+  useEffect(() => {
+    let y: number | null = null;
+    try { const v = sessionStorage.getItem("langY"); if (v !== null) { sessionStorage.removeItem("langY"); y = Number(v); } } catch { /* ignore */ }
+    if (y === null || Number.isNaN(y)) return;
+    const target = y, t0 = performance.now();
+    let raf = 0;
+    const step = () => {
+      window.scrollTo({ top: target, behavior: "instant" });
+      if (Math.abs(window.scrollY - target) > 2 && performance.now() - t0 < 1500) raf = requestAnimationFrame(step);
+    };
+    step();
+    return () => cancelAnimationFrame(raf);
+  }, [lang]);
   useEffect(() => {
     const close = (e: MouseEvent) => { if (!navRef.current?.contains(e.target as Node)) setOpenDd(null); };
     const esc = (e: KeyboardEvent) => { if (e.key === "Escape") { setOpenDd(null); setDrawer(false); } };
@@ -88,8 +105,8 @@ export function Header() {
         </nav>
         <div className="bar-right">
           <div className="lang-switch" role="group" aria-label={t("भाषा", "Language")}>
-            <Link href={`/en${rest}`} aria-current={lang === "en"} lang="en" aria-label="English">EN</Link>
-            <Link href={`/hi${rest}`} aria-current={lang === "hi"} lang="hi" aria-label="हिन्दी">हिं</Link>
+            <Link href={`/en${rest}`} scroll={false} onClick={keepScroll} aria-current={lang === "en"} lang="en" aria-label="English">EN</Link>
+            <Link href={`/hi${rest}`} scroll={false} onClick={keepScroll} aria-current={lang === "hi"} lang="hi" aria-label="हिन्दी">हिं</Link>
           </div>
         </div>
         <button className={`menu-btn${drawer ? " is-open" : ""}`} aria-label={t("मेनू", "Menu")} aria-expanded={drawer} aria-controls="drawer" onClick={() => setDrawer(!drawer)}>

@@ -76,8 +76,8 @@ export function ECardMaker() {
   const [tick, setTick] = useState(0);
   const bump = useCallback(() => setTick((n) => n + 1), []);
 
-  /* the straight studio portrait (the one in the site icon), and the ideal's portrait on anniversary cards */
-  const mla = useImage(img.portrait.src, bump);
+  /* the studio portrait (the one in the first home slide), and the ideal's portrait on anniversary cards */
+  const mla = useImage(img.heroStudio.src, bump);
   const idealImg = useImage(anniv?.ideal.img.src, bump);
 
   const draw = useCallback(() => {

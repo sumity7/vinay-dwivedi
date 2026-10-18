@@ -1,7 +1,9 @@
 /* Development figures: then/now comparison cards and single-figure cards. Server components. */
 import type { Compare, Milestone, Single } from "@/lib/content/vikas";
+import { figureCovers } from "@/lib/content/covers";
 import { fmtDate, tr, type Lang } from "@/lib/i18n";
 import { Icon } from "./Icon";
+import { Pic } from "./Pic";
 
 export function CompareCard({ c, lang, i }: { c: Compare; lang: Lang; i: number }) {
   const ratio = c.now.value / c.then.value;
@@ -9,7 +11,8 @@ export function CompareCard({ c, lang, i }: { c: Compare; lang: Lang; i: number 
   const t = (hi: string, en: string) => (lang === "hi" ? hi : en);
   return (
     <div className="card cmp">
-      <div className={`cmp-head h${i % 6}`}>
+      <div className={`cmp-head h${i % 6}${figureCovers[c.icon] ? " has-photo" : ""}`}>
+        {figureCovers[c.icon] && <Pic className="cmp-photo" src={figureCovers[c.icon]} alt="" fill sizes="(max-width: 620px) 100vw, 420px" />}
         <span className="round"><Icon name={c.icon} /></span>
         <span className="x">{t(`${x} गुना`, `${x}× more`)}</span>
         <h3>{tr(c.title, lang)}</h3>
@@ -32,6 +35,7 @@ export function CompareCard({ c, lang, i }: { c: Compare; lang: Lang; i: number 
 export function SingleCard({ s, lang }: { s: Single; lang: Lang }) {
   return (
     <div className="card single">
+      {figureCovers[s.icon] && <div className="single-photo"><Pic src={figureCovers[s.icon]} alt="" fill sizes="(max-width: 620px) 100vw, 420px" /></div>}
       <span className="round"><Icon name={s.icon} /></span>
       <h3>{tr(s.title, lang)}</h3>
       <span className="muted" style={{ fontSize: 14 }}>{tr(s.when, lang)}</span>

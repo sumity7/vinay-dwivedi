@@ -325,10 +325,11 @@ export function drawCard(ctx: Ctx, c: CardInput) {
   ctx.save(); archPath(ctx, ax - 24, ay - 24, aw + 48, ah + 40); ctx.strokeStyle = fr; ctx.lineWidth = 1.4; ctx.globalAlpha = 0.7; ctx.stroke(); ctx.restore();
   ctx.save(); archPath(ctx, ax, ay, aw, ah); ctx.clip();
   ctx.fillStyle = "#3a3a36"; ctx.fillRect(ax, ay, aw, ah);
-  const ai = c.arch.img;
-  if (ai?.complete && ai.naturalWidth) coverTop(ctx, ai, ax, ay, aw, ah, c.arch.fy ?? 0);
+  /* the shading sits behind the portrait, so the clothes keep their true colour */
   const shade = ctx.createLinearGradient(0, ay + ah * 0.62, 0, ay + ah); shade.addColorStop(0, "rgba(0,0,0,0)"); shade.addColorStop(1, "rgba(0,0,0,.55)");
   ctx.fillStyle = shade; ctx.fillRect(ax, ay, aw, ah);
+  const ai = c.arch.img;
+  if (ai?.complete && ai.naturalWidth) coverTop(ctx, ai, ax, ay, aw, ah, c.arch.fy ?? 0);
   ctx.restore();
   if (c.garland) garland(ctx, ax - 6, ay + ah * 0.6, ax + aw + 6, ay + ah * 0.6, ay + ah * 0.84);
 

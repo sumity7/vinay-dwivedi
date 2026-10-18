@@ -1,0 +1,12 @@
+/* Home page: one readable type scale for the small print, and tighter gaps between sections. */
+html .news-sec .news-date{font-size:14.5px}
+html .news-sec .news-card p{font-size:16.5px;line-height:1.65}
+html .journey-sec{padding:44px 0 36px}
+html .journey-sec .car-track{padding-bottom:0}
+html .jr-item h3{font-size:22px}
+html .jr-item p{font-size:17px;line-height:1.6}
+html .connect-sec small{font-size:14px}
+html .connect-sec .link-arrow,html .connect-sec .fb-note{font-size:15px}
+html #contact .hint,html .hint{font-size:14.5px}
+html #contact small{font-size:14.5px}
+html .site-credit-label{font-size:13.5px}

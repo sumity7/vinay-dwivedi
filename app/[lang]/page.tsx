@@ -12,36 +12,22 @@ import { img } from "@/lib/images";
 import { jsonLdHtml, pageMeta, personJsonLd } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "@/components/persona.css";
+import "@/components/home.css";
 import { getVideos } from "@/lib/youtube";
 
-/* Hero: three slides. The first is the studio portrait, the second the wide desk scene, the third a candid photograph. */
+/* Hero: three slides. Portrait, then with the Chief Minister. */
 const heroSlides = (lang: Lang): Slide[] => [
   {
-    img: img.heroStudio, look: "studio", alt: { hi: "विधायक विनय कुमार द्विवेदी", en: "MLA Vinay Kumar Dwivedi" },
-    eyebrow: { hi: "विधायक, मेहनौन (295)", en: "MLA, Mehnaun (295)" },
+    img: img.heroStudio, cutout: true, alt: { hi: "विधायक विनय कुमार द्विवेदी", en: "MLA Vinay Kumar Dwivedi" },
+    eyebrow: { hi: "विधायक, मेहनौन विधानसभा", en: "MLA, Mehnaun Assembly" },
     title: site.name, sub: { hi: `(${site.nickname.hi})`, en: `(${site.nickname.en})` },
     text: { hi: "दो दशकों की जनसेवा। गाँव की पंचायत से विधानसभा तक का सफ़र।", en: "Two decades of public service, from the village panchayat to the Assembly." },
     cta: { href: href(lang, "/about"), label: { hi: "पूरा परिचय", en: "Full biography" } },
     cta2: { href: href(lang, "/vikas-yatra"), label: { hi: "उपलब्धियाँ", en: "Achievements" } },
-    snapLabel: { hi: "संक्षिप्त परिचय", en: "Profile snapshot" },
     snap: [
-      { k: { hi: "पद", en: "Role" }, v: { hi: "विधायक, मेहनौन (295)", en: "MLA, Mehnaun (295)" } },
-      { k: { hi: "कार्यकाल", en: "Terms" }, v: { hi: "2 बार (2017, 2022)", en: "2 (2017, 2022)" } },
-      { k: { hi: "मत, 2022", en: "Votes, 2022" }, v: { hi: "50.05%", en: "50.05%" } },
-    ],
-  },
-  {
-    img: img.heroDesk, look: "wide", pos: "100% 50%", alt: { hi: "जन समस्याओं के काग़ज़ात देखते विधायक जी", en: "The MLA going through public grievances at his desk" },
-    eyebrow: { hi: "ई-शिकायत", en: "e-Shikayat" },
-    title: { hi: "हर शिकायत पर स्वयं ध्यान", en: "Every complaint, personally seen to" },
-    text: { hi: "अपनी बात सीधे विधायक कार्यालय तक पहुँचाएँ और कार्यवाही के हर कदम की जानकारी ऑनलाइन पाएँ।", en: "Send your concern straight to the MLA’s office and follow every step of the action online." },
-    cta: { href: href(lang, "/e-shikayat"), label: { hi: "शिकायत दर्ज करें", en: "Register a complaint" } },
-    cta2: { href: href(lang, "/e-shikayat/track"), label: { hi: "शिकायत की स्थिति", en: "Track a complaint" } },
-    snapLabel: { hi: "कैसे काम करता है", en: "How it works" },
-    snap: [
-      { k: { hi: "दर्ज करें", en: "File" }, v: { hi: "ऑनलाइन, मिनटों में", en: "Online, in minutes" } },
-      { k: { hi: "देखें", en: "Track" }, v: { hi: "टिकट संख्या से", en: "With your ticket number" } },
-      { k: { hi: "पहुँचे", en: "Reaches" }, v: { hi: "सीधे कार्यालय तक", en: "The office directly" } },
+      { k: { hi: "क्षेत्र", en: "Constituency" }, v: { hi: "मेहनौन (295)", en: "Mehnaun (295)" } },
+      { k: { hi: "कार्यकाल", en: "Terms as MLA" }, v: { hi: "2 बार (2017, 2022)", en: "2 (2017, 2022)" } },
+      { k: { hi: "2022 में मत", en: "Vote share, 2022" }, v: { hi: "50.05%", en: "50.05%" } },
     ],
   },
   {
@@ -51,17 +37,12 @@ const heroSlides = (lang: Lang): Slide[] => [
     text: { hi: "प्रधानमंत्री श्री नरेन्द्र मोदी जी के विज़न और मुख्यमंत्री श्री योगी आदित्यनाथ जी के सुशासन को मेहनौन के हर घर तक पहुँचाना उनका संकल्प है।", en: "Taking Prime Minister Shri Narendra Modi’s vision and Chief Minister Shri Yogi Adityanath’s governance to every home in Mehnaun is his resolve." },
     cta: { href: href(lang, "/vikas-yatra"), label: { hi: "उपलब्धियाँ देखें", en: "See the achievements" } },
     cta2: { href: href(lang, "/e-card"), label: { hi: "ई-कार्ड बनाएं", en: "Make an e-card" } },
-    snapLabel: { hi: "संकल्प", en: "The resolve" },
     snap: [
       { k: { hi: "हर गाँव में", en: "Every village" }, v: { hi: "सड़क, बिजली, पानी", en: "Roads, power, water" } },
       { k: { hi: "सम्मान", en: "Respect for" }, v: { hi: "किसान, युवा, महिलाएँ", en: "Farmers, youth, women" } },
       { k: { hi: "शुभकामना", en: "Greetings" }, v: { hi: "16 अवसरों के ई-कार्ड", en: "e-cards for 16 occasions" } },
     ],
   },
-];
-
-const heroTags: Bi[] = [
-  { hi: "मेहनौन", en: "Mehnaun" }, { hi: "जनसेवा", en: "Public service" }, { hi: "विकास", en: "Development" }, { hi: "ई-शिकायत", en: "e-Shikayat" },
 ];
 
 /* order of the event categories in the home gallery (anything not listed goes last) */
@@ -110,9 +91,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {/* structured data: who he is, for Google's knowledge panel and name searches */}
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdHtml(personJsonLd(lang))} />
 
-      {/* HERO: three slides, full width (the first one carries the page's h1) */}
+      {/* HERO: two slides, full width (the first one carries the page's h1) */}
       <section className="rh-sec" aria-label={t("मुख्य स्लाइड", "Highlights")}>
-        <HeroSlider slides={slides} tags={heroTags} />
+        <HeroSlider slides={slides} />
       </section>
 
       {/* FACTS: four plain facts under the hero */}
@@ -127,10 +108,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {/* PERSONALITY: one photograph, the biography as three labelled rows */}
       <section className="persona" aria-labelledby="persona-title">
         <figure className="persona-fig">
-          <Pic src={img.persona} alt={t("विधायक विनय कुमार द्विवेदी", "MLA Vinay Kumar Dwivedi")} placeholder="blur" sizes="(max-width: 900px) 100vw, 42vw" />
+          <Pic src={img.persona} fill alt={t("विधायक विनय कुमार द्विवेदी", "MLA Vinay Kumar Dwivedi")} sizes="(max-width: 900px) 100vw, 42vw" />
         </figure>
         <div className="persona-body">
-          <span className="eyebrow">{t("व्यक्तित्व", "Personality")}</span>
+          <span className="eyebrow">{t("विधायक के बारे में", "About the MLA")}</span>
           <h2 id="persona-title">{tr(site.name, lang)}</h2>
           <dl className="persona-rows">
             {profileRows.map((r, n) => <div key={n}><dt><b>{String(n + 1).padStart(2, "0")}</b>{tr(r.label, lang)}</dt><dd>{tr(r.text, lang)}</dd></div>)}
@@ -139,6 +120,23 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <Link className="btn btn-orange" href={href(lang, "/about")}>{t("पूरा परिचय", "Full biography")} <Icon name="arrow" /></Link>
             <Link className="link-arrow" href={href(lang, "/about#journey")}>{t("जीवन यात्रा", "Life journey")} <Icon name="arrow" /></Link>
           </div>
+        </div>
+      </section>
+
+      {/* JOURNEY */}
+      <section className="journey-sec" id="journey">
+        <div className="wrap">
+          <h2 className="sec-title center">{t("यात्रा", "Journey")}</h2>
+          <Carousel className="journey">
+            {journey.map((j, i) => (
+              <article key={i} className="jr-item">
+                <span className="jr-year">{tr(j.tag, lang)}</span>
+                <h3>{tr(j.title, lang)}</h3>
+                <p>{tr(j.text, lang)}</p>
+                <Link className="link-arrow" href={href(lang, "/about#journey")}>{t("और देखें", "View more")} <Icon name="arrow" /></Link>
+              </article>
+            ))}
+          </Carousel>
         </div>
       </section>
 
@@ -163,23 +161,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               );
             })}
           </div>
-        </div>
-      </section>
-
-      {/* JOURNEY */}
-      <section className="journey-sec" id="journey">
-        <div className="wrap">
-          <h2 className="sec-title center">{t("यात्रा", "Journey")}</h2>
-          <Carousel className="journey">
-            {journey.map((j, i) => (
-              <article key={i} className="jr-item">
-                <span className="jr-year">{tr(j.tag, lang)}</span>
-                <h3>{tr(j.title, lang)}</h3>
-                <p>{tr(j.text, lang)}</p>
-                <Link className="link-arrow" href={href(lang, "/about#journey")}>{t("और देखें", "View more")} <Icon name="arrow" /></Link>
-              </article>
-            ))}
-          </Carousel>
         </div>
       </section>
 
@@ -225,7 +206,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                     <span className="mock-line" />
                     <span className="mock-name"><Icon name="photoAdd" /><em>{t("आपका नाम", "Your name")}<small>{t("आपका गाँव", "Your village")}</small></em></span>
                   </div>
-                  <Pic className="mock-photo" src={img.portrait} alt="" sizes="260px" />
+                  <Pic className="mock-photo" src={img.heroStudio} alt="" sizes="260px" />
                 </div>
               </div>
               <div className="sv-body">
