@@ -217,7 +217,7 @@ export function ECardMaker() {
 
       <figure className="ec-stage">
         <div className="ec-stage-bar"><span className="ec-live" aria-hidden="true" />{t("लाइव पूर्वावलोकन", "Live preview")}<span className="ec-stage-occ">{pick(occ.label)}</span></div>
-        <canvas ref={cvRef} width={CARD_W} height={CARD_H} role="img" aria-label={`${t("ई-कार्ड", "E-card")}: ${pick(occ.title)}`} />
+        <canvas ref={cvRef} width={CARD_W} height={CARD_H} role="img" aria-label={`${t("शुभकामनाएँ", "Greetings")}: ${pick(occ.title)}`} />
         <figcaption>{t("1080 × 1350 HD · WhatsApp और Facebook पर साफ़ दिखता है", "1080 × 1350 HD · sharp on WhatsApp and Facebook")}</figcaption>
       </figure>
     </div>

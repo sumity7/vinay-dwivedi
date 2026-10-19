@@ -12,7 +12,7 @@ import { useSite } from "./SiteProvider";
 const RAIL: { path: string; icon: IconName; hi: string; en: string }[] = [
   { path: "/e-shikayat", icon: "complaint", hi: "शिकायत दर्ज करें", en: "Register a complaint" },
   { path: "/e-shikayat/track", icon: "search", hi: "शिकायत की स्थिति", en: "Track your complaint" },
-  { path: "/e-card", icon: "card", hi: "ई-कार्ड बनाएं", en: "Make an e-card" },
+  { path: "/e-card", icon: "card", hi: "शुभकामनाएँ", en: "Greetings" },
   { path: "/vikas-yatra", icon: "trend", hi: "उपलब्धियाँ", en: "Achievements" },
 ];
 

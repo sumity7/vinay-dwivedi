@@ -56,7 +56,7 @@ Meetings & interactions (page: /{lang}/media/meetings): ${meetings.map((m) => `$
 - The office reviews each complaint and forwards it to the right department. Status steps: Received, Under review, Action taken, Resolved. The office aims to act within 7 days; after 7 days a reminder can be sent from the tracking page. After resolution you can rate it with stars.
 - Track a complaint: /{lang}/e-shikayat/track. Enter the ticket number and the last 4 digits of the mobile number used.
 - Not handled through e-Shikayat: emergencies (call 112), cases pending in court, RTI applications, job requests and transfers. State-level grievances can also go to the IGRS portal jansunwai.up.nic.in.
-- e-Card: /{lang}/e-card. Choose an occasion (festivals, national days, Munna Bhaiya's birthday on 15 October, anniversaries of national figures), add your name, village/post and optional photo; download or share on WhatsApp. The photo stays on the phone and is not uploaded.
+- Greetings: /{lang}/e-card. Choose an occasion (festivals, national days, Munna Bhaiya's birthday on 15 October, anniversaries of national figures), add your name, village/post and optional photo; download or share on WhatsApp. The photo stays on the phone and is not uploaded.
 - Contact / meeting request / volunteering / suggestions: /{lang}/contact. The form opens WhatsApp with the message ready to send to the office (${site.officeWhatsApp}).
 - Office: ${both(site.office)} (full address to be added). Email: ${site.email}.
 - Social: Facebook ${site.social.facebook.url}, Instagram ${site.social.instagram.url}, YouTube ${site.social.youtube.url}.

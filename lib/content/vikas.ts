@@ -32,15 +32,30 @@ export const indiaSingle: Single[] = [
   { icon: "people", title: { hi: "बहुआयामी गरीबी से बाहर आए लोग", en: "People out of multidimensional poverty" }, value: { hi: "24.82 करोड़", en: "24.82 crore" }, when: { hi: "2013-14 से 2022-23", en: "2013-14 to 2022-23" }, source: { hi: "स्रोत: नीति आयोग, बहुआयामी गरीबी पर चर्चा पत्र (जनवरी 2024)", en: "Source: NITI Aayog discussion paper on multidimensional poverty (January 2024)" } },
 ];
 
+/* Launch dates of flagship national schemes (dates only, no figures, so nothing here needs a source line). */
+export const indiaMilestones: Milestone[] = [
+  { date: "2014-08-28", title: { hi: "प्रधानमंत्री जन धन योजना", en: "PM Jan Dhan Yojana" }, text: { hi: "हर परिवार को बैंक खाता, ताकि सरकारी सहायता सीधे खाते में पहुँचे।", en: "A bank account for every household, so that government support reaches it directly." } },
+  { date: "2014-10-02", title: { hi: "स्वच्छ भारत मिशन", en: "Swachh Bharat Mission" }, text: { hi: "गांधी जयंती पर शुरू; स्वच्छता और शौचालय का राष्ट्रव्यापी अभियान।", en: "Launched on Gandhi Jayanti: a nationwide drive for sanitation and toilets." } },
+  { date: "2015-04-08", title: { hi: "प्रधानमंत्री मुद्रा योजना", en: "PM Mudra Yojana" }, text: { hi: "छोटे व्यवसायियों और दुकानदारों को बिना गारंटी ऋण, ₹10 लाख तक।", en: "Collateral-free loans of up to ₹10 lakh for small businesses and shopkeepers." } },
+  { date: "2016-05-01", title: { hi: "प्रधानमंत्री उज्ज्वला योजना", en: "PM Ujjwala Yojana" }, text: { hi: "बलिया से शुरू; ग़रीब परिवारों की महिलाओं को मुफ़्त एलपीजी कनेक्शन।", en: "Started in Ballia: free LPG connections for women in poor households." } },
+  { date: "2017-07-01", title: { hi: "वस्तु एवं सेवा कर (जीएसटी)", en: "Goods and Services Tax (GST)" }, text: { hi: "‘एक देश, एक कर’; अलग-अलग राज्यों के करों की जगह एक व्यवस्था।", en: "‘One nation, one tax’: a single system in place of many state-wise levies." } },
+  { date: "2018-09-23", title: { hi: "आयुष्मान भारत (पीएम-जेएय)", en: "Ayushman Bharat (PM-JAY)" }, text: { hi: "पात्र परिवारों को हर साल ₹5 लाख तक का स्वास्थ्य बीमा कवर।", en: "Health cover of up to ₹5 lakh a year for eligible families." } },
+  { date: "2019-08-15", title: { hi: "जल जीवन मिशन", en: "Jal Jeevan Mission" }, text: { hi: "लाल क़िले से घोषित; हर ग्रामीण घर में नल से जल पहुँचाने का लक्ष्य।", en: "Announced from the Red Fort: tap water to every rural home." } },
+];
+
 export const upMilestones: Milestone[] = [
   { date: "2018-01-24", title: { hi: "एक जनपद एक उत्पाद", en: "One District One Product" }, text: { hi: "उत्तर प्रदेश दिवस पर शुरू; हर जनपद के पारंपरिक उत्पाद को पहचान, ऋण और बाज़ार।", en: "Launched on UP Day: recognition, credit and markets for each district’s traditional product." } },
   { date: "2019-02-24", title: { hi: "पीएम किसान सम्मान निधि", en: "PM Kisan Samman Nidhi" }, text: { hi: "गोरखपुर से देशभर के किसानों के लिए योजना का शुभारंभ।", en: "The scheme for farmers across India was launched from Gorakhpur." } },
+  { date: "2021-10-20", title: { hi: "कुशीनगर अंतरराष्ट्रीय हवाई अड्डा", en: "Kushinagar International Airport" }, text: { hi: "बौद्ध सर्किट के इस केंद्र का उद्घाटन; पूर्वांचल में विदेश से सीधी हवाई पहुँच।", en: "Opened at the heart of the Buddhist circuit, giving Purvanchal direct air access from abroad." } },
   { date: "2021-11-16", title: { hi: "पूर्वांचल एक्सप्रेसवे", en: "Purvanchal Expressway" }, text: { hi: "लखनऊ से गाज़ीपुर तक 341 किमी; पूर्वी उत्तर प्रदेश राजधानी से कुछ घंटों की दूरी पर।", en: "341 km from Lucknow to Ghazipur, bringing eastern UP within hours of the capital." } },
+  { date: "2021-11-25", title: { hi: "नोएडा अंतरराष्ट्रीय हवाई अड्डा (जेवर)", en: "Noida International Airport (Jewar)" }, text: { hi: "हवाई अड्डे का शिलान्यास; दिल्ली-एनसीआर के लिए दूसरा बड़ा हवाई अड्डा।", en: "Foundation stone laid for the second major airport serving Delhi-NCR." } },
   { date: "2021-12-13", title: { hi: "श्री काशी विश्वनाथ धाम", en: "Shri Kashi Vishwanath Dham" }, text: { hi: "मंदिर को गंगा घाटों से जोड़ने वाले धाम का लोकार्पण।", en: "The corridor linking the temple to the Ganga ghats was dedicated." } },
   { date: "2022-07-16", title: { hi: "बुंदेलखंड एक्सप्रेसवे", en: "Bundelkhand Expressway" }, text: { hi: "296 किमी का एक्सप्रेसवे; बुंदेलखंड को सीधे आगरा-लखनऊ और यमुना एक्सप्रेसवे से जोड़ा।", en: "A 296 km expressway linking Bundelkhand to the Agra-Lucknow and Yamuna expressways." } },
+  { date: "2022-12-28", title: { hi: "कानपुर मेट्रो", en: "Kanpur Metro" }, text: { hi: "पहले खंड का उद्घाटन; औद्योगिक शहर कानपुर में शहरी यात्रा का नया साधन।", en: "First section opened, giving the industrial city of Kanpur a new way to travel." } },
 ];
 
 export const regionMilestones: Milestone[] = [
+  { date: "2020-08-05", title: { hi: "श्री राम जन्मभूमि मंदिर का भूमि पूजन", en: "Bhoomi Pujan of Shri Ram Janmabhoomi temple" }, text: { hi: "अयोध्या में मंदिर निर्माण की शुरुआत; पूरे अवध क्षेत्र के लिए विकास की नई गति।", en: "Construction of the temple began at Ayodhya, setting a new pace of development across Awadh." } },
   { date: "2023-12-30", title: { hi: "महर्षि वाल्मीकि अंतरराष्ट्रीय हवाई अड्डा, अयोध्या", en: "Maharishi Valmiki International Airport, Ayodhya" }, text: { hi: "गोंडा से कुछ ही दूरी पर नया हवाई अड्डा; साथ ही अयोध्या धाम रेलवे स्टेशन का नया भवन।", en: "A new airport a short drive from Gonda, opened alongside the rebuilt Ayodhya Dham railway station." } },
   { date: "2024-01-22", title: { hi: "श्री राम जन्मभूमि मंदिर में प्राण-प्रतिष्ठा", en: "Pran Pratishtha at Shri Ram Janmabhoomi temple" }, text: { hi: "सरयू पार अयोध्या में भव्य मंदिर; देवीपाटन मंडल में आस्था, पर्यटन और रोज़गार के नए अवसर।", en: "The temple across the Saryu at Ayodhya brings new faith, tourism and jobs to the Devipatan division." } },
 ];

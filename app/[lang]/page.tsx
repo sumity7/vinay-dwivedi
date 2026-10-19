@@ -36,11 +36,11 @@ const heroSlides = (lang: Lang): Slide[] => [
     title: { hi: "योगी जी के नेतृत्व में, नया मेहनौन", en: "A new Mehnaun under Yogi ji" },
     text: { hi: "प्रधानमंत्री श्री नरेन्द्र मोदी जी के विज़न और मुख्यमंत्री श्री योगी आदित्यनाथ जी के सुशासन को मेहनौन के हर घर तक पहुँचाना उनका संकल्प है।", en: "Taking Prime Minister Shri Narendra Modi’s vision and Chief Minister Shri Yogi Adityanath’s governance to every home in Mehnaun is his resolve." },
     cta: { href: href(lang, "/vikas-yatra"), label: { hi: "उपलब्धियाँ देखें", en: "See the achievements" } },
-    cta2: { href: href(lang, "/e-card"), label: { hi: "ई-कार्ड बनाएं", en: "Make an e-card" } },
+    cta2: { href: href(lang, "/e-card"), label: { hi: "शुभकामनाएँ", en: "Greetings" } },
     snap: [
       { k: { hi: "हर गाँव में", en: "Every village" }, v: { hi: "सड़क, बिजली, पानी", en: "Roads, power, water" } },
       { k: { hi: "सम्मान", en: "Respect for" }, v: { hi: "किसान, युवा, महिलाएँ", en: "Farmers, youth, women" } },
-      { k: { hi: "शुभकामना", en: "Greetings" }, v: { hi: "16 अवसरों के ई-कार्ड", en: "e-cards for 16 occasions" } },
+      { k: { hi: "शुभकामना", en: "Greetings" }, v: { hi: "16 अवसरों के कार्ड", en: "Cards for 16 occasions" } },
     ],
   },
 ];
@@ -219,7 +219,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                   <li><Icon name="download" />{t("डाउनलोड या साझा करें", "Download or share")}</li>
                 </ul>
                 <div className="sv-btns">
-                  <Link className="btn btn-orange" href={href(lang, "/e-card")}>{t("ई-कार्ड बनाएं", "Make an e-card")} <Icon name="arrow" /></Link>
+                  <Link className="btn btn-orange" href={href(lang, "/e-card")}>{t("शुभकामनाएँ", "Greetings")} <Icon name="arrow" /></Link>
                 </div>
               </div>
             </article>

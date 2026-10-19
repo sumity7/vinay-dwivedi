@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/Chrome";
 import { Icon } from "@/components/Icon";
 import { CompareCard, MilestoneList, SingleCard } from "@/components/Vikas";
-import { indiaCompare, indiaSingle, regionMilestones, upMilestones } from "@/lib/content/vikas";
+import { indiaCompare, indiaMilestones, indiaSingle, regionMilestones, upMilestones } from "@/lib/content/vikas";
 import { href, tr, type Lang } from "@/lib/i18n";
 
 type Props = { params: Promise<{ lang: string }> };
@@ -50,6 +50,8 @@ export default async function VikasYatra({ params }: Props) {
           <p className="lead" style={{ margin: "16px 0 36px" }}>{t("सड़कें, हवाई अड्डे, स्वास्थ्य और गरीबों के लिए बैंकिंग, दस साल के अंतर पर।", "Roads, airports, healthcare and banking for the poor, ten years apart.")}</p>
           <div className="cmp-grid">{indiaCompare.map((c, i) => <CompareCard key={c.title.en} c={c} lang={lang} i={i} />)}</div>
           <div className="single-grid">{indiaSingle.map((s) => <SingleCard key={s.title.en} s={s} lang={lang} />)}</div>
+          <h3 className="vk-sub" style={{ margin: "44px 0 20px" }}>{t("जन-कल्याण की प्रमुख योजनाएँ: कब शुरू हुईं", "Flagship welfare schemes: when they began")}</h3>
+          <MilestoneList items={indiaMilestones} lang={lang} />
         </div>
       </section>
       <section id="up" className="sec-sand" style={{ scrollMarginTop: 80 }}>

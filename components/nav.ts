@@ -11,10 +11,11 @@ export const NAV: NavItem[] = [
     children: [
       { path: "/e-shikayat", label: { hi: "ई-शिकायत दर्ज करें", en: "Register a complaint" }, desc: { hi: "सड़क, पानी, बिजली, पेंशन", en: "Road, water, power, pension" } },
       { path: "/e-shikayat/track", label: { hi: "शिकायत की स्थिति", en: "Track your complaint" }, desc: { hi: "टिकट संख्या डालें", en: "Enter your ticket number" } },
-      { path: "/e-card", label: { hi: "ई-कार्ड बनाएं", en: "Make an e-card" }, desc: { hi: "अपने नाम व फोटो के साथ शुभकामनाएँ", en: "Greetings with your name and photo" } },
+      { path: "/e-card", label: { hi: "शुभकामनाएँ", en: "Greetings" }, desc: { hi: "अपने नाम व फोटो के साथ शुभकामनाएँ", en: "Greetings with your name and photo" } },
     ],
   },
   { path: "/updates", label: { hi: "अपडेट्स", en: "Updates" } },
+  { path: "/vikas-yatra", label: { hi: "उपलब्धियाँ", en: "Achievements" } },
   {
     label: { hi: "मीडिया", en: "Media" }, base: "/media",
     children: [
@@ -23,11 +24,10 @@ export const NAV: NavItem[] = [
     ],
   },
   {
-    label: { hi: "दृष्टि व आदर्श", en: "Vision & Ideals" }, base: "/v",
+    label: { hi: "दृष्टि व आदर्श", en: "Vision & Ideals" }, base: "/vimarsh",
     children: [
       { path: "/vimarsh", label: { hi: "एक नज़र में", en: "Overview" }, desc: { hi: "विकास व विचार का सार", en: "Development and ideas at a glance" } },
       { path: "/vichar", label: { hi: "विचार व लेख", en: "Ideas & Articles" }, desc: { hi: "योजनाओं की सरल जानकारी", en: "Schemes explained simply" } },
-      { path: "/vikas-yatra", label: { hi: "उपलब्धियाँ", en: "Achievements" }, desc: { hi: "आँकड़े और पड़ाव", en: "Figures and milestones" } },
       { path: "/ideals", label: { hi: "हमारे आदर्श", en: "Our Ideals" }, desc: { hi: "प्रेरणा देने वाले विचार", en: "Words that guide us" } },
     ],
   },
@@ -48,5 +48,5 @@ export const FOOTER_QUICK: NavLink[] = [
   { path: "/updates", label: { hi: "अपडेट्स", en: "Updates" } },
   { path: "/vichar", label: { hi: "विचार व लेख", en: "Ideas & Articles" } },
   { path: "/e-shikayat", label: { hi: "ई-शिकायत", en: "Register a complaint" } },
-  { path: "/e-card", label: { hi: "ई-कार्ड", en: "e-Card" } },
+  { path: "/e-card", label: { hi: "शुभकामनाएँ", en: "Greetings" } },
 ];
